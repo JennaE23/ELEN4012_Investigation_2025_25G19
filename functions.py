@@ -1,6 +1,9 @@
 import csv
 from csv import DictWriter
 
+
+
+
 def create_fields(nr_qubits):
     fields = []
     for i in range(2**nr_qubits):
@@ -15,6 +18,7 @@ def create_csv(csv_file_name, fields):
         writer.writerow(fields)
 
 def results_to_csv(csv_file_names, fields, job_id_file):
+    service = qiskit_ibm_runtime.QiskitRuntimeService()
     count = 0
     jobs_torino1 = []
     jobs_torino2 = []
