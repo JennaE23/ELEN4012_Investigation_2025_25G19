@@ -77,20 +77,7 @@ def results_to_csv(csv_file_names, fields, job_id_file):
                 writer.writerows(rows)
             count2 += 1
 
-def results_to_csv2(nr_qubits,job_ids_file):
+def results_to_csv2(nr_qubits,file_name_array,job_ids_file):
     fields_ = create_fields(nr_qubits)
-    file_names_4qubits = ['4q_torino1.csv','4q_torino2.csv','4q_torino3.csv','4q_brisbane1.csv','4q_brisbane2.csv','4q_brisbane3.csv']
-    file_names_8qubits = ['8q_torino1.csv','8q_torino2.csv','8q_torino3.csv','8q_brisbane1.csv','8q_brisbane2.csv','8q_brisbane3.csv']
-    file_names_16qubits = ['16q_torino1.csv','16q_torino2.csv','16q_torino3.csv','16q_brisbane1.csv','16q_brisbane2.csv','16q_brisbane3.csv']
-    file_names_32qubits = ['32q_torino1.csv','32q_torino2.csv','32q_torino3.csv','32q_brisbane1.csv','32q_brisbane2.csv','32q_brisbane3.csv']
-    match nr_qubits:
-        case 4: 
-            file_name_array = file_names_4qubits
-        case 8:
-            file_name_array = file_names_8qubits
-        case 16:
-            file_name_array = file_names_16qubits
-        case 32:
-            file_name_array = file_names_32qubits
     create_csvs(file_name_array,fields_)
     results_to_csv(file_name_array,fields_,job_ids_file)
