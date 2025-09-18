@@ -82,15 +82,22 @@ def results_to_csv2(nr_qubits,file_name_array,job_ids_file):
     create_csvs(file_name_array,fields_)
     results_to_csv(file_name_array,fields_,job_ids_file)
 
+####################################################################
+#For Simulated data:
+def get_circuit_type_results(results_list, circuit_type):#circuit_type is 1,2 or 3
+    circuit_results =[]
+    #re-arrange results into each type of circuit
+    for i in range(len(results_list)):
+        circuit_results.append(results_list[i][circuit_type-1])
+    return circuit_results
+
 def sim_results_to_csv(nr_qubits,file_name_array,results_list):
     fields_ = create_fields(nr_qubits)
     create_csvs(file_name_array,fields_)
-    for run_result in results_list:
-        sim_results_array_to_csv(file_name_array,fields_,run_result)
-
-def sim_results_array_to_csv(file_name_array,fields_,run_result):
     for i in range(len(file_name_array)):
-        row = run_result[i]
+        rows = get_circuit_type_results(results_list,i+1)
         with open(file_name_array[i], 'a', newline='') as f:
             writer = DictWriter(f, fieldnames=fields_)
-            writer.writerows(row)
+            writer.writerows(rows)
+
+
