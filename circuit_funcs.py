@@ -78,6 +78,18 @@ def run_job(backend_, circuit_set):
     #need code to save job ID
     return job.job_id()
 
+def run_sim(fake_backend,qc_set, nr_runs):
+    sim_backend = fake_backend
+    # Transpile the ideal circuit to a circuit that can be directly executed by the backend
+    transpiled_circuits = transpile(qc_set, sim_backend)
+    results =[]
+    # Run the transpiled circuit using the simulated backend
+    for run in range(nr_runs):
+        job = sim_backend.run(transpiled_circuits,shots =4096,memory=False)
+        results.append(job.result().get_counts())
+
+    return results
+
 def send_set_to_backends(nr_qubits):
     #make set of circuits:
     qc_set = make_set_of_3(nr_qubits)
