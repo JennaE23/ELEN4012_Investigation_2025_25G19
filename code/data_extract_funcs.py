@@ -16,9 +16,10 @@ def create_csv(csv_file_name, fields):
         writer.writerow(fields)
 
 def add_dir_to_filenames(dir_,file_names):
+    file_names_new =[]
     for i in range(len(file_names)):
-        file_names[i]= dir_ + file_names[i]
-    return file_names
+        file_names_new.append(dir_ + file_names[i])
+    return file_names_new
 
 def create_csvs(file_names_array, fields):
     for file_name in file_names_array:
@@ -83,11 +84,11 @@ def results_to_csv(csv_file_names, fields, job_id_file):
             count2 += 1
 
 def results_to_csv2(nr_qubits,dir_,file_name_array,job_ids_file,create_csvs_ = False):
-    file_name_array =add_dir_to_filenames(dir_,file_name_array)
+    file_name_array2 =add_dir_to_filenames(dir_,file_name_array)
     fields_ = create_fields(nr_qubits)
     if create_csvs_:
-        create_csvs(file_name_array,fields_)
-    results_to_csv(file_name_array,fields_,job_ids_file)
+        create_csvs(file_name_array2,fields_)
+    results_to_csv(file_name_array2,fields_,job_ids_file)
 
 ####################################################################
 #For Simulated data:
