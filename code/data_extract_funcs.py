@@ -99,12 +99,15 @@ def get_circuit_type_results(results_list, circuit_type):#circuit_type is 1,2 or
         circuit_results.append(results_list[i][circuit_type-1])
     return circuit_results
 
-def sim_results_to_csv(nr_qubits,file_name_array,results_list):
+def sim_results_to_csv(nr_qubits,file_name_array,results_list,create_csvs_,dir_):
     fields_ = create_fields(nr_qubits)
-    create_csvs(file_name_array,fields_)
+    file_name_array2 =add_dir_to_filenames(dir_,file_name_array)
+    fields_ = create_fields(nr_qubits)
+    if create_csvs_:
+        create_csvs(file_name_array2,fields_)
     for i in range(len(file_name_array)):
         rows = get_circuit_type_results(results_list,i+1)
-        with open(file_name_array[i], 'a', newline='') as f:
+        with open(file_name_array2[i], 'a', newline='') as f:
             writer = DictWriter(f, fieldnames=fields_)
             writer.writerows(rows)
 
