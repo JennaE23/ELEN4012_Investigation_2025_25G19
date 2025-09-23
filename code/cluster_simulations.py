@@ -14,11 +14,11 @@ from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
 
 
 # importing datetime module for now()
-import datetime
-import matplotlib
+# import datetime
+# import matplotlib
 
-import circuit_funcs
-import data_extract_funcs
+# import circuit_funcs
+# import data_extract_funcs
 import sim_function
 
 def make_file_names(backend_name,is_sim,nr_qubits):
