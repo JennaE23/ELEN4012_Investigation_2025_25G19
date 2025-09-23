@@ -42,7 +42,7 @@ def run_sims_for_all_backends(fake_backends, nr_qubits,nr_runs,dir_,create_csvs_
 
 fake_backends = [FakeTorino(),FakeFez(),FakeMarrakesh(),FakeBrisbane()]
 
-dir_ = ""
+dir_ = "Simulated_results/4qTest/"
 create_csvs_ = True # if true, it creates and overwrites, if false, it just appends
 runs= 10
 nr_qubits = 4
