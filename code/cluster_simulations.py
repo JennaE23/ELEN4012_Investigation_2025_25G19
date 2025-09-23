@@ -18,7 +18,7 @@ from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
 # import matplotlib
 
 # import circuit_funcs
-# import data_extract_funcs
+import data_extract_funcs
 import sim_function
 
 def make_file_names(backend_name,is_sim,nr_qubits):
@@ -42,9 +42,9 @@ def run_sims_for_all_backends(fake_backends, nr_qubits,nr_runs,dir_,create_csvs_
 
 fake_backends = [FakeTorino(),FakeFez(),FakeMarrakesh(),FakeBrisbane()]
 
-dir_ = "../Simulated_results/4qCluster/"
+dir_ = ""
 create_csvs_ = True # if true, it creates and overwrites, if false, it just appends
 runs= 10
 nr_qubits = 4
 
-run_sims_for_all_backends([FakeBrisbane()],nr_qubits,runs,dir_,create_csvs_)
+run_sims_for_all_backends([FakeTorino()],nr_qubits,runs,dir_,create_csvs_)
