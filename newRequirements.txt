@@ -1,0 +1,8 @@
+rustworkx>=0.15.0
+numpy>=1.17,<3
+scipy>=1.5
+dill>=0.3
+stevedore>=3.0.0
+qiskit==2.1.2
+qiskit-aer==0.17.1
+qiskit-ibm-runtime==0.41.1
