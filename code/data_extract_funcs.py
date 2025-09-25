@@ -2,6 +2,16 @@ import csv
 from csv import DictWriter
 from qiskit_ibm_runtime import QiskitRuntimeService
 
+def make_file_names(backend,nr_qubits):
+    base_name = nr_qubits +"q_"
+    base_name = base_name +backend.backend_name
+
+    file_names = []
+    for i in range(1,4):
+        temp_name = base_name + str(i) +".csv"
+        file_names.append(temp_name)
+    return file_names
+
 def create_fields(nr_qubits):
     fields = []
     for i in range(2**nr_qubits):
