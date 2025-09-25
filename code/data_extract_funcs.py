@@ -3,8 +3,9 @@ from csv import DictWriter
 from qiskit_ibm_runtime import QiskitRuntimeService
 
 def make_file_names(backend,nr_qubits):
+    nr_qubits = str(nr_qubits)
     base_name = nr_qubits +"q_"
-    base_name = base_name +backend.backend_name
+    base_name = base_name +backend
 
     file_names = []
     for i in range(1,4):
