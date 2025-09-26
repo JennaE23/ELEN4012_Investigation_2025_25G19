@@ -26,7 +26,7 @@ def extract_cols_from_filename(file_name_str, dir_):
         backend_name_start = backend_name_start +4
         
     backend_name = file_name_str[backend_name_start:-5]
-
+    
     file_path = dir_+file_name_str
     
     return [nr_qubits,backend_name,is_sim,circuit_type,file_path]
@@ -69,7 +69,7 @@ def load_meta_df(meta_df,experiment_type):#Hardware,Simulation,Refreshed_Simulat
             backends_ = fake_backends
         case 'Refreshed_Simulation':
             dir_ = dir_Refr_Sims
-            backends_ = fake_backends
+            backends_ = [FakeTorino(),FakeBrisbane()]
 
     add_qfolders(meta_df,backends_,dir_)
 
