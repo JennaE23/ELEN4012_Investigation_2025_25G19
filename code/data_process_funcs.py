@@ -4,12 +4,13 @@ import matplotlib.pyplot as plt
 import sklearn
 import sklearn.preprocessing as preprocessing
 from sklearn.preprocessing import MaxAbsScaler
+import meta_dataframe_functions
 
 import os
 
 def create_processed_df(file_name, shots = 4096):
-    current_directory = os.getcwd()
-    print("Current working directory:", current_directory)
+    # current_directory = os.getcwd()
+    # print("Current working directory:", current_directory)
 
     df = pd.read_csv(file_name)
     df.fillna(0, inplace=True)
@@ -30,3 +31,23 @@ def create_processed_dfs(file_names_array, shots = 4096):
         df = create_processed_df(file_name, shots)
         dfs.append(df)
     return dfs
+
+def get_meta_dataframe(type_data, nr_qubit_types = 2,nr_machines = 2, nr_circuits = 3):
+    bigDf =  meta_dataframe_functions.blank_meta_df()
+    meta_dataframe_functions.load_meta_df(bigDf,type_data)
+
+    df_array = []
+    for i in range (nr_machines * nr_circuits * nr_qubit_types):
+        df = create_processed_df(bigDf['file_path'][i])
+        df.insert(loc=0, column='circuit_type', value=bigDf['circuit_type'][i])
+        df.insert(loc=0, column='backend', value=bigDf['backend'][i])
+        df.insert(loc=0, column='nr_qubits', value=bigDf['nr_qubits'][i])
+
+        df_array.append(df)
+    return df_array
+
+def join_dfs(dfs):
+    bigDf = pd.DataFrame()
+    for df in dfs:
+        bigDf = pd.concat([bigDf, df], ignore_index=True)
+    return bigDf
