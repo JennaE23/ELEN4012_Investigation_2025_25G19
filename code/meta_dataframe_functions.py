@@ -59,7 +59,8 @@ def load_meta_df(meta_df,experiment_type):#Hardware,Simulation,Refreshed_Simulat
     service = QiskitRuntimeService()
     fake_backends = [FakeTorino(), FakeFez(), FakeMarrakesh(),FakeBrisbane()]
     hardware_backends = [service.backend('ibm_brisbane'), service.backend('ibm_torino')]
-    
+    backends_ =[]
+    dir_ =[]
     match experiment_type:
         case 'Hardware':
             dir_ = dir_Hardware
@@ -102,6 +103,6 @@ def get_experiment_type(file_path):
         return exp_type
 
 def add_experiment_type_column(meta_df):
-    
+
     meta_df['experiment_type']=meta_df.loc[:,'file_path'].apply(get_experiment_type)
     return meta_df
