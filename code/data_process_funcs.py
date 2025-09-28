@@ -21,10 +21,12 @@ def create_processed_df(file_name, shots = 4096):
     df2.iloc[:,0] = abs(df2.iloc[:,0] - 4096)
 
     totalErrors = df2.iloc[:,0]
+    totalErrors.rename("totalError", inplace=True)
+
     df2 = df2.div(totalErrors, axis=0)
-    # df2['totalError'] = totalErrors
-    # df2.insert(loc=0, column='totalError', value=totalErrors)
-    df2 = pd.concat([pd.DataFrame(totalErrors, columns=['totalError']), df2], axis=1)
+    #df2['totalError'] = totalErrors
+    #df2.insert(loc=0,  value=totalErrors)
+    df2 = pd.concat([pd.DataFrame(totalErrors), df2], axis=1)
     return df2
 
 def create_processed_dfs(file_names_array, shots = 4096):

@@ -77,3 +77,31 @@ def get_results_df_from_row(row_index,meta_df):
     csv_file = meta_df.loc[row_index,'file_path']
     csv_df = pd.read_csv(csv_file)
     return csv_df
+
+def add_df_column(meta_df):
+    meta_df['df'] = meta_df['file_path'].apply(pd.read_csv)
+    return meta_df
+def get_percentage_non_zero(df):
+    df.replace(0,'')
+    percentage_non_zero = 100*sum(df.count())/(df.size)
+    return percentage_non_zero
+
+def add_sparsity_column(meta_df): #df column must already exist
+    meta_df['percent_non_zero']=meta_df['df'].apply(get_percentage_non_zero)
+    return meta_df
+
+def get_experiment_type(file_path):
+    if 'Hardware' in file_path:
+        exp_type = 'Hardware'
+        return exp_type
+    if 'Refreshed' in file_path:
+        exp_type = 'Refreshed Sim'
+        return exp_type
+    if 'Simulated' in file_path:
+        exp_type = 'Sim'
+        return exp_type
+
+def add_experiment_type_column(meta_df):
+    
+    meta_df['experiment_type']=meta_df.loc[:,'file_path'].apply(get_experiment_type)
+    return meta_df
