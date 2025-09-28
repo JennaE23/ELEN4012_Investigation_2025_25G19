@@ -23,7 +23,8 @@ def create_processed_df(file_name, shots = 4096):
     totalErrors = df2.iloc[:,0]
     df2 = df2.div(totalErrors, axis=0)
     # df2['totalError'] = totalErrors
-    df2.insert(loc=0, column='totalError', value=totalErrors)
+    # df2.insert(loc=0, column='totalError', value=totalErrors)
+    df2 = pd.concat([pd.DataFrame(totalErrors, columns=['totalError']), df2], axis=1)
     return df2
 
 def create_processed_dfs(file_names_array, shots = 4096):
@@ -40,9 +41,19 @@ def get_meta_dataframe(type_data, nr_qubit_sizes = 2,nr_machines = 2, nr_circuit
     df_array = []
     for i in range (nr_machines * nr_circuits * nr_qubit_sizes):
         df = create_processed_df(bigDf['file_path'][i])
-        df.insert(loc=0, column='circuit_type', value=bigDf['circuit_type'][i])
-        df.insert(loc=0, column='backend', value=bigDf['backend'][i])
-        df.insert(loc=0, column='nr_qubits', value=bigDf['nr_qubits'][i])
+        # df.insert(loc=0, column='circuit_type', value=bigDf['circuit_type'][i])
+        # df.insert(loc=0, column='backend', value=bigDf['backend'][i])
+        # df.insert(loc=0, column='nr_qubits', value=bigDf['nr_qubits'][i])
+        default_vals = {
+            'circuit_type': bigDf['circuit_type'][i],
+            'backend': bigDf['backend'][i],
+            'nr_qubits': bigDf['nr_qubits'][i]
+        }
+        data = {}
+        for col, val in default_vals.items():
+            data[col] = [val] * len(df)
+        default_df = pd.DataFrame(data)
+        df = pd.concat([default_df, df], axis=1)
 
         df_array.append(df)
     return df_array
