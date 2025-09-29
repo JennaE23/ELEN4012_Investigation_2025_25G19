@@ -12,6 +12,8 @@ from qiskit_ibm_runtime import QiskitRuntimeService
 
 import data_extract_funcs
 
+#Call experiment_type as 'Hardware', 'Simulation', 'Refreshed_Simulation'
+
 def extract_cols_from_filename(file_name_str, dir_):
     nr_qubits = re.findall(r'\d+',file_name_str[0:3])[0]
     backend_name_start = len(nr_qubits)+2 #might need to 7 change if 'ibm_..." is included in file name"
