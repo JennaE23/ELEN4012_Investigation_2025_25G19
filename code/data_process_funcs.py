@@ -113,6 +113,32 @@ def arr_dfs_of_qubit_sizes(type_data, nr_qubit_sizes = 2,nr_machines = 2, nr_cir
         df_size = join_dfs(df_arr[start_index:end_index])
         df.append(df_size)
     return df
+
+def get_expanded_df(type_data, nr_qubits):
+    big_df =  meta_dataframe_functions.blank_meta_df()
+    meta_dataframe_functions.load_meta_df(big_df,type_data)
+
+    df_qubits = big_df[big_df['nr_qubits']==str(nr_qubits)]
+    # df_qubits =meta_dataframe_functions.add_experiment_type_column(df_qubits)
+    df_arr = []
+    for i in df_qubits.index: #for each row
+        df_ = create_processed_df(df_qubits.loc[i,'file_path'])
+    
+        default_vals = {
+                'circuit_type': df_qubits.loc[i,'circuit_type'],
+                'backend': df_qubits.loc[i,'backend'],
+                'nr_qubits': df_qubits.loc[i,'nr_qubits'],
+                'experiment_type': type_data
+            }
+        data = {}
+        for col, val in default_vals.items():
+            data[col] = [val] * len(df_)
+        default_df = pd.DataFrame(data)
+        df_ = pd.concat([default_df, df_], axis=1)
+        df_arr.append(df_)
+
+    df = pd.concat(df_arr)
+    return df
     
 def find_max_value_cols(df, num_cols = 5):
     max_values = df.iloc[:,num_cols:].max()
