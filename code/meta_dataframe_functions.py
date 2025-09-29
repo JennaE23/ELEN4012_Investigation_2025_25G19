@@ -58,7 +58,7 @@ def load_meta_df(meta_df,experiment_type):#Hardware,Simulation,Refreshed_Simulat
     
     service = QiskitRuntimeService()
     fake_backends = [FakeTorino(), FakeFez(), FakeMarrakesh(),FakeBrisbane()]
-    hardware_backends = [service.backend('ibm_brisbane'), service.backend('ibm_torino')]
+    hardware_backends = [ service.backend('ibm_torino'),service.backend('ibm_brisbane')]
     backends_ =[]
     dir_ =[]
     match experiment_type:
