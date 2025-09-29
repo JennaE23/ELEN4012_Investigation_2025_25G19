@@ -114,33 +114,33 @@ def arr_dfs_of_qubit_sizes(type_data, nr_qubit_sizes = 2,nr_machines = 2, nr_cir
         df.append(df_size)
     return df
     
-def find_max_value_cols(df):
-    max_values = df.iloc[:,5:].max()
+def find_max_value_cols(df, num_cols = 5):
+    max_values = df.iloc[:,num_cols:].max()
     return max_values
 
-def find_min_value_cols(df):
-    min_values = df.iloc[:,5:].min()
+def find_min_value_cols(df, num_cols = 5):
+    min_values = df.iloc[:,num_cols:].min()
     return min_values
 
-def find_mean_cols(df):
-    mean_values = df.iloc[:,5:].mean()
+def find_mean_cols(df, num_cols = 5):
+    mean_values = df.iloc[:,num_cols:].mean()
     return mean_values
 
-def find_std_dev_cols(df):
-    std_dev_values = df.iloc[:,5:].std()
+def find_std_dev_cols(df, num_cols = 5):
+    std_dev_values = df.iloc[:,num_cols:].std()
     return std_dev_values
 
-def find_variance_cols(df):
-    variance_values = df.iloc[:,5:].var()
+def find_variance_cols(df, num_cols = 5):
+    variance_values = df.iloc[:,num_cols:].var()
     return variance_values
 
-def find_range_dataframe(df):
+def find_range_dataframe(df, num_cols = 5):
     range_df = pd.DataFrame()
-    max_values = find_max_value_cols(df)
-    min_values = find_min_value_cols(df)
-    mean = find_mean_cols(df)
-    std = find_std_dev_cols(df)
-    var = find_variance_cols(df)
+    max_values = find_max_value_cols(df, num_cols)
+    min_values = find_min_value_cols(df, num_cols)
+    mean = find_mean_cols(df, num_cols)
+    std = find_std_dev_cols(df, num_cols)
+    var = find_variance_cols(df, num_cols)
     range_values = max_values - min_values
     range_df = pd.concat([max_values, min_values, range_values, mean, std, var], axis=1)
     range_df.columns = ['max', 'min', 'range', 'mean', 'standard deviation', 'variance']
