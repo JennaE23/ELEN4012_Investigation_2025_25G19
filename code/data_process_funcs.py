@@ -57,7 +57,7 @@ def get_meta_dataframe(type_data, nr_qubit_sizes = 2,nr_machines = 2, nr_circuit
 
     df_array = []
     for i in range (nr_machines * nr_circuits * nr_qubit_sizes):
-        df = create_processed_df(bigDf['file_path'][i])
+        df = create_processed_df(bigDf.loc[i,'file_path'])
         # df.insert(loc=0, column='circuit_type', value=bigDf['circuit_type'][i])
         # df.insert(loc=0, column='backend', value=bigDf['backend'][i])
         # df.insert(loc=0, column='nr_qubits', value=bigDf['nr_qubits'][i])
@@ -81,7 +81,7 @@ def get_meta_dataframe_unprocessed(type_data, nr_qubit_sizes = 2,nr_machines = 2
 
     df_array = []
     for i in range (nr_machines * nr_circuits * nr_qubit_sizes):
-        df = create_unprocessed_df(bigDf['file_path'][i])
+        df = create_unprocessed_df(bigDf.loc[i,'file_path'])
         # df.insert(loc=0, column='circuit_type', value=bigDf['circuit_type'][i])
         # df.insert(loc=0, column='backend', value=bigDf['backend'][i])
         # df.insert(loc=0, column='nr_qubits', value=bigDf['nr_qubits'][i])
