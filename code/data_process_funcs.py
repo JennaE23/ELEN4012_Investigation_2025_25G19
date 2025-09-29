@@ -24,6 +24,7 @@ def create_processed_df(file_name, shots = 4096):
     totalErrors.rename("totalError", inplace=True)
 
     df2 = df2.div(totalErrors, axis=0)
+    df2.fillna(0, inplace=True)
     #df2['totalError'] = totalErrors
     #df2.insert(loc=0,  value=totalErrors)
     df2 = pd.concat([pd.DataFrame(totalErrors), df2], axis=1)
