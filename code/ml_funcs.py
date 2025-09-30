@@ -72,12 +72,14 @@ def get_cv_score(model, X_train,Y_train,folds = 5,ravel=True):
     print("Cross-validation accuracy: ",score)
     return score
 
-def std_split_fit_and_scores(dfp,model,test_size_ = 0.2):
+def std_split_fit_and_scores(dfp,model,test_size_ = 0.2,fold_ = 5,cv = True):
     X,Y = get_x_y(dfp)
 
     X_train, X_test, Y_train, Y_test = model_selection.train_test_split(
     X,Y,test_size=test_size_,shuffle = True,random_state=42)
 
     fitted_model, score = fit_and_get_score(model,X_train,Y_train,X_test,Y_test)
-    cv_score = get_cv_score(fitted_model,X_train,Y_train)
+    cv_score = np.nan
+    if cv:
+        cv_score = get_cv_score(fitted_model,X_train,Y_train,folds = fold_)
     return fitted_model, score, cv_score
