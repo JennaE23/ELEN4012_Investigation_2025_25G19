@@ -108,3 +108,4 @@ def add_experiment_type_column(meta_df):
 
     meta_df['experiment_type']=meta_df.loc[:,'file_path'].apply(get_experiment_type)
     return meta_df
+
