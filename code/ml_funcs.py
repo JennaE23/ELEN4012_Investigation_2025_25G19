@@ -61,8 +61,23 @@ def fit_and_get_score(model,X_train,Y_train,X_test,Y_test,ravel = True):
 
     return model_,Cscore
 
-def get_cv_score(model, X_train,Y_train,folds = 5,):
+def get_cv_score(model, X_train,Y_train,folds = 5,ravel=True):
     model_ = model
-    score = cross_val_score(model_, X_train, Y_train, cv=folds, scoring='accuracy')
+    if ravel:
+        Y_train_1d = Y_train.to_numpy()
+        Y_train_1d = Y_train_1d.ravel()
+    else:
+        Y_train_1d = Y_train
+    score = cross_val_score(model_, X_train, Y_train_1d, cv=folds, scoring='accuracy')
     print("Cross-validation accuracy: ",score)
     return score
+
+def std_split_fit_and_scores(dfp,model,test_size_ = 0.2):
+    X,Y = get_x_y(dfp)
+
+    X_train, X_test, Y_train, Y_test = model_selection.train_test_split(
+    X,Y,test_size=test_size_,shuffle = True,random_state=42)
+
+    fitted_model, score = fit_and_get_score(model,X_train,Y_train,X_test,Y_test)
+    cv_score = get_cv_score(fitted_model,X_train,Y_train)
+    return fitted_model, score, cv_score
