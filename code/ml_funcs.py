@@ -18,13 +18,14 @@ def features_to_int(df):
     label_encoder = LabelEncoder()
     df_['backend'] = label_encoder.fit_transform(df_['backend'])
     df_['circuit_type'] = pd.to_numeric(df_['circuit_type'], downcast='integer', errors='coerce')
+    df_['nr_qubits'] = pd.to_numeric(df_['nr_qubits'], downcast='integer', errors='coerce')
     return df_
 
 def drop_0th_col(nr_qubits,df):
     df_ = df
-    col_name = '0'*nr_qubits
-    df_.drop(col_name,axis=1)
-    return df_
+    col_name = np.strings.multiply('0',nr_qubits)[0]
+    df_ =df_.drop(col_name,axis=1)
+    return df_ 
 
 def total_Err_to_percent(df): #in place of scaling
     df_ = df
@@ -36,9 +37,10 @@ def apply_preprosessing(df, includes_exp_type = True):#assumes only 1 nr of qubi
     if includes_exp_type:
         df_ = df_.drop('experiment_type',axis = 1)
     df_ = features_to_int(df_)
-    df_ = drop_0th_col(df_[0,'nr_qubits'],df_)
+    df_ = drop_0th_col(df_[['nr_qubits']].iloc[0],df_)
     df_ = df_.drop('nr_qubits', axis = 1)
     df_ = total_Err_to_percent(df_)
+    return df_
 
 def get_x_y(df_q):
     Y = df_q[['backend']]
