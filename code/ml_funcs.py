@@ -6,6 +6,7 @@ from sklearn import model_selection, datasets, svm
 from sklearn.svm import SVC
 from sklearn.preprocessing import LabelEncoder
 from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
 
 import data_process_funcs
 import meta_dataframe_functions
@@ -42,9 +43,12 @@ def apply_preprosessing(df, includes_exp_type = True):#assumes only 1 nr of qubi
     df_ = total_Err_to_percent(df_)
     return df_
 
-def get_x_y(df_q):
+def get_x_y(df_q,scale= True):
     Y = df_q[['backend']]
     X = df_q.drop('backend',axis = 1)
+    if scale:
+        scaler = StandardScaler()
+        X = scaler.fit_transform(X)
     return X,Y
 
 def fit_and_get_score(model,X_train,Y_train,X_test,Y_test,ravel = True):
@@ -72,8 +76,8 @@ def get_cv_score(model, X_train,Y_train,folds = 5,ravel=True):
     print("Cross-validation accuracy: ",score)
     return score
 
-def std_split_fit_and_scores(dfp,model,test_size_ = 0.2,fold_ = 5,cv = True):
-    X,Y = get_x_y(dfp)
+def std_split_fit_and_scores(dfp,model,scale = True, test_size_ = 0.2,fold_ = 5,cv = True):
+    X,Y = get_x_y(dfp,scale)
 
     X_train, X_test, Y_train, Y_test = model_selection.train_test_split(
     X,Y,test_size=test_size_,shuffle = True,random_state=42)
