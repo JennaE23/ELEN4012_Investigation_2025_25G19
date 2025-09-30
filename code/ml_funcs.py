@@ -31,8 +31,10 @@ def total_Err_to_percent(df): #in place of scaling
     df_['totalError']= df_['totalError'].div(4096)
     return df_
 
-def apply_preprosessing(df):#assumes only 1 nr of qubits
+def apply_preprosessing(df, includes_exp_type = True):#assumes only 1 nr of qubits
     df_ = df
+    if includes_exp_type:
+        df_ = df_.drop('experiment_type',axis = 1)
     df_ = features_to_int(df_)
     df_ = drop_0th_col(df_[0,'nr_qubits'],df_)
     df_ = df_.drop('nr_qubits', axis = 1)
@@ -43,7 +45,7 @@ def get_x_y(df_q):
     X = df_q.drop('backend',axis = 1)
     return X,Y
 
-def fit_and_get_score_(model,X_train,Y_train,X_test,Y_test,ravel = True):
+def fit_and_get_score(model,X_train,Y_train,X_test,Y_test,ravel = True):
     model_ = model
     if ravel:
         Y_train_1d = Y_train.to_numpy()
