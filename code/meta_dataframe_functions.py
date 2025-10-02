@@ -45,11 +45,10 @@ def add_qfolder_to_df(df,folder_dir,backends_,nr_qubits):
             add_file_to_meta_df(df,file_name,folder_dir)
 
 def add_qfolder_to_df_generic(df,folder_dir,backends_,nr_qubits):
-    for backend in backends_:
-        backend_name = "fake_genericV2"
-        file_names = data_extract_funcs.make_file_names(backend_name,nr_qubits)
-        for file_name in file_names:
-            add_file_to_meta_df(df,file_name,folder_dir)
+    backend_name = backends_
+    file_names = data_extract_funcs.make_file_names(backend_name,nr_qubits)
+    for file_name in file_names:
+        add_file_to_meta_df(df,file_name,folder_dir)
 
 def add_qfolders(df,backends,folders):
     for folder in folders:
@@ -71,7 +70,7 @@ def load_meta_df(meta_df,experiment_type):#Hardware,Simulation,Refreshed_Simulat
     dir_Refr_Sims = ["../Refreshed_Simulated_results/4q/","../Refreshed_Simulated_results/8q/","../Refreshed_Simulated_results/16q/"]
     
     service = QiskitRuntimeService()
-    generic_backend = [GenericBackendV2(4),GenericBackendV2(8),GenericBackendV2(16)]
+    
     fake_backends = [FakeTorino(), FakeFez(), FakeMarrakesh(),FakeBrisbane()]
     hardware_backends = [ service.backend('ibm_torino'),service.backend('ibm_brisbane')]
     backends_ =[]
@@ -88,7 +87,7 @@ def load_meta_df(meta_df,experiment_type):#Hardware,Simulation,Refreshed_Simulat
             backends_ = [FakeTorino(),FakeBrisbane()]
         case 'Generic_Simulation':
             dir_ = dir_Sims
-            backends_ = generic_backend
+            backends_ = "fake_genericV2"
             add_qfolders_generic(meta_df, backends_,dir_)
             return
 
