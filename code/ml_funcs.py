@@ -20,10 +20,13 @@ from itertools import combinations
 
 def features_to_int(df):
     df_ = df
-    label_encoder = LabelEncoder()
-    df_['backend'] = label_encoder.fit_transform(df_['backend'])
     df_['circuit_type'] = pd.to_numeric(df_['circuit_type'], downcast='integer', errors='coerce')
     df_['nr_qubits'] = pd.to_numeric(df_['nr_qubits'], downcast='integer', errors='coerce')
+    return df_
+def label_encode_backend(df):
+    df_ = df
+    label_encoder = LabelEncoder()
+    df_['backend'] = label_encoder.fit_transform(df_['backend'])
     return df_
 
 def drop_0th_col(nr_qubits,df):
@@ -37,10 +40,12 @@ def total_Err_to_percent(df): #in place of scaling
     df_['totalError']= df_['totalError'].div(4096)
     return df_
 
-def apply_preprosessing(df, drop_exp_type = True):#assumes only 1 nr of qubits
+def apply_preprosessing(df, drop_exp_type = True,label_encode = True):#assumes only 1 nr of qubits
     df_ = df
     if drop_exp_type:
         df_ = df_.drop('experiment_type',axis = 1)
+    if label_encode:
+        df_ = label_encode_backend(df_)
     df_ = features_to_int(df_)
     df_ = drop_0th_col(df_[['nr_qubits']].iloc[0],df_)
     df_ = df_.drop('nr_qubits', axis = 1)
@@ -227,7 +232,9 @@ def get_accuracies_for_comparison(model, tr_val_dfp, tr_label,test_dfps, test_df
     labels =[]
     labels = labels +test_dfp_labels
     labels.insert(0,"self_score")
-   
+    tr_val_dfp = apply_preprosessing(tr_val_dfp)
+    
+
     X_tr_val,Y_tr_val = get_x_y(tr_val_dfp)
     X_train_self, X_test_self, Y_train_self, Y_test_self = model_selection.train_test_split(
     X_tr_val,Y_tr_val,test_size=0.2,shuffle = True,random_state=42)
@@ -243,6 +250,7 @@ def get_accuracies_for_comparison(model, tr_val_dfp, tr_label,test_dfps, test_df
     test_scores.append(self_score)
 
     for dfp in test_dfps:
+        dfp = apply_preprosessing(dfp)
         X,Y = get_x_y(dfp)
         test_score = fitted_model_full.score(X, Y) #check score vs accurcy_score
         test_scores.append(test_score)
