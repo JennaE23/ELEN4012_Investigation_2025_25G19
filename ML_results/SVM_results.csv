@@ -1,0 +1,2 @@
+nr_qubits,machines,tr&v exp_type,tr&v circuits,test exp_type,test circuits,preprocess settings,kernal,param settings,accuracy,cv_1,cv_2,cv_3,cv_4,cv_5
+8,1100,Hardware,111,Hardware,111,0,linear,0,0.9916666666666667,0.9895833333333334,1.0,0.9895833333333334,0.9895833333333334,1.0

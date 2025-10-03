@@ -14,6 +14,8 @@ import meta_dataframe_functions
 from sklearn.model_selection import cross_val_score
 
 from csv import DictWriter
+import itertools
+from itertools import combinations
 
 
 def features_to_int(df):
@@ -35,9 +37,9 @@ def total_Err_to_percent(df): #in place of scaling
     df_['totalError']= df_['totalError'].div(4096)
     return df_
 
-def apply_preprosessing(df, includes_exp_type = True):#assumes only 1 nr of qubits
+def apply_preprosessing(df, drop_exp_type = True):#assumes only 1 nr of qubits
     df_ = df
-    if includes_exp_type:
+    if drop_exp_type:
         df_ = df_.drop('experiment_type',axis = 1)
     df_ = features_to_int(df_)
     df_ = drop_0th_col(df_[['nr_qubits']].iloc[0],df_)
@@ -45,10 +47,10 @@ def apply_preprosessing(df, includes_exp_type = True):#assumes only 1 nr of qubi
     df_ = total_Err_to_percent(df_)
     return df_
 
-def get_x_y(df_q,scale= True):
+def get_x_y(df_q,apply_scaler= True):
     Y = df_q[['backend']]
     X = df_q.drop('backend',axis = 1)
-    if scale:
+    if apply_scaler:
         scaler = StandardScaler()
         X = scaler.fit_transform(X)
     return X,Y
@@ -91,6 +93,8 @@ def std_split_fit_and_scores(dfp,model,scale = True, test_size_ = 0.2,fold_ = 5,
         cv_score = get_cv_score(fitted_model,X_train,Y_train,folds = fold_)
     return fitted_model, score, cv_score
 
+#/////////////////////////////////////////////////////////////
+#csv things
 def create_ml_results_csv(ml_alg, dir = '../ML_Results/'):
     general_fields = ['nr_qubits','machines','tr&v exp_type','tr&v circuits', 'test exp_type','test circuits','preprocess settings']
     score_fields = ['accuracy','cv_1','cv_2','cv_3','cv_4','cv_5']
@@ -182,3 +186,64 @@ def get_circuit_binary_from_df(df, all_circuits = ['1','2','3']):
     binary_list = [1 if circuit in circuit_list else 0 for circuit in all_circuits]
     binary = "".join(str(x) for x in binary_list)
     return binary
+
+#/////////////////////////////////////////////////
+#comparison test things
+def split_into_circuits(df_all_circuits):
+    circuits = df_all_circuits.groupby('circuit_type')
+    circuit_1 = circuits.get_group(1)
+    circuit_2 = circuits.get_group(2)
+    circuit_3 = circuits.get_group(3)
+    return [circuit_1,circuit_2,circuit_3]
+
+def generate_combos(individual_dfps,include_combined=False):
+    nr_indiv = len(individual_dfps)
+    combos =[]
+    
+    for i in range(nr_indiv):
+        combo = individual_dfps
+        combo.insert(0, combo.pop(i))
+        if include_combined:
+            #make elements joined as pairs
+            pair_dfs = make_pairs(combo[1:])
+            #append the paired elements
+            combo = combo+ pair_dfs
+        combos.append(combo)
+
+    return combos
+
+def make_pairs(indiv_dfs):
+    pairs = list(combinations(indiv_dfs, 2))
+    pair_dfs = []
+    for pair in pairs:
+        df = pd.concat(pair)
+        pair_dfs.append(df)
+
+    return pair_dfs
+
+def get_accuracies_for_comparison(model, tr_val_dfp, tr_label,test_dfps, test_dfp_labels, to_print = False):
+    
+    test_scores = []
+    labels =[]
+    labels = labels +test_dfp_labels
+    labels.insert(0,"self_score")
+   
+    X_tr_val,Y_tr_val = get_x_y(tr_val_dfp)
+    X_train_self, X_test_self, Y_train_self, Y_test_self = model_selection.train_test_split(
+    X_tr_val,Y_tr_val,test_size=0.2,shuffle = True,random_state=42)
+    fitted_model, self_score = fit_and_get_score(
+    model,X_train_self,Y_train_self,X_test_self,Y_test_self)
+
+    test_scores.append(self_score)
+
+    for dfp in test_dfps:
+        X,Y = get_x_y(dfp)
+        test_score = fitted_model.score(X, Y) #check score vs accurcy_score
+        test_scores.append(test_score)
+
+    if to_print:
+        print("Trained on ",tr_label)
+        for i in range(len(test_scores)):
+            print("test on ",labels[i],":",test_scores[i])
+
+    return test_scores ,labels
