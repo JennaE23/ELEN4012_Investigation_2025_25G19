@@ -232,7 +232,6 @@ def get_accuracies_for_comparison(model, tr_val_dfp, tr_label,test_dfps, test_df
     labels =[]
     labels = labels +test_dfp_labels
     labels.insert(0,"self_score")
-    tr_val_dfp = apply_preprosessing(tr_val_dfp)
     
 
     X_tr_val,Y_tr_val = get_x_y(tr_val_dfp)
@@ -250,7 +249,7 @@ def get_accuracies_for_comparison(model, tr_val_dfp, tr_label,test_dfps, test_df
     test_scores.append(self_score)
 
     for dfp in test_dfps:
-        dfp = apply_preprosessing(dfp)
+        
         X,Y = get_x_y(dfp)
         test_score = fitted_model_full.score(X, Y) #check score vs accurcy_score
         test_scores.append(test_score)
