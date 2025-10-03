@@ -51,7 +51,7 @@ def get_x_y(df_q,scale= True):
         X = scaler.fit_transform(X)
     return X,Y
 
-def fit_and_get_score(model,X_train,Y_train,X_test,Y_test,ravel = True):
+def fit_and_get_score(model,X_train,Y_train,X_test,Y_test,ravel = True, to_print = False):
     model_ = model
     if ravel:
         Y_train_1d = Y_train.to_numpy()
@@ -61,7 +61,8 @@ def fit_and_get_score(model,X_train,Y_train,X_test,Y_test,ravel = True):
 
     model_.fit(X_train, Y_train_1d)
     Cscore = model_.score(X_test, Y_test)
-    print("Accuracy:", Cscore)
+    if to_print:
+        print("Accuracy:", Cscore)
 
     return model_,Cscore
 
