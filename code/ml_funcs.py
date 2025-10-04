@@ -40,6 +40,11 @@ def total_Err_to_percent(df): #in place of scaling
     df_['totalError']= df_['totalError'].div(4096)
     return df_
 
+def apply_custom_scaling(df):
+    df_ = df
+    df_['circuit_type'] = df_['circuit_type'].div(3)
+    return df_
+
 def apply_preprosessing(df, drop_exp_type = True,label_encode = True):#assumes only 1 nr of qubits
     df_ = df
     if drop_exp_type:
@@ -50,14 +55,12 @@ def apply_preprosessing(df, drop_exp_type = True,label_encode = True):#assumes o
     df_ = drop_0th_col(df_[['nr_qubits']].iloc[0],df_)
     df_ = df_.drop('nr_qubits', axis = 1)
     df_ = total_Err_to_percent(df_)
+    df_ = apply_custom_scaling(df_)
     return df_
 
-def get_x_y(df_q,apply_scaler= True):
+def get_x_y(df_q):
     Y = df_q[['backend']]
     X = df_q.drop('backend',axis = 1)
-    if apply_scaler:
-        scaler = StandardScaler()
-        X = scaler.fit_transform(X)
     return X,Y
 
 def fit_and_get_score(model,X_train,Y_train,X_test,Y_test,ravel = True, to_print = False):
