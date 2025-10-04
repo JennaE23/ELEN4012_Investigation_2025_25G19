@@ -25,3 +25,7 @@ nr_qubits,machines,tr&v exp_type,tr&v circuits,test exp_type,test circuits,prepr
 8,1100,Hardware,100,Hardware,100,0,15,0,1.0,1.0,1.0,1.0,1.0,1.0
 8,1100,Hardware,100,Hardware,000,0,15,0,1.0,nan,nan,nan,nan,nan
 8,1100,Hardware,100,Hardware,000,0,15,0,0.77,nan,nan,nan,nan,nan
+8,1100,Hardware,111,Hardware,111,0,15,0,1.0,1.0,1.0,1.0,1.0,1.0
+8,1100,Hardware,100,Hardware,100,0,15,0,1.0,1.0,1.0,1.0,1.0,1.0
+8,1100,Hardware,100,Hardware,010,0,15,0,1.0,nan,nan,nan,nan,nan
+8,1100,Hardware,100,Hardware,001,0,15,0,0.77,nan,nan,nan,nan,nan
