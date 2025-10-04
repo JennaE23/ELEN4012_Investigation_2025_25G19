@@ -231,22 +231,23 @@ def get_accuracies_for_comparison(model, tr_val_dfp, tr_label,test_dfps, test_df
     test_scores = []
     labels =[]
     labels = labels +test_dfp_labels
-    labels.insert(0,"self_score")
-    
 
-    X_tr_val,Y_tr_val = get_x_y(tr_val_dfp)
-    X_train_self, X_test_self, Y_train_self, Y_test_self = model_selection.train_test_split(
-    X_tr_val,Y_tr_val,test_size=0.2,shuffle = True,random_state=42)
     if get_self_score:
+        labels.insert(0,"self_score")
+        X_tr_val,Y_tr_val = get_x_y(tr_val_dfp)
+
+        X_train_self, X_test_self, Y_train_self, Y_test_self = model_selection.train_test_split(
+        X_tr_val,Y_tr_val,test_size=0.2,shuffle = True,random_state=42)
+
         fitted_model, self_score = fit_and_get_score(
         model,X_train_self,Y_train_self,X_test_self,Y_test_self)
+
+        test_scores.append(self_score)
     
     Y_tr_val_1d = Y_tr_val.to_numpy()
     Y_tr_val_1d = Y_tr_val_1d.ravel()
 
     fitted_model_full = model.fit(X_tr_val,Y_tr_val_1d)
-
-    test_scores.append(self_score)
 
     for dfp in test_dfps:
         
