@@ -23,10 +23,11 @@ def features_to_int(df):
     df_['circuit_type'] = pd.to_numeric(df_['circuit_type'], downcast='integer', errors='coerce')
     df_['nr_qubits'] = pd.to_numeric(df_['nr_qubits'], downcast='integer', errors='coerce')
     return df_
+
 def label_encode_backend(df):
     df_ = df
-    label_encoder = LabelEncoder()
-    df_['backend'] = label_encoder.fit_transform(df_['backend'])
+    labels = {'brisbane':0, 'fez':1, 'marakesh':2,'torino':3}# alphabetical order
+    df['backend'] = df['backend'].map(labels)
     return df_
 
 def drop_0th_col(nr_qubits,df):
@@ -234,10 +235,11 @@ def get_accuracies_for_comparison(model, tr_val_dfp, tr_label,test_dfps, test_df
     test_scores = []
     labels =[]
     labels = labels +test_dfp_labels
+    X_tr_val,Y_tr_val = get_x_y(tr_val_dfp)
 
     if get_self_score:
         labels.insert(0,"self_score")
-        X_tr_val,Y_tr_val = get_x_y(tr_val_dfp)
+        
 
         X_train_self, X_test_self, Y_train_self, Y_test_self = model_selection.train_test_split(
         X_tr_val,Y_tr_val,test_size=0.2,shuffle = True,random_state=42)
