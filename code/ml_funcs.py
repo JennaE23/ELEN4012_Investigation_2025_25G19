@@ -7,6 +7,7 @@ from sklearn.svm import SVC
 from sklearn.preprocessing import LabelEncoder
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsClassifier
 
 import data_process_funcs
 import meta_dataframe_functions
@@ -79,7 +80,7 @@ def fit_and_get_score(model,X_train,Y_train,X_test,Y_test,ravel = True, to_print
 
     return model_,Cscore
 
-def get_cv_score(model, X_train,Y_train,folds = 5,ravel=True):
+def get_cv_score(model, X_train,Y_train,folds = 5,ravel=True, to_print = False):
     model_ = model
     if ravel:
         Y_train_1d = Y_train.to_numpy()
@@ -87,11 +88,12 @@ def get_cv_score(model, X_train,Y_train,folds = 5,ravel=True):
     else:
         Y_train_1d = Y_train
     score = cross_val_score(model_, X_train, Y_train_1d, cv=folds, scoring='accuracy')
-    print("Cross-validation accuracy: ",score)
+    if to_print:
+        print("Cross-validation accuracy: ",score)
     return score
 
-def std_split_fit_and_scores(dfp,model,scale = True, test_size_ = 0.2,fold_ = 5,cv = True):
-    X,Y = get_x_y(dfp,scale)
+def std_split_fit_and_scores(dfp,model, test_size_ = 0.2,fold_ = 5,cv = True):
+    X,Y = get_x_y(dfp)
 
     X_train, X_test, Y_train, Y_test = model_selection.train_test_split(
     X,Y,test_size=test_size_,shuffle = True,random_state=42)
@@ -192,9 +194,112 @@ def get_circuit_binary(circuit_list, all_circuits = ['1','2','3']):
 
 def get_circuit_binary_from_df(df, all_circuits = ['1','2','3']):
     circuit_list = df['circuit_type'].unique().astype(str).tolist()
+    print(circuit_list)
+    circuit_list = [str(i) for i in circuit_list]  # Ensure all elements are strings
     binary_list = [1 if circuit in circuit_list else 0 for circuit in all_circuits]
     binary = "".join(str(x) for x in binary_list)
     return binary
+
+#/////////////////////////////////////////////////////////////
+# Big Function + baby funcs
+def preprocess_dfs(dfs, preprocessing_settings):
+    # Example preprocessing based on settings
+    # print("Preprocessing settings:", preprocessing_settings)
+    processed_dfs = []
+    for df in dfs:
+        match preprocessing_settings:
+            case 0:
+                df_processed = apply_preprosessing(df) 
+            case _:
+                raise ValueError("Unsupported preprocessing setting")
+
+        processed_dfs.append(df_processed)
+        # Add more preprocessing options as needed
+    return processed_dfs
+
+def KNN_model_setup(base_parameter, param_settings):
+    match param_settings:
+        case 0:
+            model = KNeighborsClassifier(n_neighbors=base_parameter)
+        case _:
+            raise ValueError("Unsupported parameter setting for KNN")
+    return model
+
+def SVM_model_setup(base_parameter, param_settings):
+    match param_settings:
+        case 0:
+            model = svm.SVC(kernel=base_parameter)
+        case _:
+            raise ValueError("Unsupported parameter setting for SVM")
+    return model
+
+def get_file_name_and_fields(ml_algorithm, dir = '../ML_Results/'):
+    general_fields = ['nr_qubits','machines','tr&v exp_type','tr&v circuits', 'test exp_type','test circuits','preprocess settings']
+    score_fields = ['accuracy','cv_1','cv_2','cv_3','cv_4','cv_5']
+    match ml_algorithm:
+        case 'SVM':
+            file_name = dir + 'SVM_results.csv'
+            ml_param_fields = ['kernal', 'param settings']
+        case 'KNN':
+            file_name = dir + 'KNN_results.csv'
+            ml_param_fields = ['n_neighbors', 'param settings']
+        case _:
+            raise ValueError("Unsupported ML algorithm")
+    fields = general_fields + ml_param_fields + score_fields
+    return file_name, fields
+
+def run_and_print_ml_results(train_df,test_dfs,ml_algorithm,base_parameter, dir = '../ML_Results/', get_self_score = True, preprocessing_settings = 0, param_settings = 0, cross_validation = False):
+    # Get CSV setup
+    nr_qubits = train_df['nr_qubits'].iloc[0]
+    machines = get_machine_binary_from_df(train_df)
+    tr_val_circuits = get_circuit_binary_from_df(train_df)
+    tr_val_exp_type = train_df['experiment_type'].iloc[0]
+    filename, fields = get_file_name_and_fields(ml_algorithm, dir)
+    if len(test_dfs) != 0:
+        test_exp_type = test_dfs[0]['experiment_type'].iloc[0]      #Assumes all test dfs are of the same type
+    
+    # Apply preprocessing
+    processed_dfs = preprocess_dfs([train_df] + test_dfs, preprocessing_settings)
+    train_df_processed = processed_dfs[0]
+    test_dfs_processed = processed_dfs[1:]
+
+    # Prepare Model
+    match ml_algorithm:
+        case 'KNN':
+            model = KNN_model_setup(base_parameter, param_settings)
+        case 'SVM':
+            model = SVM_model_setup(base_parameter, param_settings)
+        case _:
+            raise ValueError("Unsupported ML algorithm")
+        
+    if get_self_score:
+        fitted_model, score, cv_scores = std_split_fit_and_scores\
+        (train_df_processed, model, cv = cross_validation)
+        general_fields = get_general_fields(nr_qubits, machines, tr_val_exp_type, tr_val_circuits, tr_val_exp_type, tr_val_circuits, preprocessing_settings)
+        ml_fields = get_ml_fields(ml_algorithm, model.get_params(), param_settings)
+        results_fields = get_results_fields(score, cv_scores)
+        ml_results_to_csv(general_fields, ml_fields, results_fields, filename, fields)
+
+
+    # Fitted model
+    X_train, Y_train = get_x_y(train_df_processed)
+    Y_train = Y_train.to_numpy().ravel()
+    fitted_model = model.fit(X_train, Y_train)
+    # fitted_model = model.fit(X_train, Y_train.values.ravel())
+    
+    for test_df_processed in test_dfs_processed:
+        X_test, Y_test = get_x_y(test_df_processed)
+        test_score = fitted_model.score(X_test, Y_test)
+        
+        test_circuits = get_circuit_binary_from_df(test_df_processed)
+        print(test_circuits)
+        # test_exp_type = test_df_processed['experiment_type'].iloc[0]
+
+        general_fields = get_general_fields(nr_qubits, machines, tr_val_exp_type, tr_val_circuits, test_exp_type, test_circuits, preprocessing_settings)
+        ml_fields = get_ml_fields(ml_algorithm, model.get_params(), param_settings)
+        results_fields = get_results_fields(test_score)
+        ml_results_to_csv(general_fields, ml_fields, results_fields, filename, fields)
+
 
 #/////////////////////////////////////////////////
 #comparison test things
