@@ -194,7 +194,7 @@ def get_circuit_binary(circuit_list, all_circuits = ['1','2','3']):
 
 def get_circuit_binary_from_df(df, all_circuits = ['1','2','3']):
     circuit_list = df['circuit_type'].unique().astype(str).tolist()
-    print(circuit_list)
+    # print(circuit_list)
     circuit_list = [str(i) for i in circuit_list]  # Ensure all elements are strings
     binary_list = [1 if circuit in circuit_list else 0 for circuit in all_circuits]
     binary = "".join(str(x) for x in binary_list)
@@ -258,10 +258,11 @@ def run_and_print_ml_results(train_df,test_dfs,ml_algorithm,base_parameter, dir 
     if len(test_dfs) != 0:
         test_exp_type = test_dfs[0]['experiment_type'].iloc[0]      #Assumes all test dfs are of the same type
     
-    # Apply preprocessing
-    processed_dfs = preprocess_dfs([train_df] + test_dfs, preprocessing_settings)
-    train_df_processed = processed_dfs[0]
-    test_dfs_processed = processed_dfs[1:]
+    # # Apply preprocessing
+    # processed_dfs = preprocess_dfs([train_df] + test_dfs, preprocessing_settings)
+    # train_df_processed = processed_dfs[0]
+    # test_dfs_processed = processed_dfs[1:]
+    train_df_processed = preprocess_dfs([train_df], preprocessing_settings)[0]
 
     # Prepare Model
     match ml_algorithm:
@@ -287,11 +288,12 @@ def run_and_print_ml_results(train_df,test_dfs,ml_algorithm,base_parameter, dir 
     fitted_model = model.fit(X_train, Y_train)
     # fitted_model = model.fit(X_train, Y_train.values.ravel())
     
-    for test_df_processed in test_dfs_processed:
+    for test_df in test_dfs:
+        test_df_processed = preprocess_dfs([test_df], preprocessing_settings)[0]
         X_test, Y_test = get_x_y(test_df_processed)
         test_score = fitted_model.score(X_test, Y_test)
         
-        test_circuits = get_circuit_binary_from_df(test_df_processed)
+        test_circuits = get_circuit_binary_from_df(test_df)
         print(test_circuits)
         # test_exp_type = test_df_processed['experiment_type'].iloc[0]
 
