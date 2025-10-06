@@ -315,8 +315,9 @@ def split_into_circuits(df_all_circuits):
 def generate_combos(individual_dfps,include_combined=False):
     nr_indiv = len(individual_dfps)
     combos =[]
+    combos.append(individual_dfps)
     
-    for i in range(nr_indiv):
+    for i in range(1,nr_indiv):
         combo = individual_dfps
         combo.insert(0, combo.pop(i))
         if include_combined:
