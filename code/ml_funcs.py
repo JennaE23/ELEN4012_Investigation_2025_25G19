@@ -322,7 +322,7 @@ def generate_combos(individual_dfps,include_combined=False):
         combo.insert(0, combo.pop(i))
         if include_combined:
             #make elements joined as pairs
-            pair_dfs = make_pairs(combo[1:])
+            pair_dfs = make_pairs(combo[1:3])
             #append the paired elements
             combo = combo+ pair_dfs
         combos.append(combo)
@@ -330,10 +330,10 @@ def generate_combos(individual_dfps,include_combined=False):
     return combos
 
 def make_pairs(indiv_dfs):
-    pairs = list(combinations(indiv_dfs, 2))
+    pairs = list(combinations(indiv_dfs.copy(), 2))
     pair_dfs = []
     for pair in pairs:
-        df = pd.concat(pair)
+        df = pd.concat(pair[:])
         pair_dfs.append(df)
 
     return pair_dfs
