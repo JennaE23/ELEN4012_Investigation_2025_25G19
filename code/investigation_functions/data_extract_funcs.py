@@ -113,7 +113,7 @@ def get_circuit_type_results(results_list, circuit_type):#circuit_type is 1,2 or
 def sim_results_to_csv(nr_qubits,file_name_array,results_list,create_csvs_,dir_):
     fields_ = create_fields(nr_qubits)
     file_name_array2 =add_dir_to_filenames(dir_,file_name_array)
-    fields_ = create_fields(nr_qubits)
+    #fields_ = create_fields(nr_qubits)
     if create_csvs_:
         create_csvs(file_name_array2,fields_)
     for i in range(len(file_name_array)):
