@@ -8,11 +8,12 @@ from qiskit.providers.fake_provider import GenericBackendV2
 from qiskit_ibm_runtime import QiskitRuntimeService
 
 import datetime
+import config
 
-backends = ['ibm_torino','ibm_brisbane']#,'ibm_kingston','ibm_pittsburgh']
-nrs_of_qubits = [4,8,16,32]
+#backends = ['ibm_torino','ibm_brisbane']#,'ibm_kingston','ibm_pittsburgh']
+# nrs_of_qubits = [4,8,16,32]
 circuit_types = ['Cnot','Cnot_X','Swap'] #
-service = QiskitRuntimeService()
+
 
 def make_set_of_3(nr_qubits):
     set_of_3 = []
@@ -71,7 +72,7 @@ def run_job(backend_, circuit_set):
     pm = generate_preset_pass_manager(optimization_level=0, backend=backend_)
     isa_circuits = pm.run(circuit_set)
     sampler = Sampler(mode=backend_)
-
+    sampler.options.environment.job_tags= config.tags
     #run job
     job = sampler.run(isa_circuits)
 
@@ -90,7 +91,8 @@ def run_sim(fake_backend,qc_set, nr_runs):
 
     return results
 
-def send_set_to_backends(nr_qubits):
+def send_set_to_backends(nr_qubits,backends,service_):
+    service = service_
     #make set of circuits:
     qc_set = make_set_of_3(nr_qubits)
     job_IDs = []
@@ -100,9 +102,9 @@ def send_set_to_backends(nr_qubits):
         job_IDs.append(run_job(service.backend(backend_name),qc_set))
     return job_IDs
 
-def send_and_record(nr_qubits,file_name):
+def send_and_record(nr_qubits,file_name,backends,service_):
     current_time = datetime.datetime.now().isoformat()
-    lines = send_set_to_backends(nr_qubits)
+    lines = send_set_to_backends(nr_qubits,backends,service_)
     lines.append(current_time)
     text = "\n".join(lines) + "\n"
     with open(file_name, "a", encoding="utf-8") as f:
