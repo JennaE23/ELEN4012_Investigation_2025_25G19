@@ -11,7 +11,7 @@ def get_and_save_sim_results(nr_qubits,fake_backend,nr_runs,output_file_names,cr
 
 def run_sims_for_all_backends(fake_backends, nr_qubits,nr_runs,dir_,create_csvs_):
     for fake_backend in fake_backends:
-        file_names = data_extract_funcs.make_file_names(fake_backend,str(nr_qubits))
+        file_names = data_extract_funcs.make_file_names(str(fake_backend.backend_name),str(nr_qubits))
         get_and_save_sim_results(nr_qubits,fake_backend,1,file_names,create_csvs_,dir_)
         for i in range(nr_runs-1):
             get_and_save_sim_results(nr_qubits,fake_backend,1,file_names,False,dir_)
