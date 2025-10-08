@@ -333,3 +333,5 @@ nr_qubits,machines,tr&v exp_type,tr&v circuits,test exp_type,test circuits,prepr
 4,1100,Refreshed_Simulation,111,Refreshed_Simulation,111,0,14,1,1.0,1.0,1.0,1.0,1.0,1.0
 4,1100,Refreshed_Simulation,111,Hardware,111,0,14,1,0.43567251461988304,nan,nan,nan,nan,nan
 4,1100,Refreshed_Simulation,111,Simulation,111,0,14,1,0.485,nan,nan,nan,nan,nan
+4,1110,Sim and Refreshed,111,Sim and Refreshed,111,0,14,1,0.9333333333333333,0.9131944444444444,0.9201388888888888,0.9166666666666666,0.8958333333333334,0.9027777777777778
+4,1110,Sim and Refreshed,111,Hardware,111,0,14,1,0.3304093567251462,nan,nan,nan,nan,nan

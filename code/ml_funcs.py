@@ -221,6 +221,8 @@ def KNN_model_setup(base_parameter, param_settings):
     match param_settings:
         case 0:
             model = KNeighborsClassifier(n_neighbors=base_parameter)
+        case 1:
+            model = KNeighborsClassifier(n_neighbors=base_parameter, weights="distance", p=1)
         case _:
             raise ValueError("Unsupported parameter setting for KNN")
     return model
@@ -229,14 +231,6 @@ def SVM_model_setup(base_parameter, param_settings):
     match param_settings:
         case 0:
             model = svm.SVC(kernel=base_parameter)
-        case 1:
-            model = svm.SVC(C = 450,kernel = 'poly',coef0 = 0.5)
-        case 2:
-            model = svm.SVC(kernel='poly', degree = 5)
-        case 3:
-            model = svm.SVC(C = 450,kernel = 'rbf')
-        case 4:
-            model = svm.SVC(C = 450, kernel='poly', degree = 5)
         case _:
             raise ValueError("Unsupported parameter setting for SVM")
     return model
