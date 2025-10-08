@@ -94,12 +94,12 @@ def results_to_csv(csv_file_names, fields, job_id_file, service_ = QiskitRuntime
                 writer.writerows(rows)
             count2 += 1
 
-def results_to_csv2(nr_qubits,dir_,file_name_array,job_ids_file,service =QiskitRuntimeService(),create_csvs_ = False):
+def results_to_csv2(nr_qubits,dir_,file_name_array,job_ids_file,service_ =QiskitRuntimeService(),create_csvs_ = False):
     file_name_array2 =add_dir_to_filenames(dir_,file_name_array)
     fields_ = create_fields(nr_qubits)
     if create_csvs_:
         create_csvs(file_name_array2,fields_)
-    results_to_csv(file_name_array2,fields_,job_ids_file,service)
+    results_to_csv(file_name_array2,fields_,job_ids_file,service_)
 
 ####################################################################
 #For Simulated data:
