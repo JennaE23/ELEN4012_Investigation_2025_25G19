@@ -19,7 +19,7 @@ from qiskit_ibm_runtime.fake_provider import FakeFez, FakeMarrakesh
 
 # import circuit_funcs
 # import data_extract_funcs
-import sim_function
+from investigation_functions import sim_function
 
 def make_file_names(backend_name,is_sim,nr_qubits):
     base_name = nr_qubits +"q_"
