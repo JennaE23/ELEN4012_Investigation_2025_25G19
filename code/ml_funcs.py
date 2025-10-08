@@ -255,8 +255,8 @@ def run_and_print_ml_results(train_df,test_dfs,ml_algorithm,base_parameter, dir 
     tr_val_circuits = get_circuit_binary_from_df(train_df)
     tr_val_exp_type = train_df['experiment_type'].iloc[0]
     filename, fields = get_file_name_and_fields(ml_algorithm, dir)
-    if len(test_dfs) != 0:
-        test_exp_type = test_dfs[0]['experiment_type'].iloc[0]      #Assumes all test dfs are of the same type
+    # if len(test_dfs) != 0:
+    #     test_exp_type = test_dfs[0]['experiment_type'].iloc[0]      #Assumes all test dfs are of the same type
     
     # # Apply preprocessing
     # processed_dfs = preprocess_dfs([train_df] + test_dfs, preprocessing_settings)
@@ -298,7 +298,7 @@ def run_and_print_ml_results(train_df,test_dfs,ml_algorithm,base_parameter, dir 
         
         test_circuits = get_circuit_binary_from_df(test_df)
         #print(test_circuits)
-        # test_exp_type = test_df_processed['experiment_type'].iloc[0]
+        test_exp_type = test_df['experiment_type'].iloc[0]
 
         general_fields = get_general_fields(nr_qubits, machines, tr_val_exp_type, tr_val_circuits, test_exp_type, test_circuits, preprocessing_settings)
         ml_fields = get_ml_fields(ml_algorithm, model.get_params(), param_settings)
