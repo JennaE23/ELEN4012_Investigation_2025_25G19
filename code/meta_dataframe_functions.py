@@ -3,9 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import re
 
-import qiskit
-from qiskit.providers.fake_provider import GenericBackendV2
-from qiskit_ibm_runtime import SamplerV2 as Sampler
+# import qiskit
+# from qiskit.providers.fake_provider import GenericBackendV2
+# from qiskit_ibm_runtime import SamplerV2 as Sampler
 from qiskit_ibm_runtime.fake_provider import FakeManilaV2, FakeTorino, FakeBrisbane
 from qiskit_ibm_runtime.fake_provider import FakeFez, FakeMarrakesh #fez, marrakesh are both Heron2
 from qiskit_ibm_runtime import QiskitRuntimeService

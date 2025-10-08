@@ -1,16 +1,16 @@
-import qiskit
-from qiskit import QuantumCircuit #Aer, IBMQ,
-from qiskit.visualization import plot_histogram
-from qiskit import transpile
+# import qiskit
+# from qiskit import QuantumCircuit #Aer, IBMQ,
+# from qiskit.visualization import plot_histogram
+# from qiskit import transpile
 #from qiskit.providers import fake_provider
-from qiskit.providers.fake_provider import GenericBackendV2
-from qiskit_ibm_runtime import SamplerV2 as Sampler
-from qiskit_ibm_runtime.fake_provider import FakeManilaV2, FakeTorino, FakeBrisbane
+# from qiskit.providers.fake_provider import GenericBackendV2
+# from qiskit_ibm_runtime import SamplerV2 as Sampler
+from qiskit_ibm_runtime.fake_provider import FakeTorino, FakeBrisbane
 from qiskit_ibm_runtime.fake_provider import FakeFez, FakeMarrakesh
 #fez, marrakesh are both Heron2
-from qiskit.providers.basic_provider import BasicSimulator
-from qiskit_ibm_runtime import QiskitRuntimeService
-from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
+# from qiskit.providers.basic_provider import BasicSimulator
+# from qiskit_ibm_runtime import QiskitRuntimeService
+# from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
 
 
 # importing datetime module for now()
@@ -18,7 +18,7 @@ from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
 # import matplotlib
 
 # import circuit_funcs
-import data_extract_funcs
+# import data_extract_funcs
 import sim_function
 
 def make_file_names(backend_name,is_sim,nr_qubits):

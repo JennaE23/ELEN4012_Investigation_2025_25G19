@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import sklearn
-import sklearn.preprocessing as preprocessing
-from sklearn.preprocessing import MaxAbsScaler
+# import sklearn
+# import sklearn.preprocessing as preprocessing
+# from sklearn.preprocessing import MaxAbsScaler
 import meta_dataframe_functions
 
 import os
