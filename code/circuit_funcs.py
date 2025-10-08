@@ -1,11 +1,11 @@
-import qiskit
+#import qiskit
 from qiskit import QuantumCircuit #Aer, IBMQ,
 from qiskit import transpile
 from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
 from qiskit_ibm_runtime import SamplerV2 as Sampler
-from qiskit.providers.basic_provider import BasicSimulator
-from qiskit.providers.fake_provider import GenericBackendV2
-from qiskit_ibm_runtime import QiskitRuntimeService
+#from qiskit.providers.basic_provider import BasicSimulator
+#from qiskit.providers.fake_provider import GenericBackendV2
+#from qiskit_ibm_runtime import QiskitRuntimeService
 
 import datetime
 import config
