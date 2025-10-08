@@ -1,16 +1,16 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import sklearn
-from sklearn import model_selection, datasets, svm
+# import matplotlib.pyplot as plt
+# import sklearn
+from sklearn import model_selection, svm
 from sklearn.svm import SVC
-from sklearn.preprocessing import LabelEncoder
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
+# from sklearn.preprocessing import LabelEncoder
+# from sklearn.decomposition import PCA
+# from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 
 import data_process_funcs as dpf
-import meta_dataframe_functions
+#import meta_dataframe_functions as mdf
 
 from sklearn.model_selection import cross_val_score
 
