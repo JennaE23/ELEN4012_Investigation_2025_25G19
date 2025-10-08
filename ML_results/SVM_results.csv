@@ -1,2 +1,13 @@
 nr_qubits,machines,tr&v exp_type,tr&v circuits,test exp_type,test circuits,preprocess settings,kernal,param settings,accuracy,cv_1,cv_2,cv_3,cv_4,cv_5
-8,1100,Hardware,111,Hardware,111,0,linear,0,0.9916666666666667,0.9895833333333334,1.0,0.9895833333333334,0.9895833333333334,1.0
+4,1100,Hardware,111,Hardware,111,0,linear,0,1.0,1.0,1.0,1.0,1.0,1.0
+4,1100,Hardware,111,Simulation,111,0,linear,0,0.24833333333333332,nan,nan,nan,nan,nan
+4,1100,Hardware,111,Simulation,111,0,linear,0,0.38,nan,nan,nan,nan,nan
+4,1100,Hardware,111,Simulation,111,0,linear,0,0.31416666666666665,nan,nan,nan,nan,nan
+4,1110,Simulation,111,Simulation,111,0,linear,0,0.65,0.6458333333333334,0.640625,0.5625,0.6197916666666666,0.6666666666666666
+4,1110,Simulation,111,Hardware,111,0,linear,0,0.5,nan,nan,nan,nan,nan
+4,1110,Simulation,111,Hardware,111,0,linear,0,0.25333333333333335,nan,nan,nan,nan,nan
+4,1100,Refreshed_Simulation,111,Refreshed_Simulation,111,0,linear,0,0.6666666666666666,0.6770833333333334,0.625,0.7708333333333334,0.5729166666666666,0.59375
+4,1100,Refreshed_Simulation,111,Hardware,111,0,linear,0,0.41228070175438597,nan,nan,nan,nan,nan
+4,1100,Refreshed_Simulation,111,Hardware,111,0,linear,0,0.52,nan,nan,nan,nan,nan
+4,1110,Sim and Refreshed,111,Sim and Refreshed,111,0,linear,0,0.5777777777777777,0.5555555555555556,0.5416666666666666,0.5902777777777778,0.53125,0.53125
+4,1110,Sim and Refreshed,111,Hardware,111,0,linear,0,0.4766081871345029,nan,nan,nan,nan,nan

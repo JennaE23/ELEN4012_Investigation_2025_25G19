@@ -27,7 +27,7 @@ def features_to_int(df):
 
 def label_encode_backend(df):
     df_ = df
-    labels = {'brisbane':0, 'fez':1, 'marakesh':2,'torino':3}# alphabetical order
+    labels = {'brisbane':0, 'fez':1, 'marrakesh':2,'torino':3}# alphabetical order
     df['backend'] = df['backend'].map(labels)
     return df_
 
@@ -72,7 +72,7 @@ def fit_and_get_score(model,X_train,Y_train,X_test,Y_test,ravel = True, to_print
         Y_train_1d = Y_train_1d.ravel()
     else:
         Y_train_1d = Y_train
-
+    #print(Y_train_1d)
     model_.fit(X_train, Y_train_1d)
     Cscore = model_.score(X_test, Y_test)
     if to_print:
@@ -278,7 +278,10 @@ def run_and_print_ml_results(train_df,test_dfs,ml_algorithm,base_parameter, dir 
         (train_df_processed, model, cv = cross_validation)
         general_fields = get_general_fields(nr_qubits, machines, tr_val_exp_type, tr_val_circuits, tr_val_exp_type, tr_val_circuits, preprocessing_settings)
         ml_fields = get_ml_fields(ml_algorithm, model.get_params(), param_settings)
-        results_fields = get_results_fields(score, cv_scores)
+        if cross_validation:
+            results_fields = get_results_fields(score, cv_scores)
+        else:
+            results_fields = get_results_fields(score)
         ml_results_to_csv(general_fields, ml_fields, results_fields, filename, fields)
 
 
@@ -294,7 +297,7 @@ def run_and_print_ml_results(train_df,test_dfs,ml_algorithm,base_parameter, dir 
         test_score = fitted_model.score(X_test, Y_test)
         
         test_circuits = get_circuit_binary_from_df(test_df)
-        print(test_circuits)
+        #print(test_circuits)
         # test_exp_type = test_df_processed['experiment_type'].iloc[0]
 
         general_fields = get_general_fields(nr_qubits, machines, tr_val_exp_type, tr_val_circuits, test_exp_type, test_circuits, preprocessing_settings)
@@ -334,8 +337,8 @@ def get_circuit_type_array(df_nq):
     circuits = split_into_circuits(df_nqi) 
     return circuits
 
-def get_HSR_list_of_arrays(nr_qubits):
-    initial_list = get_HSR_array_all_backends(nr_qubits)
+def get_HSR_test_table(initial_list):
+    
     list_of_arrays = generate_combos(initial_list)
     
     df_SR = pd.concat(initial_list[1:3].copy())
@@ -358,7 +361,7 @@ def get_HSR_list_of_arrays(nr_qubits):
 
     return list_of_arrays
 
-def get_circuits_list_of_arrays(df_nq):
+def get_circuits_test_table(df_nq):
     circuits = get_circuit_type_array(df_nq)
     combos = generate_combos(circuits,True)
 
