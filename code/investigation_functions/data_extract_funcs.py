@@ -13,6 +13,12 @@ def make_file_names(backend,nr_qubits):
         file_names.append(temp_name)
     return file_names
 
+def make_file_names_multi_backends(backend_names,nr_qubits):
+    file_names_ = []
+    for backend_name in backend_names:
+        file_names_.append(make_file_names(backend_name,nr_qubits))
+    return file_names_
+
 def create_fields(nr_qubits):
     fields = []
     for i in range(2**nr_qubits):
@@ -26,79 +32,66 @@ def create_csv(csv_file_name, fields):
         writer = csv.writer(file)
         writer.writerow(fields)
 
-def add_dir_to_filenames(dir_,file_names):
+def add_dir_to_filenames_list(dir_,file_names):
+    file_names_new = file_names.copy()
+    for backend_files in file_names_new:
+        for i in range(len(backend_files)):
+            backend_files[i]= dir_ + backend_files[i]
+    return file_names_new
+
+def add_dir_to_filenames_arr(dir_,file_names):
     file_names_new =[]
     for i in range(len(file_names)):
-        file_names_new.append(dir_ + file_names[i])
+        file_names_new.append( dir_ + file_names[i])
     return file_names_new
 
 def create_csvs(file_names_array, fields):
     for file_name in file_names_array:
         create_csv(file_name,fields)
 
-def results_to_csv(csv_file_names, fields, job_id_file, service_ = QiskitRuntimeService()):
-    service = service_
-    count = 0
-    jobs_torino1 = []
-    jobs_torino2 = []
-    jobs_torino3 = []
-    jobs_brisbane1 = []
-    jobs_brisbane2 = []
-    jobs_brisbane3 = []
+def create_csvs_from_list(file_names_list, fields):
+    for file_names_array in file_names_list:
+        for file_name in file_names_array:
+            create_csv(file_name,fields)
+
+def results_to_csv( csv_file_names,fields, job_id_file, service_):
+    #csv_file_names = make_file_names_multi_backends(backend_names,nr_qubits)
+    #service = service_
+
     with open(job_id_file, 'r') as f:
+        backend_count = 0
         for job_id in f.readlines():
-            if count != 2:
-                #job_id = f.readline()
-                job_id = job_id[:-1] #gets rid of extra blank space character
-                #print(job_id)
-                #print(len(job_id))
-                job = service.job(job_id)
-                for i in range(3):
-                    #result =i
-                    result = job.result()[i].data.meas.get_counts()
-                    #print(result)
-                    if i == 0:
-                        circuit1 = result
-                    elif i == 1:
-                        circuit2 = result
-                    else:
-                        circuit3 = result
-                if count == 0:
-                    jobs_torino1.append(circuit1)
-                    jobs_torino2.append(circuit2)
-                    jobs_torino3.append(circuit3)
-                elif count == 1:
-                    jobs_brisbane1.append(circuit1)
-                    jobs_brisbane2.append(circuit2)
-                    jobs_brisbane3.append(circuit3)
-            count = (count + 1) % 3
-            #print(count)
 
-        count2 = 0
-        for csv_file_name in csv_file_names:
-            match count2:
-                case 0:
-                    rows = jobs_torino1
-                case 1:
-                    rows = jobs_torino2    
-                case 2:
-                    rows = jobs_torino3
-                case 3:
-                    rows = jobs_brisbane1
-                case 4:
-                    rows = jobs_brisbane2
-                case 5:
-                    rows = jobs_brisbane3
-            with open(csv_file_name, 'a', newline='') as f:
-                writer = DictWriter(f, fieldnames=fields)
-                writer.writerows(rows)
-            count2 += 1
+            
+            # this skips the datetime line
+            if "datetime" in job_id:
+                #print("date_row")
+                backend_count =0
+                continue
+            
+            csv_backend_files = csv_file_names[backend_count]
+            job_id = job_id[:-1] #gets rid of extra blank space character
+            #print(job_id)
+            #print(len(job_id))
+            job = service_.job(job_id)
+            for i in range(3):
+                
+                result = job.result()[i].data.meas.get_counts()
+                #print(result)
 
-def results_to_csv2(nr_qubits,dir_,file_name_array,job_ids_file,service_ =QiskitRuntimeService(),create_csvs_ = False):
-    file_name_array2 =add_dir_to_filenames(dir_,file_name_array)
+                with open(csv_backend_files[i], 'a', newline='') as f:
+                    writer = DictWriter(f, fieldnames=fields)
+                    writer.writerows([result])
+            
+            backend_count = backend_count+1
+               
+
+def results_to_csv2(backend_names, nr_qubits,dir_,job_ids_file,service_ ,create_csvs_ = False):
+    file_name_array = make_file_names_multi_backends(backend_names,nr_qubits)
+    file_name_array2 =add_dir_to_filenames_list(dir_,file_name_array)
     fields_ = create_fields(nr_qubits)
     if create_csvs_:
-        create_csvs(file_name_array2,fields_)
+        create_csvs_from_list(file_name_array2,fields_)
     results_to_csv(file_name_array2,fields_,job_ids_file,service_)
 
 ####################################################################
@@ -112,7 +105,7 @@ def get_circuit_type_results(results_list, circuit_type):#circuit_type is 1,2 or
 
 def sim_results_to_csv(nr_qubits,file_name_array,results_list,create_csvs_,dir_):
     fields_ = create_fields(nr_qubits)
-    file_name_array2 =add_dir_to_filenames(dir_,file_name_array)
+    file_name_array2 =add_dir_to_filenames_list(dir_,file_name_array)
     #fields_ = create_fields(nr_qubits)
     if create_csvs_:
         create_csvs(file_name_array2,fields_)

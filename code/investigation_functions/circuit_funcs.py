@@ -83,20 +83,20 @@ def run_sim(fake_backend,qc_set, nr_runs):
 
     return results
 
-def send_set_to_backends(nr_qubits,backends,service_):
+def send_set_to_backends(nr_qubits,backend_names,service_):
     service = service_
     #make set of circuits:
     qc_set = make_set_of_3(nr_qubits)
     job_IDs = []
     #send set to each backend
-    for backend_name in backends:
+    for backend_name in backend_names:
         #store the job id for each backend job
         job_IDs.append(run_job(service.backend(backend_name),qc_set))
     return job_IDs
 
-def send_and_record(nr_qubits,file_name,backends,service_):
-    current_time = datetime.datetime.now().isoformat()
-    lines = send_set_to_backends(nr_qubits,backends,service_)
+def send_and_record(nr_qubits,file_name,backend_names,service_):
+    current_time = "datetime"+datetime.datetime.now().isoformat()
+    lines = send_set_to_backends(nr_qubits,backend_names,service_)
     lines.append(current_time)
     text = "\n".join(lines) + "\n"
     with open(file_name, "a", encoding="utf-8") as f:
