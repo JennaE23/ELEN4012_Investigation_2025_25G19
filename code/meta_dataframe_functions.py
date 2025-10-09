@@ -12,6 +12,8 @@ from qiskit_ibm_runtime import QiskitRuntimeService
 
 import data_extract_funcs
 
+import backend_vars
+
 #Call experiment_type as 'Hardware', 'Simulation', 'Refreshed_Simulation', 'Generic_Simulation'
 
 def extract_cols_from_filename(file_name_str, dir_):
@@ -64,27 +66,34 @@ def blank_meta_df():
     meta_df = pd.DataFrame(columns = ['nr_qubits','backend','sim','circuit_type','file_path'])
     return meta_df
 
-def load_meta_df(meta_df,experiment_type):#Hardware,Simulation,Refreshed_Simulation
-    dir_Hardware = ["../Hardware_results/4q/","../Hardware_results/8q/"]
-    dir_Sims = ["../Simulated_results/4q/","../Simulated_results/8q/","../Simulated_results/16q/"]
-    dir_Refr_Sims = ["../Refreshed_Simulated_results/4q/","../Refreshed_Simulated_results/8q/","../Refreshed_Simulated_results/16q/"]
-    
-    service = QiskitRuntimeService()
-    
-    fake_backends = [FakeTorino(), FakeFez(), FakeMarrakesh(),FakeBrisbane()]
-    hardware_backends = [ service.backend('ibm_torino'),service.backend('ibm_brisbane')]
+# Loads the particular data required. By default, loads brisbane and torino only for hardware and refreshed.
+# To load full hardware*, set updated_results to 'True' and updated_service to your service.
+# To load full refreshed*, set updated_results to 'True'.
+# Note: A licensed service will be required to load full Hardware.
+# *full refers to (torino, brisbane, fez and marrakesh), additional simulated results can be added be adjusting the backend_vars file.
+def load_meta_df(meta_df,experiment_type, updated_results = False, updated_service = 'Default'):#Hardware,Simulation,Refreshed_Simulation
+    dir_Hardware = backend_vars.dir_Hardware_list
+    dir_Sims = backend_vars.dir_Sims_list
+    dir_Refr_Sims = backend_vars.dir_Refr_Sims_list
+
     backends_ =[]
     dir_ =[]
     match experiment_type:
         case 'Hardware':
             dir_ = dir_Hardware
+            hardware_backends = backend_vars.hardware_backends
+            if updated_results:
+                hardware_backends = backend_vars.update_hardware_backends(hardware_backends, updated_service)
             backends_ = hardware_backends
         case 'Simulation':
             dir_ = dir_Sims
-            backends_ = fake_backends
+            backends_ = backend_vars.fake_backends
         case 'Refreshed_Simulation':
             dir_ = dir_Refr_Sims
-            backends_ = [FakeTorino(),FakeBrisbane()]
+            if updated_results:
+                backends_ = backend_vars.fake_backends
+            else:
+                backends_ = backend_vars.original_fake_backends
         case 'Generic_Simulation':
             dir_ = dir_Sims
             backends_ = "fake_genericV2"

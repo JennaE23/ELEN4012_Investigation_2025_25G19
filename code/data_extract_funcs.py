@@ -36,7 +36,7 @@ def create_csvs(file_names_array, fields):
     for file_name in file_names_array:
         create_csv(file_name,fields)
 
-def results_to_csv(csv_file_names, fields, job_id_file, service_ = QiskitRuntimeService()):
+def results_to_csv(csv_file_names, fields, job_id_file, service_):
     service = service_
     count = 0
     jobs_torino1 = []
@@ -94,7 +94,7 @@ def results_to_csv(csv_file_names, fields, job_id_file, service_ = QiskitRuntime
                 writer.writerows(rows)
             count2 += 1
 
-def results_to_csv2(nr_qubits,dir_,file_name_array,job_ids_file,service_ =QiskitRuntimeService(),create_csvs_ = False):
+def results_to_csv2(nr_qubits,dir_,file_name_array,job_ids_file,service_,create_csvs_ = False):
     file_name_array2 =add_dir_to_filenames(dir_,file_name_array)
     fields_ = create_fields(nr_qubits)
     if create_csvs_:

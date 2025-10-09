@@ -326,11 +326,11 @@ def make_same_backends(dfs,backends):
     
     return dfs_mod
 
-def get_HSR_array_all_backends(nr_qubits):
+def get_HSR_array_all_backends(nr_qubits, updated_results = False, updated_service = 'Default'):
 
-    df_H = dpf.get_expanded_df('Hardware',nr_qubits)
-    df_S = dpf.get_expanded_df('Simulation',nr_qubits)
-    df_R = dpf.get_expanded_df('Refreshed_Simulation',nr_qubits)
+    df_H = dpf.get_expanded_df('Hardware',nr_qubits, updated_results, updated_service)
+    df_S = dpf.get_expanded_df('Simulation',nr_qubits, updated_results, updated_service)
+    df_R = dpf.get_expanded_df('Refreshed_Simulation',nr_qubits, updated_results, updated_service)
 
     return [df_H, df_S, df_R]
 
