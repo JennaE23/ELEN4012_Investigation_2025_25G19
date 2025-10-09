@@ -1,21 +1,13 @@
-#import qiskit
-from qiskit import QuantumCircuit #Aer, IBMQ,
+from qiskit import QuantumCircuit 
 from qiskit import transpile
 from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
 from qiskit_ibm_runtime import SamplerV2 as Sampler
-#from qiskit.providers.basic_provider import BasicSimulator
-#from qiskit.providers.fake_provider import GenericBackendV2
-#from qiskit_ibm_runtime import QiskitRuntimeService
 
 import datetime
 import config
 
-#backends = ['ibm_torino','ibm_brisbane']#,'ibm_kingston','ibm_pittsburgh']
-# nrs_of_qubits = [4,8,16,32]
-circuit_types = ['Cnot','Cnot_X','Swap'] #
-
-
 def make_set_of_3(nr_qubits):
+    circuit_types = ['Cnot','Cnot_X','Swap']
     set_of_3 = []
     for i in range(len(circuit_types)):
         set_of_3.append(make_circuit(nr_qubits,circuit_types[i]))
