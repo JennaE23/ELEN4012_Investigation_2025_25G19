@@ -104,7 +104,7 @@ def arr_dfs_of_qubit_sizes(type_data, nr_qubit_sizes = 2,nr_machines = 2, nr_cir
         df.append(df_size)
     return df
 
-def get_expanded_df(type_data, nr_qubits, dir_,updated_results = False, updated_service = 'Default'):
+def get_expanded_df(type_data, nr_qubits, dir_='',updated_results = False, updated_service = 'Default'):
     big_df =  mdf.blank_meta_df()
     mdf.load_meta_df(big_df,type_data,dir_, updated_results, updated_service)
 
