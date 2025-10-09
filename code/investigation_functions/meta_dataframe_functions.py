@@ -71,10 +71,21 @@ def blank_meta_df():
 # To load full refreshed*, set updated_results to 'True'.
 # Note: A licensed service will be required to load full Hardware.
 # *full refers to (torino, brisbane, fez and marrakesh), additional simulated results can be added be adjusting the backend_vars file.
-def load_meta_df(meta_df,experiment_type, updated_results = False, updated_service = 'Default'):#Hardware,Simulation,Refreshed_Simulation
-    dir_Hardware = backend_vars.dir_Hardware_list
-    dir_Sims = backend_vars.dir_Sims_list
-    dir_Refr_Sims = backend_vars.dir_Refr_Sims_list
+def load_meta_df(meta_df,experiment_type, exp_dir_='',updated_results = False, updated_service = 'Default'):#Hardware,Simulation,Refreshed_Simulation
+    dir_Hardware = backend_vars.make_dir_list(
+        exp_dir_,
+        backend_vars.Hardware_folder
+    )
+    dir_Sims = backend_vars.make_dir_list(
+        exp_dir_,
+        backend_vars.Sim_folder,
+        incl_16=True
+    )
+    dir_Refr_Sims = backend_vars.make_dir_list(
+        exp_dir_,
+        backend_vars.Refr_Sim_folder,
+        incl_16=True
+    )
 
     backends_ =[]
     dir_ =[]
