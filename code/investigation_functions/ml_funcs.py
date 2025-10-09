@@ -9,7 +9,7 @@ from sklearn.svm import SVC
 # from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 
-import data_process_funcs as dpf
+from investigation_functions import data_process_funcs as dpf
 #import meta_dataframe_functions as mdf
 
 from sklearn.model_selection import cross_val_score

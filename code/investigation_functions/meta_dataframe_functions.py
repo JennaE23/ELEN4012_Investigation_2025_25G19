@@ -10,7 +10,7 @@ from qiskit_ibm_runtime.fake_provider import FakeManilaV2, FakeTorino, FakeBrisb
 from qiskit_ibm_runtime.fake_provider import FakeFez, FakeMarrakesh #fez, marrakesh are both Heron2
 from qiskit_ibm_runtime import QiskitRuntimeService
 
-import data_extract_funcs
+from investigation_functions import data_extract_funcs
 
 import backend_vars
 

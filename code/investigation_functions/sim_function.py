@@ -1,7 +1,4 @@
-import data_extract_funcs
-#import circuit_funcs2
-import circuit_funcs
-#import code.investigation_functions.circuit_funcs as circuit_funcs
+from investigation_functions import data_extract_funcs, circuit_funcs
 
 def get_and_save_sim_results(nr_qubits,fake_backend,nr_runs,output_file_names,create_csvs_,dir_):
     qc_set = circuit_funcs.make_set_of_3(nr_qubits)
