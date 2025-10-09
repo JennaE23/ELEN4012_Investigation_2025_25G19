@@ -87,12 +87,12 @@ def results_to_csv( csv_file_names,fields, job_id_file, service_):
                
 
 def results_to_csv2(backend_names, nr_qubits,dir_,job_ids_file,service_ ,create_csvs_ = False):
-    file_name_array = make_file_names_multi_backends(backend_names,nr_qubits)
-    file_name_array2 =add_dir_to_filenames_list(dir_,file_name_array)
+    file_name_list = make_file_names_multi_backends(backend_names,nr_qubits)
+    file_name_list2 =add_dir_to_filenames_list(dir_,file_name_list)
     fields_ = create_fields(nr_qubits)
     if create_csvs_:
-        create_csvs_from_list(file_name_array2,fields_)
-    results_to_csv(file_name_array2,fields_,job_ids_file,service_)
+        create_csvs_from_list(file_name_list2,fields_)
+    results_to_csv(file_name_list2,fields_,job_ids_file,service_)
 
 ####################################################################
 #For Simulated data:
