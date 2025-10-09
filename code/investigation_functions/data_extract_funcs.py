@@ -55,13 +55,10 @@ def create_csvs_from_list(file_names_list, fields):
             create_csv(file_name,fields)
 
 def results_to_csv( csv_file_names,fields, job_id_file, service_):
-    #csv_file_names = make_file_names_multi_backends(backend_names,nr_qubits)
-    #service = service_
 
     with open(job_id_file, 'r') as f:
         backend_count = 0
         for job_id in f.readlines():
-
             
             # this skips the datetime line
             if "datetime" in job_id:
@@ -71,13 +68,11 @@ def results_to_csv( csv_file_names,fields, job_id_file, service_):
             
             csv_backend_files = csv_file_names[backend_count]
             job_id = job_id[:-1] #gets rid of extra blank space character
-            #print(job_id)
-            #print(len(job_id))
+          
             job = service_.job(job_id)
             for i in range(3):
                 
                 result = job.result()[i].data.meas.get_counts()
-                #print(result)
 
                 with open(csv_backend_files[i], 'a', newline='') as f:
                     writer = DictWriter(f, fieldnames=fields)
