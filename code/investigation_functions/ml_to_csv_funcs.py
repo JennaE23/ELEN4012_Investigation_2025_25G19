@@ -1,0 +1,229 @@
+
+from investigation_functions import ml_funcs as mlf
+#from investigation_functions import data_process_funcs as dpf
+
+import numpy as np
+#from sklearn.model_selection import cross_val_score
+from csv import DictWriter
+#/////////////////////////////////////////////////////////////
+#csv things
+def create_ml_results_csv(ml_alg, dir = '../ML_Results/'):
+    general_fields = ['nr_qubits','machines','tr&v exp_type','tr&v circuits', 'test exp_type','test circuits','preprocess settings']
+    score_fields = ['accuracy','cv_1','cv_2','cv_3','cv_4','cv_5']
+    if ml_alg == 'SVM':
+        file_name = dir + 'SVM_results.csv'
+        # ml_param_fields = ['C', 'break_ties', 'cache_size', 'class_weight', 'coef0', 'decision_function_shape', 'degree', 'gamma', 'kernel', 'max_iter', 'probability', 'random_state', 'shrinking', 'tol', 'verbose']
+        # SVM example parameters = {'C': 1.0, 'break_ties': False, 'cache_size': 200, 'class_weight': None, 'coef0': 0.0, 'decision_function_shape': 'ovr', 'degree': 3, 'gamma': 'scale', 'kernel': 'linear', 'max_iter': -1, 'probability': False, 'random_state': None, 'shrinking': True, 'tol': 0.001, 'verbose': False}
+        ml_param_fields = ['kernal', 'param settings']
+    else:
+        file_name = dir + 'KNN_results.csv'
+        # ml_param_fields = ['algorithm', 'leaf_size', 'metric', 'metric_params', 'n_jobs', 'n_neighbors', 'p', 'weights']
+        # KNN example parameters = {'algorithm': 'auto',
+            #  'leaf_size': 30,
+            #  'metric': 'minkowski',
+            #  'metric_params': None,
+            #  'n_jobs': None,
+            #  'n_neighbors': 5,
+            #  'p': 2,
+            #  'weights': 'uniform'}
+        ml_param_fields = ['n_neighbors', 'param settings']
+    fields = general_fields + ml_param_fields + score_fields
+    with open(file_name, 'w', newline='') as f:
+        writer = DictWriter(f, fieldnames=fields)
+        writer.writeheader()
+    return file_name, fields
+
+def get_general_fields(nr_qubits, machines, tr_val_exp_type, tr_val_circuits, test_exp_type, test_circuits, preprocess_settings):
+    general_fields = {
+        'nr_qubits': nr_qubits,
+        'machines': machines,
+        'tr&v exp_type': tr_val_exp_type,
+        'tr&v circuits': tr_val_circuits,
+        'test exp_type': test_exp_type,
+        'test circuits': test_circuits,
+        'preprocess settings': preprocess_settings
+    }
+    return general_fields
+
+def get_ml_fields(ml_alg, model_parameters, param_settings = 0):
+    if ml_alg == 'SVM':
+        ml_fields = {
+            'kernal': model_parameters.get('kernel', 'N/A'),
+            # 'param settings': str(model_parameters)
+            'param settings': param_settings
+        }
+    else:
+        ml_fields = {
+            'n_neighbors': model_parameters.get('n_neighbors', 'N/A'),
+            # 'param settings': str(model_parameters)
+            'param settings': param_settings
+        }
+    return ml_fields
+
+def get_results_fields(score, cv_score = [np.nan,np.nan,np.nan,np.nan,np.nan]):
+    results_fields = {
+        'accuracy': score,
+        'cv_1': cv_score[0],
+        'cv_2': cv_score[1],
+        'cv_3': cv_score[2],
+        'cv_4': cv_score[3],
+        'cv_5': cv_score[4]
+    }
+    return results_fields
+
+def ml_results_to_csv(general_fields, ml_fields, results_fields,file_name,fields):
+    all_fields = {**general_fields, **ml_fields, **results_fields}
+    with open(file_name, 'a', newline='') as f:
+        writer = DictWriter(f, fieldnames=fields)
+        writer.writerow(all_fields)
+
+def get_machine_binary(machine_list, all_machines = ['torino', 'brisbane', 'fez', 'marakesh']):
+    binary_list = [1 if machine in machine_list else 0 for machine in all_machines]
+    binary = "".join(str(x) for x in binary_list)
+    return binary
+
+def get_machine_binary_from_df(df, all_machines = ['torino', 'brisbane', 'fez', 'marakesh']):
+    machine_list = df['backend'].unique().tolist()
+    binary_list = [1 if machine in machine_list else 0 for machine in all_machines]
+    binary = "".join(str(x) for x in binary_list)
+    return binary
+
+def get_circuit_binary(circuit_list, all_circuits = ['1','2','3']):
+    binary_list = [1 if circuit in circuit_list else 0 for circuit in all_circuits]
+    binary = "".join(str(x) for x in binary_list)
+    return binary
+
+def get_circuit_binary_from_df(df, all_circuits = ['1','2','3']):
+    circuit_list = df['circuit_type'].unique().astype(str).tolist()
+    # print(circuit_list)
+    circuit_list = [str(i) for i in circuit_list]  # Ensure all elements are strings
+    binary_list = [1 if circuit in circuit_list else 0 for circuit in all_circuits]
+    binary = "".join(str(x) for x in binary_list)
+    return binary
+
+#/////////////////////////////////////////////////////////////
+# Big Function + baby funcs
+def preprocess_dfs(dfs, preprocessing_settings):
+    # Example preprocessing based on settings
+    # print("Preprocessing settings:", preprocessing_settings)
+    processed_dfs = []
+    for df in dfs:
+        match preprocessing_settings:
+            case 0:
+                df_processed = mlf.apply_preprosessing(df) 
+            case _:
+                raise ValueError("Unsupported preprocessing setting")
+
+        processed_dfs.append(df_processed)
+        # Add more preprocessing options as needed
+    return processed_dfs
+
+# def KNN_model_setup(base_parameter, param_settings):
+#     match param_settings:
+#         case 0:
+#             model = KNeighborsClassifier(n_neighbors=base_parameter)
+#         case 1:
+#             model = KNeighborsClassifier(n_neighbors=base_parameter, weights="distance", p=1)
+#         case _:
+#             raise ValueError("Unsupported parameter setting for KNN")
+#     return model
+
+# def SVM_model_setup(base_parameter, param_settings):
+#     match param_settings:
+#         case 0:
+#             model = svm.SVC(kernel=base_parameter)
+#         case _:
+#             raise ValueError("Unsupported parameter setting for SVM")
+#     return model
+
+def get_file_name_and_fields(ml_algorithm, dir = '../ML_Results/'):
+    general_fields = ['nr_qubits','machines','tr&v exp_type','tr&v circuits', 'test exp_type','test circuits','preprocess settings']
+    score_fields = ['accuracy','cv_1','cv_2','cv_3','cv_4','cv_5']
+    match ml_algorithm:
+        case 'SVM':
+            file_name = dir + 'SVM_results.csv'
+            ml_param_fields = ['kernal', 'param settings']
+        case 'KNN':
+            file_name = dir + 'KNN_results.csv'
+            ml_param_fields = ['n_neighbors', 'param settings']
+        case _:
+            raise ValueError("Unsupported ML algorithm")
+    fields = general_fields + ml_param_fields + score_fields
+    return file_name, fields
+
+def run_and_print_ml_results(train_df,test_dfs,param_mode, dir = '../ML_Results/', get_self_score = True, preprocessing_settings = 0, cross_validation = False):
+    #extract strings from param_mode
+    ml_algorithm = param_mode.get_alg_type()
+    
+    
+    # Get CSV setup
+    nr_qubits = train_df['nr_qubits'].iloc[0]
+    machines = get_machine_binary_from_df(train_df)
+    tr_val_circuits = get_circuit_binary_from_df(train_df)
+    tr_val_exp_type = train_df['experiment_type'].iloc[0]
+    filename, fields = get_file_name_and_fields(ml_algorithm, dir)
+    # if len(test_dfs) != 0:
+    #     test_exp_type = test_dfs[0]['experiment_type'].iloc[0]      #Assumes all test dfs are of the same type
+    
+    # # Apply preprocessing
+    # processed_dfs = preprocess_dfs([train_df] + test_dfs, preprocessing_settings)
+    # train_df_processed = processed_dfs[0]
+    # test_dfs_processed = processed_dfs[1:]
+    train_df_processed = preprocess_dfs([train_df], preprocessing_settings)[0]
+
+    # Prepare Model
+    model = param_mode.model
+    param_settings = param_mode.label
+    # match ml_algorithm:
+    #     case 'KNN':
+    #         model = KNN_model_setup(base_parameter, param_settings)
+    #     case 'SVM':
+    #         model = SVM_model_setup(base_parameter, param_settings)
+    #     case _:
+    #         raise ValueError("Unsupported ML algorithm")
+        
+    if get_self_score:
+        fitted_model, score, cv_scores = mlf.std_split_fit_and_scores\
+        (train_df_processed, model, cv = cross_validation)
+        general_fields = get_general_fields(nr_qubits, machines, tr_val_exp_type, tr_val_circuits, tr_val_exp_type, tr_val_circuits, preprocessing_settings)
+        ml_fields = get_ml_fields(ml_algorithm, model.get_params(), param_settings)
+        if cross_validation:
+            results_fields = get_results_fields(score, cv_scores)
+        else:
+            results_fields = get_results_fields(score)
+        ml_results_to_csv(general_fields, ml_fields, results_fields, filename, fields)
+
+
+    # Fitted model
+    X_train, Y_train = mlf.get_x_y(train_df_processed)
+    Y_train = Y_train.to_numpy().ravel()
+    fitted_model = model.fit(X_train, Y_train)
+    # fitted_model = model.fit(X_train, Y_train.values.ravel())
+    
+    for test_df in test_dfs:
+        test_df_processed = preprocess_dfs([test_df], preprocessing_settings)[0]
+        X_test, Y_test = mlf.get_x_y(test_df_processed)
+        test_score = fitted_model.score(X_test, Y_test)
+        
+        test_circuits = get_circuit_binary_from_df(test_df)
+        #print(test_circuits)
+        test_exp_type = test_df['experiment_type'].iloc[0]
+
+        general_fields = get_general_fields(nr_qubits, machines, tr_val_exp_type, tr_val_circuits, test_exp_type, test_circuits, preprocessing_settings)
+        ml_fields = get_ml_fields(ml_algorithm, model.get_params(), param_settings)
+        results_fields = get_results_fields(test_score)
+        ml_results_to_csv(general_fields, ml_fields, results_fields, filename, fields)
+
+def run_and_record_test_table_for_mode(test_table,param_mode, dir='../ML_Results/'):
+        # param_mode must be either an SVM_mode or a KNN_mode object
+        # base_param = param_mode.base_param
+        # alg_type = param_mode.alg_type
+
+        for i in range(len(test_table)):
+
+            train_df = test_table[i][0]
+            # nr_test_dfs = len(test_table_HSR4q[i])
+            test_dfs = test_table[i][1:]
+            #print_test_table([test_table_HSR4q[i]],circ_types=False)
+            
+            run_and_print_ml_results(train_df,test_dfs,param_mode,dir = dir,cross_validation=True)
