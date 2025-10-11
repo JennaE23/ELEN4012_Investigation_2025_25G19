@@ -1,23 +1,14 @@
 import pandas as pd
 import numpy as np
-# import matplotlib.pyplot as plt
-# import sklearn
+
 from sklearn import model_selection, svm
 from sklearn.svm import SVC
-# from sklearn.preprocessing import LabelEncoder
-# from sklearn.decomposition import PCA
-# from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
-
-from investigation_functions import data_process_funcs as dpf
-#import meta_dataframe_functions as mdf
-
 from sklearn.model_selection import cross_val_score
 
-from csv import DictWriter
-import itertools
-from itertools import combinations
+from investigation_functions import data_process_funcs as dpf
 
+from csv import DictWriter
 
 def features_to_int(df):
     df_ = df
@@ -250,7 +241,11 @@ def get_file_name_and_fields(ml_algorithm, dir = '../ML_Results/'):
     fields = general_fields + ml_param_fields + score_fields
     return file_name, fields
 
-def run_and_print_ml_results(train_df,test_dfs,ml_algorithm,base_parameter, dir = '../ML_Results/', get_self_score = True, preprocessing_settings = 0, param_settings = 0, cross_validation = False):
+def run_and_print_ml_results(train_df,test_dfs,param_mode, dir = '../ML_Results/', get_self_score = True, preprocessing_settings = 0, cross_validation = False):
+    #extract strings from param_mode
+    ml_algorithm = param_mode.get_alg_type()
+    
+    
     # Get CSV setup
     nr_qubits = train_df['nr_qubits'].iloc[0]
     machines = get_machine_binary_from_df(train_df)
@@ -267,13 +262,15 @@ def run_and_print_ml_results(train_df,test_dfs,ml_algorithm,base_parameter, dir 
     train_df_processed = preprocess_dfs([train_df], preprocessing_settings)[0]
 
     # Prepare Model
-    match ml_algorithm:
-        case 'KNN':
-            model = KNN_model_setup(base_parameter, param_settings)
-        case 'SVM':
-            model = SVM_model_setup(base_parameter, param_settings)
-        case _:
-            raise ValueError("Unsupported ML algorithm")
+    model = param_mode.model
+    param_settings = param_mode.label
+    # match ml_algorithm:
+    #     case 'KNN':
+    #         model = KNN_model_setup(base_parameter, param_settings)
+    #     case 'SVM':
+    #         model = SVM_model_setup(base_parameter, param_settings)
+    #     case _:
+    #         raise ValueError("Unsupported ML algorithm")
         
     if get_self_score:
         fitted_model, score, cv_scores = std_split_fit_and_scores\
@@ -308,109 +305,6 @@ def run_and_print_ml_results(train_df,test_dfs,ml_algorithm,base_parameter, dir 
         ml_results_to_csv(general_fields, ml_fields, results_fields, filename, fields)
 
 
-#/////////////////////////////////////////////////
-#comparison test things
-def split_into_circuits(df_all_circuits):
-    circuits = df_all_circuits.groupby('circuit_type')
-    circuit_1 = circuits.get_group(1)
-    circuit_2 = circuits.get_group(2)
-    circuit_3 = circuits.get_group(3)
-    return [circuit_1,circuit_2,circuit_3]
-
-def make_same_backends(dfs,backends):
-    dfs_ = dfs.copy()
-    dfs_mod = []
-    for df in dfs_:
-        df = df[df['backend'].isin(backends)]
-        dfs_mod.append(df)
-    
-    return dfs_mod
-
-def get_HSR_array_all_backends(nr_qubits, updated_results = False, updated_service = 'Default'):
-
-    df_H = dpf.get_expanded_df('Hardware',nr_qubits, updated_results, updated_service)
-    df_S = dpf.get_expanded_df('Simulation',nr_qubits, updated_results, updated_service)
-    df_R = dpf.get_expanded_df('Refreshed_Simulation',nr_qubits, updated_results, updated_service)
-
-    return [df_H, df_S, df_R]
-
-def get_circuit_type_array(df_nq):
-    df_nqi = features_to_int(df_nq)
-    circuits = split_into_circuits(df_nqi) 
-    return circuits
-
-def get_HSR_test_table(initial_list):
-    
-    list_of_arrays = generate_combos(initial_list)
-    
-    df_SR = pd.concat(initial_list[1:3].copy())
-    
-    # Quick and dirty fix for results_to_csv function:
-    df_SR['experiment_type'] = 'Sim and Refreshed'
-
-    #Train on H, Test on SR combined:
-    list_of_arrays[0].append(df_SR)
-
-    #make the train on H row only torino and brisbane:
-    #H_backends = initial_list[0]['backend'].unique()
-    for i in range(len(list_of_arrays)):
-        backends = initial_list[i]['backend'].unique()
-        list_of_arrays[i] = make_same_backends(list_of_arrays[i],backends)
-    
-    #Train on SR and Test on H only:
-    train_SR_test_H = [df_SR,initial_list[0]]
-    list_of_arrays.append(train_SR_test_H)
-
-    return list_of_arrays
-
-def get_circuits_test_table(df_nq):
-    circuits = get_circuit_type_array(df_nq)
-    combos = generate_combos(circuits,True)
-
-    # add the combined training rows
-    for i in range(len(circuits)):
-        combined_train = [combos[i][3],combos[i][0]]
-        combos.append(combined_train)
-    
-    return combos
-
-def generate_combos(individual_dfps,include_combined=False):
-    indiv_list = individual_dfps.copy()
-    nr_indiv = len(indiv_list)
-    table =[]
-
-    row1 = indiv_list.copy()
-    if include_combined:
-        #make elements joined as pairs
-        pair_dfs = make_pairs(row1[1:3])
-        #append the paired elements
-        row1 = row1 +pair_dfs
-    table.append(row1)
-
-    for i in range(1,nr_indiv):
-        row = indiv_list.copy()
-        train_element =  row.pop(i)
-        row.insert(0,train_element)
-        
-        if include_combined:
-            pair_parts = row[1:3].copy()
-            #make elements joined as pairs
-            pair_dfs = make_pairs(pair_parts)
-            #append the paired elements
-            row = row +pair_dfs
-
-        table.append(row)    
-
-    return table
-
-def make_pairs(indiv_dfs):
-    pairs = list(combinations(indiv_dfs.copy(), 2))
-    pair_dfs = []
-    for pair in pairs:
-        df = pd.concat(pair[:])
-        pair_dfs.append(df)
-
-    return pair_dfs
 
 def get_accuracies_for_comparison(model, tr_val_dfp, tr_label,test_dfps, test_dfp_labels, to_print = False, get_self_score = True):
     

@@ -3,13 +3,14 @@ from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 import ml_funcs as mlf
 
-def print_and_plot_svm_models(df_processed, models, model_names, graph_type = 'bar'):
+def print_and_plot_svm_models(df_processed, models, model_names, df_name='', graph_type = 'bar',to_print = 'False'):
     scores = []
     
     for model in models:
         fitted_model,score,cv_score = mlf.std_split_fit_and_scores(df_processed,model)
-        print(f"Model={model}, Accuracy={score}, CV_Accuracy={cv_score.mean()}")
-        print(f"CV_Scores={cv_score}")
+        if to_print:
+            print(f"Model={model}, Accuracy={score}, CV_Accuracy={cv_score.mean()}")
+            print(f"CV_Scores={cv_score}")
         scores.append(cv_score.mean())
     
     plt.figure(figsize=(10,6))
@@ -22,7 +23,7 @@ def print_and_plot_svm_models(df_processed, models, model_names, graph_type = 'b
             raise ValueError("graph_type must be 'line' or 'bar'")
     plt.xlabel('SVM Models')
     plt.ylabel('Cross-Validation Accuracy')
-    plt.title('SVM Model Comparison')
+    plt.title(df_name +'SVM Model Comparison')
     plt.ylim(0, 1.2)
     plt.xticks(rotation=45)
     plt.grid(axis='y')

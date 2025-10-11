@@ -10,6 +10,9 @@ original_fake_backends = [FakeTorino(), FakeBrisbane()]
 fake_backends = [FakeTorino(), FakeFez(), FakeMarrakesh(),FakeBrisbane()]
 hardware_backends = [ service.backend('ibm_torino'),service.backend('ibm_brisbane')]
 
+original_fake_backend_names = ['fake_brisbane','fake_torino']
+fake_backend_names = ['fake_brisbane','fake_fez','fake_marrakesh','fake_torino']
+hardware_backend_names = ['ibm_brisbane','ibm_torino']
 # Qubits list
 qubits_list = [4,8,16]
 
@@ -34,6 +37,13 @@ def update_hardware_backends(hardware_backends_old, service_new):
     hardware_backends_new.extend(new_backends)
     return hardware_backends
 
+def update_hardware_backend_names(hardware_backend_names):
+    hardware_backends_new = hardware_backend_names
+    new_backends = ['ibm_fez','ibm_marrakesh']
+    hardware_backends_new.extend(new_backends)
+    return hardware_backends_new
+
+
 def get_exp_type_subfolders(exp_folder, incl_16q = False):
     subfolders_dir =[]
     for qubit in qubits_list:
@@ -42,9 +52,9 @@ def get_exp_type_subfolders(exp_folder, incl_16q = False):
         subfolders_dir.append(exp_folder+str(qubit)+"q/")
     return subfolders_dir
 
-def make_dir_list(exp_dir_,exp_folder,incl_16 = False):
+def make_dir_list(experiment_dir_,exp_folder,incl_16 = False):
     dir_list = data_extract_funcs.add_dir_to_filenames_arr(
-        exp_dir_,
+        experiment_dir_,
         get_exp_type_subfolders(exp_folder,incl_16)
     )
     return dir_list
