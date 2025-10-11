@@ -152,7 +152,8 @@ def get_file_name_and_fields(ml_algorithm, dir = '../ML_Results/'):
     return file_name, fields
 
 def run_and_print_ml_results(train_df,test_dfs,param_mode, dir = '../ML_Results/', get_self_score = True, preprocessing_settings = 0, cross_validation = False):
- 
+    
+    ml_algorithm = param_mode.get_alg_type()
 
     # Get CSV setup
     nr_qubits = train_df['nr_qubits'].iloc[0]
@@ -166,7 +167,7 @@ def run_and_print_ml_results(train_df,test_dfs,param_mode, dir = '../ML_Results/
     # Prepare Model
     model = param_mode.model
     param_settings = param_mode.label
-    ml_algorithm = param_mode.get_alg_type()
+    
    
         
     if get_self_score:

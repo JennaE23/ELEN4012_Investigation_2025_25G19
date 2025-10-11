@@ -74,7 +74,8 @@ def blank_meta_df():
 def load_meta_df(meta_df,experiment_type, exp_dir_='',updated_results = False, updated_service = 'Default'):#Hardware,Simulation,Refreshed_Simulation
     dir_Hardware = backend_vars.make_dir_list(
         exp_dir_,
-        backend_vars.Hardware_folder
+        backend_vars.Hardware_folder,
+        incl_16=True
     )
     dir_Sims = backend_vars.make_dir_list(
         exp_dir_,
