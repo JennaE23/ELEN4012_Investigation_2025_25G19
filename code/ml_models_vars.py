@@ -84,3 +84,7 @@ class Param_Modes:  #modes or models?
         ]
 
         self.KNN_modes = KNN_mode().get_KNN_models(knn_ks_)
+
+        def add_SVM_mode(self,svm_mode):
+            self.SVM_modes.append(svm_mode)
+        

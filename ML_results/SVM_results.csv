@@ -59,3 +59,21 @@ nr_qubits,machines,tr&v exp_type,tr&v circuits,test exp_type,test circuits,prepr
 4,1110,Refreshed_Simulation,111,Simulation,111,0,poly,1,0.23,nan,nan,nan,nan,nan
 4,1110,Sim and Refreshed,111,Sim and Refreshed,111,0,poly,1,0.7916666666666666,0.8098958333333334,0.7994791666666666,0.7578125,0.7708333333333334,0.7838541666666666
 4,1110,Sim and Refreshed,111,Hardware,111,0,poly,1,0.24610591900311526,nan,nan,nan,nan,nan
+4,1110,Hardware,100,Hardware,100,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+4,1110,Hardware,100,Hardware,010,0,rbf,2,1.0,nan,nan,nan,nan,nan
+4,1110,Hardware,100,Hardware,001,0,rbf,2,0.2643312101910828,nan,nan,nan,nan,nan
+4,1110,Hardware,100,Hardware,011,0,rbf,2,0.6321656050955414,nan,nan,nan,nan,nan
+4,1110,Hardware,010,Hardware,010,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+4,1110,Hardware,010,Hardware,100,0,rbf,2,1.0,nan,nan,nan,nan,nan
+4,1110,Hardware,010,Hardware,001,0,rbf,2,0.4012738853503185,nan,nan,nan,nan,nan
+4,1110,Hardware,010,Hardware,101,0,rbf,2,0.7006369426751592,nan,nan,nan,nan,nan
+4,1110,Hardware,001,Hardware,001,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+4,1110,Hardware,001,Hardware,100,0,rbf,2,0.6242038216560509,nan,nan,nan,nan,nan
+4,1110,Hardware,001,Hardware,010,0,rbf,2,0.6624203821656051,nan,nan,nan,nan,nan
+4,1110,Hardware,001,Hardware,110,0,rbf,2,0.643312101910828,nan,nan,nan,nan,nan
+4,1110,Hardware,011,Hardware,011,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+4,1110,Hardware,011,Hardware,100,0,rbf,2,0.9267515923566879,nan,nan,nan,nan,nan
+4,1110,Hardware,101,Hardware,101,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+4,1110,Hardware,101,Hardware,010,0,rbf,2,0.7643312101910829,nan,nan,nan,nan,nan
+4,1110,Hardware,110,Hardware,110,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+4,1110,Hardware,110,Hardware,001,0,rbf,2,0.39490445859872614,nan,nan,nan,nan,nan
