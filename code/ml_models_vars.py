@@ -28,29 +28,28 @@ class SVM_mode:
         self.label = label_
         self.__alg_type ='SVM'
 
-    # #PUBLIC:
-    # #initialisable
-    # base_param : str = 'linear' # kernel
-    # C: float =0
-    # coef0: float = 0
-    # degree: float =3
-    # model : SVC = SVC(kernel = base_param, C = C, degree = degree, coef0 = coef0)
-    # label : int =0
     def get_alg_type(self):
         return self.__alg_type
-    # def get_model(self):
-    #     return self.model
+    
     
 class KNN_mode:
-    def __init__(self, base_param_=3, label_ =0):
+    def __init__(
+            self, 
+            base_param_=3,
+            weights_="distance",
+            algorithm_='auto', 
+            leaf_size_=30, 
+            p_=1,
+            label_ =0
+        ):
         self.__alg_type = 'KNN'
         self.base_param = base_param_ #k
         self.model  = KNeighborsClassifier(
         n_neighbors=base_param_, 
-        weights="distance",
-        algorithm='auto', 
-        leaf_size=30, 
-        p=1
+        weights=weights_,
+        algorithm=algorithm_, 
+        leaf_size=leaf_size_, 
+        p=p_
         )
         self.label =label_
 
@@ -85,6 +84,6 @@ class Param_Modes:  #modes or models?
 
         self.KNN_modes = KNN_mode().get_KNN_models(knn_ks_)
 
-        def add_SVM_mode(self,svm_mode):
-            self.SVM_modes.append(svm_mode)
+    def add_SVM_mode(self,svm_mode):
+        self.SVM_modes.append(svm_mode)
         

@@ -152,35 +152,22 @@ def get_file_name_and_fields(ml_algorithm, dir = '../ML_Results/'):
     return file_name, fields
 
 def run_and_print_ml_results(train_df,test_dfs,param_mode, dir = '../ML_Results/', get_self_score = True, preprocessing_settings = 0, cross_validation = False):
-    #extract strings from param_mode
-    ml_algorithm = param_mode.get_alg_type()
-    
-    
+ 
+
     # Get CSV setup
     nr_qubits = train_df['nr_qubits'].iloc[0]
     machines = get_machine_binary_from_df(train_df)
     tr_val_circuits = get_circuit_binary_from_df(train_df)
     tr_val_exp_type = train_df['experiment_type'].iloc[0]
     filename, fields = get_file_name_and_fields(ml_algorithm, dir)
-    # if len(test_dfs) != 0:
-    #     test_exp_type = test_dfs[0]['experiment_type'].iloc[0]      #Assumes all test dfs are of the same type
     
-    # # Apply preprocessing
-    # processed_dfs = preprocess_dfs([train_df] + test_dfs, preprocessing_settings)
-    # train_df_processed = processed_dfs[0]
-    # test_dfs_processed = processed_dfs[1:]
     train_df_processed = preprocess_dfs([train_df], preprocessing_settings)[0]
 
     # Prepare Model
     model = param_mode.model
     param_settings = param_mode.label
-    # match ml_algorithm:
-    #     case 'KNN':
-    #         model = KNN_model_setup(base_parameter, param_settings)
-    #     case 'SVM':
-    #         model = SVM_model_setup(base_parameter, param_settings)
-    #     case _:
-    #         raise ValueError("Unsupported ML algorithm")
+    ml_algorithm = param_mode.get_alg_type()
+   
         
     if get_self_score:
         fitted_model, score, cv_scores = mlf.std_split_fit_and_scores\
