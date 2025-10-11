@@ -26,10 +26,10 @@ class SVM_mode:
         self.degree = degree_
         #self.model =model_
         self.label = label_
-        self.__alg_type ='SVM'
+        self.__ALG_TYPE ='SVM'
 
     def get_alg_type(self):
-        return self.__alg_type
+        return self.__ALG_TYPE
     
     
 class KNN_mode:
@@ -42,7 +42,7 @@ class KNN_mode:
             p_=1,
             label_ =0
         ):
-        self.__alg_type = 'KNN'
+        self.__ALG_TYPE = 'KNN'
         self.base_param = base_param_ #k
         self.model  = KNeighborsClassifier(
         n_neighbors=base_param_, 
@@ -53,14 +53,29 @@ class KNN_mode:
         )
         self.label =label_
 
-    def get_KNN_models(self,k_s):
+    def get_KNN_array(
+            self,k_s,
+            weights_="distance",
+            algorithm_='auto', 
+            leaf_size_=30, 
+            p_=1,
+            label_ =0
+        ):
         models = []
         for i in k_s:
-            models.append(KNN_mode(i))
+            models.append(KNN_mode(
+                i,
+                weights_,
+                algorithm_, 
+                leaf_size_, 
+                p_,
+                label_
+            ))
         return models
     
     def get_alg_type(self):
-        return self.__alg_type
+        return self.__ALG_TYPE
+
     
 class Param_Modes:  #modes or models?
     def __init__(self,knn_ks_ = range(3,26)):
@@ -82,8 +97,14 @@ class Param_Modes:  #modes or models?
             #mode5 = SVC(kernel = 'linear', C = 450)
         ]
 
-        self.KNN_modes = KNN_mode().get_KNN_models(knn_ks_)
+        self.KNN_modes = [
+            KNN_mode().get_KNN_array(knn_ks_, weights_='distance', label_=0),
+            KNN_mode().get_KNN_array(knn_ks_, weights_='uniform', label_=1)
+            #etc
+        ]
 
     def add_SVM_mode(self,svm_mode):
         self.SVM_modes.append(svm_mode)
-        
+    
+    def add_KNN_mode(self,knn_mode):
+        self.KNN_modes.append(knn_mode)
