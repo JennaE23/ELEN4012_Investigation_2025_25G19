@@ -77,12 +77,12 @@ def ml_results_to_csv(general_fields, ml_fields, results_fields,file_name,fields
         writer = DictWriter(f, fieldnames=fields)
         writer.writerow(all_fields)
 
-def get_machine_binary(machine_list, all_machines = ['torino', 'brisbane', 'fez', 'marakesh']):
+def get_machine_binary(machine_list, all_machines = ['torino', 'brisbane', 'fez', 'marrakesh']):
     binary_list = [1 if machine in machine_list else 0 for machine in all_machines]
     binary = "".join(str(x) for x in binary_list)
     return binary
 
-def get_machine_binary_from_df(df, all_machines = ['torino', 'brisbane', 'fez', 'marakesh']):
+def get_machine_binary_from_df(df, all_machines = ['torino', 'brisbane', 'fez', 'marrakesh']):
     machine_list = df['backend'].unique().tolist()
     binary_list = [1 if machine in machine_list else 0 for machine in all_machines]
     binary = "".join(str(x) for x in binary_list)
