@@ -7,25 +7,18 @@ import numpy as np
 from csv import DictWriter
 #/////////////////////////////////////////////////////////////
 #csv things
-def create_ml_results_csv(ml_alg, dir = '../ML_Results/'):
+def create_ml_results_csv(ml_alg, dir = '../ML_Results/', file_name = None):
     general_fields = ['nr_qubits','machines','tr&v exp_type','tr&v circuits', 'test exp_type','test circuits','preprocess settings']
     score_fields = ['accuracy','cv_1','cv_2','cv_3','cv_4','cv_5']
+    if file_name is None:
+        f_name = ml_alg + '_results.csv'
+    else:
+        f_name = file_name
     if ml_alg == 'SVM':
-        file_name = dir + 'SVM_results.csv'
-        # ml_param_fields = ['C', 'break_ties', 'cache_size', 'class_weight', 'coef0', 'decision_function_shape', 'degree', 'gamma', 'kernel', 'max_iter', 'probability', 'random_state', 'shrinking', 'tol', 'verbose']
-        # SVM example parameters = {'C': 1.0, 'break_ties': False, 'cache_size': 200, 'class_weight': None, 'coef0': 0.0, 'decision_function_shape': 'ovr', 'degree': 3, 'gamma': 'scale', 'kernel': 'linear', 'max_iter': -1, 'probability': False, 'random_state': None, 'shrinking': True, 'tol': 0.001, 'verbose': False}
+        file_name = dir + f_name
         ml_param_fields = ['kernal', 'param settings']
     else:
-        file_name = dir + 'KNN_results.csv'
-        # ml_param_fields = ['algorithm', 'leaf_size', 'metric', 'metric_params', 'n_jobs', 'n_neighbors', 'p', 'weights']
-        # KNN example parameters = {'algorithm': 'auto',
-            #  'leaf_size': 30,
-            #  'metric': 'minkowski',
-            #  'metric_params': None,
-            #  'n_jobs': None,
-            #  'n_neighbors': 5,
-            #  'p': 2,
-            #  'weights': 'uniform'}
+        file_name = dir + f_name
         ml_param_fields = ['n_neighbors', 'param settings']
     fields = general_fields + ml_param_fields + score_fields
     with open(file_name, 'w', newline='') as f:
@@ -136,22 +129,26 @@ def preprocess_dfs(dfs, preprocessing_settings):
 #             raise ValueError("Unsupported parameter setting for SVM")
 #     return model
 
-def get_file_name_and_fields(ml_algorithm, dir = '../ML_Results/'):
+def get_file_name_and_fields(ml_algorithm, dir = '../ML_Results/', file_name = None):
     general_fields = ['nr_qubits','machines','tr&v exp_type','tr&v circuits', 'test exp_type','test circuits','preprocess settings']
     score_fields = ['accuracy','cv_1','cv_2','cv_3','cv_4','cv_5']
+    if file_name is None:
+        f_name = ml_algorithm + '_results.csv'
+    else:
+        f_name = file_name
     match ml_algorithm:
         case 'SVM':
-            file_name = dir + 'SVM_results.csv'
+            file_name = dir + f_name
             ml_param_fields = ['kernal', 'param settings']
         case 'KNN':
-            file_name = dir + 'KNN_results.csv'
+            file_name = dir + f_name
             ml_param_fields = ['n_neighbors', 'param settings']
         case _:
             raise ValueError("Unsupported ML algorithm")
     fields = general_fields + ml_param_fields + score_fields
     return file_name, fields
 
-def run_and_print_ml_results(train_df,test_dfs,param_mode, dir = '../ML_Results/', get_self_score = True, preprocessing_settings = 0, cross_validation = False):
+def run_and_print_ml_results(train_df,test_dfs,param_mode, dir = '../ML_Results/', get_self_score = True, preprocessing_settings = 0, cross_validation = False, file_name = None):
     
     ml_algorithm = param_mode.get_alg_type()
 
@@ -160,7 +157,7 @@ def run_and_print_ml_results(train_df,test_dfs,param_mode, dir = '../ML_Results/
     machines = get_machine_binary_from_df(train_df)
     tr_val_circuits = get_circuit_binary_from_df(train_df)
     tr_val_exp_type = train_df['experiment_type'].iloc[0]
-    filename, fields = get_file_name_and_fields(ml_algorithm, dir)
+    filename, fields = get_file_name_and_fields(ml_algorithm, dir, file_name)
     
     train_df_processed = preprocess_dfs([train_df], preprocessing_settings)[0]
 
@@ -202,7 +199,7 @@ def run_and_print_ml_results(train_df,test_dfs,param_mode, dir = '../ML_Results/
         results_fields = get_results_fields(test_score)
         ml_results_to_csv(general_fields, ml_fields, results_fields, filename, fields)
 
-def run_and_record_test_table_for_mode(test_table,param_mode, dir='../ML_Results/'):
+def run_and_record_test_table_for_mode(test_table,param_mode, dir='../ML_Results/', file_name = None):
         # param_mode must be either an SVM_mode or a KNN_mode object
         # base_param = param_mode.base_param
         # alg_type = param_mode.alg_type
@@ -214,4 +211,4 @@ def run_and_record_test_table_for_mode(test_table,param_mode, dir='../ML_Results
             test_dfs = test_table[i][1:]
             #print_test_table([test_table_HSR4q[i]],circ_types=False)
             
-            run_and_print_ml_results(train_df,test_dfs,param_mode,dir = dir,cross_validation=True)
+            run_and_print_ml_results(train_df,test_dfs,param_mode,dir = dir,cross_validation=True, file_name = file_name)
