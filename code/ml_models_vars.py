@@ -78,7 +78,7 @@ class KNN_mode:
 
     
 class Param_Modes:  #modes or models?
-    def __init__(self,knn_ks_ = [3,10,15]):
+    def __init__(self,knn_ks_ = [5,10,15]):
     
         self.knn_ks = knn_ks_
 
