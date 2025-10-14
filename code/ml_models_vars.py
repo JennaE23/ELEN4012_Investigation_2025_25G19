@@ -78,7 +78,7 @@ class KNN_mode:
 
     
 class Param_Modes:  #modes or models?
-    def __init__(self,knn_ks_ = range(3,26)):
+    def __init__(self,knn_ks_ = [3,10,15]):
     
         self.knn_ks = knn_ks_
 
@@ -98,8 +98,11 @@ class Param_Modes:  #modes or models?
         ]
 
         self.KNN_modes = [
-            KNN_mode(base_param = 3, weights_='distance', label_=0),
-            KNN_mode(base_param = 2, weights_='uniform', label_=1)
+            KNN_mode().get_KNN_array(knn_ks_, weights_='uniform', p_= 2, label_=0),
+            KNN_mode().get_KNN_array(knn_ks_, weights_='distance', label_=1),
+            KNN_mode().get_KNN_array(knn_ks_, weights_='distance', algorithm_='ball_tree', label_=2),
+            KNN_mode().get_KNN_array(knn_ks_, weights_='distance', algorithm_='kd_tree', label_=3),
+            KNN_mode().get_KNN_array(knn_ks_, weights_='distance', p_= 1, label_=4)
             #etc
         ]
 
