@@ -98,8 +98,8 @@ class Param_Modes:  #modes or models?
         ]
 
         self.KNN_modes = [
-            KNN_mode().get_KNN_array(knn_ks_, weights_='distance', label_=0),
-            KNN_mode().get_KNN_array(knn_ks_, weights_='uniform', label_=1)
+            KNN_mode(base_param = 3, weights_='distance', label_=0),
+            KNN_mode(base_param = 2, weights_='uniform', label_=1)
             #etc
         ]
 

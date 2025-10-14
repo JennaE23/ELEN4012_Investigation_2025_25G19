@@ -3,12 +3,12 @@ from qiskit_ibm_runtime.fake_provider import FakeFez, FakeMarrakesh #fez, marrak
 from qiskit_ibm_runtime import QiskitRuntimeService
 
 from investigation_functions import data_extract_funcs
-service = QiskitRuntimeService()
+#service = QiskitRuntimeService()
 
 # Backend Lists
 original_fake_backends = [FakeTorino(), FakeBrisbane()]
 fake_backends = [FakeTorino(), FakeFez(), FakeMarrakesh(),FakeBrisbane()]
-hardware_backends = [ service.backend('ibm_torino'),service.backend('ibm_brisbane')]
+#hardware_backends = [ service.backend('ibm_torino'),service.backend('ibm_brisbane')]
 
 original_fake_backend_names = ['fake_brisbane','fake_torino']
 fake_backend_names = ['fake_brisbane','fake_fez','fake_marrakesh','fake_torino']

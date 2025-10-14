@@ -1,6 +1,6 @@
 
 from investigation_functions import ml_funcs as mlf
-#from investigation_functions import data_process_funcs as dpf
+from investigation_functions import test_table_funcs as ttf
 
 import numpy as np
 #from sklearn.model_selection import cross_val_score
@@ -111,23 +111,6 @@ def preprocess_dfs(dfs, preprocessing_settings):
         # Add more preprocessing options as needed
     return processed_dfs
 
-# def KNN_model_setup(base_parameter, param_settings):
-#     match param_settings:
-#         case 0:
-#             model = KNeighborsClassifier(n_neighbors=base_parameter)
-#         case 1:
-#             model = KNeighborsClassifier(n_neighbors=base_parameter, weights="distance", p=1)
-#         case _:
-#             raise ValueError("Unsupported parameter setting for KNN")
-#     return model
-
-# def SVM_model_setup(base_parameter, param_settings):
-#     match param_settings:
-#         case 0:
-#             model = svm.SVC(kernel=base_parameter)
-#         case _:
-#             raise ValueError("Unsupported parameter setting for SVM")
-#     return model
 
 def get_file_name_and_fields(ml_algorithm, dir = '../ML_Results/', file_name = None):
     general_fields = ['nr_qubits','machines','tr&v exp_type','tr&v circuits', 'test exp_type','test circuits','preprocess settings']
@@ -212,3 +195,52 @@ def run_and_record_test_table_for_mode(test_table,param_mode, dir='../ML_Results
             #print_test_table([test_table_HSR4q[i]],circ_types=False)
             
             run_and_print_ml_results(train_df,test_dfs,param_mode,dir = dir,cross_validation=True, file_name = file_name)
+
+
+#initial_list = ttf.get_HSR_array_all_backends(nr_qubits,dir_runs, True)
+
+def run_and_record_HSR_c111(initial_list_H_S_R,dir_ml,file_name,param_modes):
+
+    test_table_HSR = ttf.get_HSR_test_table(initial_list_H_S_R)
+    for mode in param_modes:
+        run_and_record_test_table_for_mode(
+            test_table_HSR,mode,dir_ml,file_name
+        )
+
+def run_and_record_HSR_for_each_c_type(initial_list_H_S_R, dir_ml, file_name, param_modes):
+    #HSR for one circuit type at a time ('001','010','100')
+    circuit_options = ['1','2','3']
+    
+    for circuit_type in circuit_options:
+
+        init_list_circ =[]
+        for exp_type in initial_list_H_S_R:
+            init_list_circ.append(exp_type[exp_type['circuit_type']==circuit_type])
+
+        test_table_HSR_c = ttf.get_HSR_test_table(init_list_circ)
+        for mode in param_modes:
+            run_and_record_test_table_for_mode(
+                test_table_HSR_c,mode,dir_ml,file_name
+            )
+
+def run_and_record_circuit_test_table(initial_list_H_S_R, dir_ml, file_name, param_modes):
+    for exp_type in initial_list_H_S_R:
+        test_table_circuits = ttf.get_circuits_test_table(exp_type)
+        for mode in param_modes:
+            run_and_record_test_table_for_mode(
+                test_table_circuits,mode,dir_ml,file_name
+            )
+
+def run_and_record_backends_v_backends(
+        initial_list_H_S_R, dir_ml, file_name, param_modes_best_H_S_R, backend_combos_list
+    ):
+    # svm_modes_for_exp_type = svm_modes[2:5]
+    modes_for_exp_type = param_modes_best_H_S_R  
+     
+    for exp_type,mode in zip(initial_list_H_S_R,modes_for_exp_type):
+        
+        #split_into_backends
+        for backend_combo in backend_combos_list:
+            self_test_b = exp_type[exp_type['backend'].isin(backend_combo)]
+            run_and_print_ml_results(
+                self_test_b,[self_test_b],mode,dir_ml, file_name=file_name)
