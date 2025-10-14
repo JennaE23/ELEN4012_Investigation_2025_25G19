@@ -29,7 +29,7 @@ param_modes = svm_modes
 param_modes_best_H_S_R=param_modes[2:5]
 ml2csv.create_ml_results_csv('SVM',dir_ml)
 
-for qubit_nr in [4]:#qubits_list:
+for qubit_nr in [16]:#qubits_list:
     initial_list = ttf.get_HSR_array_all_backends(qubit_nr,dir_runs, True)
     
     ml2csv.run_and_record_HSR_c111(initial_list,dir_ml,file_name,param_modes)
