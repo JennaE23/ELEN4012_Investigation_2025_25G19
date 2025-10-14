@@ -31,11 +31,11 @@ dir_Sims_list = ["../Simulated_results/4q/","../Simulated_results/8q/","../Simul
 dir_Refr_Sims_list = ["../Refreshed_Simulated_results/4q/","../Refreshed_Simulated_results/8q/","../Refreshed_Simulated_results/16q/"]
 
 # Functions to update lists
-def update_hardware_backends(hardware_backends_old, service_new):
-    hardware_backends_new = hardware_backends_old
-    new_backends = [service_new.backend('ibm_fez'),service_new.backend('ibm_marrakesh')]
-    hardware_backends_new.extend(new_backends)
-    return hardware_backends
+# def update_hardware_backends(hardware_backends_old, service_new):
+#     hardware_backends_new = hardware_backends_old
+#     new_backends = [service_new.backend('ibm_fez'),service_new.backend('ibm_marrakesh')]
+#     hardware_backends_new.extend(new_backends)
+#     return hardware_backends
 
 def update_hardware_backend_names(hardware_backend_names):
     hardware_backends_new = hardware_backend_names
