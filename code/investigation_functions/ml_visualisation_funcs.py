@@ -88,9 +88,10 @@ def drop_preproc(df):
     df_ = df.drop('preprocess settings',axis =1)
     return df_
 
-def make_easy2plot(df,drop_nr_q = True):
+def make_easy2plot(df,drop_nr_q = True, add_cv_avg = True):
     df_ = df
-    df_ = add_avg_cv_col(df_)
+    if add_cv_avg:
+        df_ = add_avg_cv_col(df_)
     df_ = drop_cvs(df_)
     df_ = drop_preproc(df_)
     if drop_nr_q:
