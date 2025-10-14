@@ -18,6 +18,7 @@ for knn_modes in knn_modes_all_k:
 dir_runs = ""
 dir_ml = "ML_results/SVM/"
 file_name = "svm_16q.csv"
+ml2csv.create_ml_results_csv('SVM',dir_ml,file_name)
 
 backend_list = ['brisbane','torino','fez','marrakesh']
 backend_combos = list(combinations(backend_list, 2))
@@ -27,7 +28,7 @@ backend_combos.append(herons)
 #to be changed if changing betw SVM and KNN:
 param_modes = svm_modes
 param_modes_best_H_S_R=param_modes[2:5]
-ml2csv.create_ml_results_csv('SVM',dir_ml)
+
 
 for qubit_nr in [16]:#qubits_list:
     initial_list = ttf.get_HSR_array_all_backends(qubit_nr,dir_runs, True)
