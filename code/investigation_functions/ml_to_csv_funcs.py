@@ -101,11 +101,10 @@ def preprocess_dfs(dfs, preprocessing_settings):
     # print("Preprocessing settings:", preprocessing_settings)
     processed_dfs = []
     for df in dfs:
-        match preprocessing_settings:
-            case 0:
-                df_processed = mlf.apply_preprosessing(df) 
-            case _:
-                raise ValueError("Unsupported preprocessing setting")
+        if preprocessing_settings==0:
+            df_processed = mlf.apply_preprosessing(df) 
+        else:
+            raise ValueError("Unsupported preprocessing setting")
 
         processed_dfs.append(df_processed)
         # Add more preprocessing options as needed
@@ -119,15 +118,14 @@ def get_file_name_and_fields(ml_algorithm, dir = '../ML_Results/', file_name = N
         f_name = ml_algorithm + '_results.csv'
     else:
         f_name = file_name
-    match ml_algorithm:
-        case 'SVM':
-            file_name = dir + f_name
-            ml_param_fields = ['kernal', 'param settings']
-        case 'KNN':
-            file_name = dir + f_name
-            ml_param_fields = ['n_neighbors', 'param settings']
-        case _:
-            raise ValueError("Unsupported ML algorithm")
+    if ml_algorithm == 'SVM':
+        file_name = dir + f_name
+        ml_param_fields = ['kernal', 'param settings']
+    elif ml_algorithm=='KNN':
+        file_name = dir + f_name
+        ml_param_fields = ['n_neighbors', 'param settings']
+    else:
+        raise ValueError("Unsupported ML algorithm")
     fields = general_fields + ml_param_fields + score_fields
     return file_name, fields
 
