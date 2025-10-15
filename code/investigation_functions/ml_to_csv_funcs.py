@@ -246,3 +246,24 @@ def run_and_record_backends_v_backends(
                 self_test_b,[self_test_b],mode,
                 dir_ml, cross_validation=cross_val,file_name=file_name
             )
+
+def run_and_record_bvb_for_each_c_type(
+        initial_list_H_S_R, dir_ml, file_name, param_modes_best_HSR,
+        backend_combos_list,
+        cross_val = True
+        ):
+    #HSR for one circuit type at a time ('001','010','100')
+    circuit_options = ['1','2','3']
+    
+    for circuit_type in circuit_options:
+
+        init_list_circ =[]
+        for exp_type in initial_list_H_S_R:
+            init_list_circ.append(exp_type[exp_type['circuit_type']==circuit_type])
+
+        run_and_record_backends_v_backends(
+            init_list_circ, dir_ml, 
+            file_name, param_modes_best_HSR, backend_combos_list,
+            cross_val
+        )
+        
