@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from investigation_functions import ml_funcs as mlf
+import seaborn as sns
+import numpy as np
 
 def print_and_plot_svm_models(df_processed, models, model_names, df_name='', graph_type = 'bar',to_print = 'False'):
     scores = []
@@ -97,3 +99,30 @@ def make_easy2plot(df,drop_nr_q = True, add_cv_avg = True):
     if drop_nr_q:
         df_ = df_.drop('nr_qubits',axis = 1)
     return df_
+
+def plot_bar_per_qubit_nr(
+        df4q,df8q,df16q, labels_,nr_cat =3,x_='machines',y_='accuracy',lowerY=0,
+        hue_ = 'tr&v exp_type'):
+    
+    plt.subplot(311)
+    ax_4qs =sns.barplot(
+        df4q, x = x_, y = y_,
+        hue = hue_)
+    ax_4qs.set_ylim(tuple([lowerY,1]))
+    ax_4qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
+
+    plt.subplot(312)
+    ax_8qs=sns.barplot(
+        df8q, x = x_, y = y_,
+        hue = hue_)
+    ax_8qs.set_ylim(tuple([lowerY,1]))
+    ax_8qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
+
+    plt.subplot(313)
+    ax_16qs=sns.barplot(
+        df16q, x = x_, y = y_,
+        hue = hue_)
+    ax_16qs.set_ylim(tuple([lowerY,1]))
+    ax_16qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
+
+    plt.show()
