@@ -230,7 +230,9 @@ def run_and_record_circuit_test_table(initial_list_H_S_R, dir_ml, file_name, par
             )
 
 def run_and_record_backends_v_backends(
-        initial_list_H_S_R, dir_ml, file_name, param_modes_best_H_S_R, backend_combos_list
+        initial_list_H_S_R, dir_ml, 
+        file_name, param_modes_best_H_S_R, backend_combos_list,
+        cross_val = True
     ):
     # svm_modes_for_exp_type = svm_modes[2:5]
     modes_for_exp_type = param_modes_best_H_S_R  
@@ -241,4 +243,6 @@ def run_and_record_backends_v_backends(
         for backend_combo in backend_combos_list:
             self_test_b = exp_type[exp_type['backend'].isin(backend_combo)]
             run_and_print_ml_results(
-                self_test_b,[self_test_b],mode,dir_ml, file_name=file_name)
+                self_test_b,[self_test_b],mode,
+                dir_ml, cross_validation=cross_val,file_name=file_name
+            )

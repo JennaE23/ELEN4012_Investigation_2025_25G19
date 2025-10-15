@@ -17,7 +17,7 @@ for knn_modes in knn_modes_all_k:
 
 dir_runs = ""
 dir_ml = "ML_results/SVM/"
-file_name = "svm_16q_bvb.csv"
+file_name = "svm_16q_bvb2.csv"
 # file_name = "svm_4q_test.csv"
 ml2csv.create_ml_results_csv('SVM',dir_ml,file_name)
 
@@ -25,6 +25,7 @@ backend_list = ['brisbane','torino','fez','marrakesh']
 backend_combos = list(combinations(backend_list, 2))
 herons = tuple(['torino','fez','marrakesh'])
 backend_combos.append(herons)
+
 
 #to be changed if changing betw SVM and KNN:
 param_modes = svm_modes
