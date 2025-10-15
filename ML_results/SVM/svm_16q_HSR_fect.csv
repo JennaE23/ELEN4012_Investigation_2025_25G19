@@ -1,0 +1,181 @@
+nr_qubits,machines,tr&v exp_type,tr&v circuits,test exp_type,test circuits,preprocess settings,kernal,param settings,accuracy,cv_1,cv_2,cv_3,cv_4,cv_5
+16,1111,Hardware,100,Hardware,100,0,linear,0,0.9,0.9375,0.9375,0.90625,0.9375,0.90625
+16,1111,Hardware,100,Simulation,100,0,linear,0,0.23273657289002558,nan,nan,nan,nan,nan
+16,1111,Hardware,100,Refreshed_Simulation,100,0,linear,0,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,100,Sim and Refreshed,100,0,linear,0,0.24146649810366624,nan,nan,nan,nan,nan
+16,1111,Simulation,100,Simulation,100,0,linear,0,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Simulation,100,Hardware,100,0,linear,0,0.25,nan,nan,nan,nan,nan
+16,1111,Simulation,100,Refreshed_Simulation,100,0,linear,0,0.9975,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,100,Refreshed_Simulation,100,0,linear,0,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Refreshed_Simulation,100,Hardware,100,0,linear,0,0.25,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,100,Simulation,100,0,linear,0,0.7595907928388747,nan,nan,nan,nan,nan
+16,1111,Sim and Refreshed,100,Sim and Refreshed,100,0,linear,0,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Sim and Refreshed,100,Hardware,100,0,linear,0,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,100,Hardware,100,0,poly,1,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Hardware,100,Simulation,100,0,poly,1,0.23273657289002558,nan,nan,nan,nan,nan
+16,1111,Hardware,100,Refreshed_Simulation,100,0,poly,1,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,100,Sim and Refreshed,100,0,poly,1,0.24146649810366624,nan,nan,nan,nan,nan
+16,1111,Simulation,100,Simulation,100,0,poly,1,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Simulation,100,Hardware,100,0,poly,1,0.25,nan,nan,nan,nan,nan
+16,1111,Simulation,100,Refreshed_Simulation,100,0,poly,1,0.685,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,100,Refreshed_Simulation,100,0,poly,1,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Refreshed_Simulation,100,Hardware,100,0,poly,1,0.25,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,100,Simulation,100,0,poly,1,0.5217391304347826,nan,nan,nan,nan,nan
+16,1111,Sim and Refreshed,100,Sim and Refreshed,100,0,poly,1,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Sim and Refreshed,100,Hardware,100,0,poly,1,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,100,Hardware,100,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Hardware,100,Simulation,100,0,rbf,2,0.23273657289002558,nan,nan,nan,nan,nan
+16,1111,Hardware,100,Refreshed_Simulation,100,0,rbf,2,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,100,Sim and Refreshed,100,0,rbf,2,0.24146649810366624,nan,nan,nan,nan,nan
+16,1111,Simulation,100,Simulation,100,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Simulation,100,Hardware,100,0,rbf,2,0.25,nan,nan,nan,nan,nan
+16,1111,Simulation,100,Refreshed_Simulation,100,0,rbf,2,0.9975,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,100,Refreshed_Simulation,100,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Refreshed_Simulation,100,Hardware,100,0,rbf,2,0.25,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,100,Simulation,100,0,rbf,2,0.7570332480818415,nan,nan,nan,nan,nan
+16,1111,Sim and Refreshed,100,Sim and Refreshed,100,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Sim and Refreshed,100,Hardware,100,0,rbf,2,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,100,Hardware,100,0,poly,3,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Hardware,100,Simulation,100,0,poly,3,0.23273657289002558,nan,nan,nan,nan,nan
+16,1111,Hardware,100,Refreshed_Simulation,100,0,poly,3,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,100,Sim and Refreshed,100,0,poly,3,0.24146649810366624,nan,nan,nan,nan,nan
+16,1111,Simulation,100,Simulation,100,0,poly,3,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Simulation,100,Hardware,100,0,poly,3,0.25,nan,nan,nan,nan,nan
+16,1111,Simulation,100,Refreshed_Simulation,100,0,poly,3,1.0,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,100,Refreshed_Simulation,100,0,poly,3,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Refreshed_Simulation,100,Hardware,100,0,poly,3,0.25,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,100,Simulation,100,0,poly,3,0.7493606138107417,nan,nan,nan,nan,nan
+16,1111,Sim and Refreshed,100,Sim and Refreshed,100,0,poly,3,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Sim and Refreshed,100,Hardware,100,0,poly,3,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,100,Hardware,100,0,poly,4,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Hardware,100,Simulation,100,0,poly,4,0.23273657289002558,nan,nan,nan,nan,nan
+16,1111,Hardware,100,Refreshed_Simulation,100,0,poly,4,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,100,Sim and Refreshed,100,0,poly,4,0.24146649810366624,nan,nan,nan,nan,nan
+16,1111,Simulation,100,Simulation,100,0,poly,4,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Simulation,100,Hardware,100,0,poly,4,0.25,nan,nan,nan,nan,nan
+16,1111,Simulation,100,Refreshed_Simulation,100,0,poly,4,0.725,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,100,Refreshed_Simulation,100,0,poly,4,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Refreshed_Simulation,100,Hardware,100,0,poly,4,0.25,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,100,Simulation,100,0,poly,4,0.5242966751918159,nan,nan,nan,nan,nan
+16,1111,Sim and Refreshed,100,Sim and Refreshed,100,0,poly,4,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Sim and Refreshed,100,Hardware,100,0,poly,4,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,010,Hardware,010,0,linear,0,1.0,0.875,0.96875,0.90625,0.875,0.9375
+16,1111,Hardware,010,Simulation,010,0,linear,0,0.23273657289002558,nan,nan,nan,nan,nan
+16,1111,Hardware,010,Refreshed_Simulation,010,0,linear,0,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,010,Sim and Refreshed,010,0,linear,0,0.24146649810366624,nan,nan,nan,nan,nan
+16,1111,Simulation,010,Simulation,010,0,linear,0,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Simulation,010,Hardware,010,0,linear,0,0.25,nan,nan,nan,nan,nan
+16,1111,Simulation,010,Refreshed_Simulation,010,0,linear,0,0.5,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,010,Refreshed_Simulation,010,0,linear,0,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Refreshed_Simulation,010,Hardware,010,0,linear,0,0.25,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,010,Simulation,010,0,linear,0,0.5115089514066496,nan,nan,nan,nan,nan
+16,1111,Sim and Refreshed,010,Sim and Refreshed,010,0,linear,0,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Sim and Refreshed,010,Hardware,010,0,linear,0,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,010,Hardware,010,0,poly,1,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Hardware,010,Simulation,010,0,poly,1,0.23273657289002558,nan,nan,nan,nan,nan
+16,1111,Hardware,010,Refreshed_Simulation,010,0,poly,1,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,010,Sim and Refreshed,010,0,poly,1,0.24146649810366624,nan,nan,nan,nan,nan
+16,1111,Simulation,010,Simulation,010,0,poly,1,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Simulation,010,Hardware,010,0,poly,1,0.25,nan,nan,nan,nan,nan
+16,1111,Simulation,010,Refreshed_Simulation,010,0,poly,1,0.5,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,010,Refreshed_Simulation,010,0,poly,1,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Refreshed_Simulation,010,Hardware,010,0,poly,1,0.25,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,010,Simulation,010,0,poly,1,0.5089514066496164,nan,nan,nan,nan,nan
+16,1111,Sim and Refreshed,010,Sim and Refreshed,010,0,poly,1,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Sim and Refreshed,010,Hardware,010,0,poly,1,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,010,Hardware,010,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Hardware,010,Simulation,010,0,rbf,2,0.23273657289002558,nan,nan,nan,nan,nan
+16,1111,Hardware,010,Refreshed_Simulation,010,0,rbf,2,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,010,Sim and Refreshed,010,0,rbf,2,0.24146649810366624,nan,nan,nan,nan,nan
+16,1111,Simulation,010,Simulation,010,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Simulation,010,Hardware,010,0,rbf,2,0.25,nan,nan,nan,nan,nan
+16,1111,Simulation,010,Refreshed_Simulation,010,0,rbf,2,0.5,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,010,Refreshed_Simulation,010,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Refreshed_Simulation,010,Hardware,010,0,rbf,2,0.25,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,010,Simulation,010,0,rbf,2,0.5115089514066496,nan,nan,nan,nan,nan
+16,1111,Sim and Refreshed,010,Sim and Refreshed,010,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Sim and Refreshed,010,Hardware,010,0,rbf,2,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,010,Hardware,010,0,poly,3,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Hardware,010,Simulation,010,0,poly,3,0.23273657289002558,nan,nan,nan,nan,nan
+16,1111,Hardware,010,Refreshed_Simulation,010,0,poly,3,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,010,Sim and Refreshed,010,0,poly,3,0.24146649810366624,nan,nan,nan,nan,nan
+16,1111,Simulation,010,Simulation,010,0,poly,3,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Simulation,010,Hardware,010,0,poly,3,0.25,nan,nan,nan,nan,nan
+16,1111,Simulation,010,Refreshed_Simulation,010,0,poly,3,0.5,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,010,Refreshed_Simulation,010,0,poly,3,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Refreshed_Simulation,010,Hardware,010,0,poly,3,0.25,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,010,Simulation,010,0,poly,3,0.5115089514066496,nan,nan,nan,nan,nan
+16,1111,Sim and Refreshed,010,Sim and Refreshed,010,0,poly,3,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Sim and Refreshed,010,Hardware,010,0,poly,3,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,010,Hardware,010,0,poly,4,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Hardware,010,Simulation,010,0,poly,4,0.23273657289002558,nan,nan,nan,nan,nan
+16,1111,Hardware,010,Refreshed_Simulation,010,0,poly,4,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,010,Sim and Refreshed,010,0,poly,4,0.24146649810366624,nan,nan,nan,nan,nan
+16,1111,Simulation,010,Simulation,010,0,poly,4,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Simulation,010,Hardware,010,0,poly,4,0.25,nan,nan,nan,nan,nan
+16,1111,Simulation,010,Refreshed_Simulation,010,0,poly,4,0.5,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,010,Refreshed_Simulation,010,0,poly,4,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Refreshed_Simulation,010,Hardware,010,0,poly,4,0.25,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,010,Simulation,010,0,poly,4,0.5115089514066496,nan,nan,nan,nan,nan
+16,1111,Sim and Refreshed,010,Sim and Refreshed,010,0,poly,4,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Sim and Refreshed,010,Hardware,010,0,poly,4,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,001,Hardware,001,0,linear,0,0.15,0.28125,0.28125,0.28125,0.28125,0.25
+16,1111,Hardware,001,Simulation,001,0,linear,0,0.23273657289002558,nan,nan,nan,nan,nan
+16,1111,Hardware,001,Refreshed_Simulation,001,0,linear,0,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,001,Sim and Refreshed,001,0,linear,0,0.24146649810366624,nan,nan,nan,nan,nan
+16,1111,Simulation,001,Simulation,001,0,linear,0,1.0,0.8412698412698413,0.8571428571428571,0.8387096774193549,0.8387096774193549,0.8548387096774194
+16,1111,Simulation,001,Hardware,001,0,linear,0,0.25,nan,nan,nan,nan,nan
+16,1111,Simulation,001,Refreshed_Simulation,001,0,linear,0,0.4725,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,001,Refreshed_Simulation,001,0,linear,0,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Refreshed_Simulation,001,Hardware,001,0,linear,0,0.25,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,001,Simulation,001,0,linear,0,0.29923273657289,nan,nan,nan,nan,nan
+16,1111,Sim and Refreshed,001,Sim and Refreshed,001,0,linear,0,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Sim and Refreshed,001,Hardware,001,0,linear,0,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,001,Hardware,001,0,poly,1,0.625,0.625,0.6875,0.59375,0.5625,0.5625
+16,1111,Hardware,001,Simulation,001,0,poly,1,0.23273657289002558,nan,nan,nan,nan,nan
+16,1111,Hardware,001,Refreshed_Simulation,001,0,poly,1,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,001,Sim and Refreshed,001,0,poly,1,0.24146649810366624,nan,nan,nan,nan,nan
+16,1111,Simulation,001,Simulation,001,0,poly,1,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Simulation,001,Hardware,001,0,poly,1,0.25,nan,nan,nan,nan,nan
+16,1111,Simulation,001,Refreshed_Simulation,001,0,poly,1,0.4575,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,001,Refreshed_Simulation,001,0,poly,1,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Refreshed_Simulation,001,Hardware,001,0,poly,1,0.25,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,001,Simulation,001,0,poly,1,0.31202046035805625,nan,nan,nan,nan,nan
+16,1111,Sim and Refreshed,001,Sim and Refreshed,001,0,poly,1,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Sim and Refreshed,001,Hardware,001,0,poly,1,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,001,Hardware,001,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Hardware,001,Simulation,001,0,rbf,2,0.23273657289002558,nan,nan,nan,nan,nan
+16,1111,Hardware,001,Refreshed_Simulation,001,0,rbf,2,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,001,Sim and Refreshed,001,0,rbf,2,0.24146649810366624,nan,nan,nan,nan,nan
+16,1111,Simulation,001,Simulation,001,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Simulation,001,Hardware,001,0,rbf,2,0.25,nan,nan,nan,nan,nan
+16,1111,Simulation,001,Refreshed_Simulation,001,0,rbf,2,0.4675,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,001,Refreshed_Simulation,001,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Refreshed_Simulation,001,Hardware,001,0,rbf,2,0.25,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,001,Simulation,001,0,rbf,2,0.30179028132992325,nan,nan,nan,nan,nan
+16,1111,Sim and Refreshed,001,Sim and Refreshed,001,0,rbf,2,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Sim and Refreshed,001,Hardware,001,0,rbf,2,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,001,Hardware,001,0,poly,3,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Hardware,001,Simulation,001,0,poly,3,0.23273657289002558,nan,nan,nan,nan,nan
+16,1111,Hardware,001,Refreshed_Simulation,001,0,poly,3,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,001,Sim and Refreshed,001,0,poly,3,0.24146649810366624,nan,nan,nan,nan,nan
+16,1111,Simulation,001,Simulation,001,0,poly,3,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Simulation,001,Hardware,001,0,poly,3,0.25,nan,nan,nan,nan,nan
+16,1111,Simulation,001,Refreshed_Simulation,001,0,poly,3,0.475,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,001,Refreshed_Simulation,001,0,poly,3,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Refreshed_Simulation,001,Hardware,001,0,poly,3,0.25,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,001,Simulation,001,0,poly,3,0.30179028132992325,nan,nan,nan,nan,nan
+16,1111,Sim and Refreshed,001,Sim and Refreshed,001,0,poly,3,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Sim and Refreshed,001,Hardware,001,0,poly,3,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,001,Hardware,001,0,poly,4,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Hardware,001,Simulation,001,0,poly,4,0.23273657289002558,nan,nan,nan,nan,nan
+16,1111,Hardware,001,Refreshed_Simulation,001,0,poly,4,0.25,nan,nan,nan,nan,nan
+16,1111,Hardware,001,Sim and Refreshed,001,0,poly,4,0.24146649810366624,nan,nan,nan,nan,nan
+16,1111,Simulation,001,Simulation,001,0,poly,4,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Simulation,001,Hardware,001,0,poly,4,0.25,nan,nan,nan,nan,nan
+16,1111,Simulation,001,Refreshed_Simulation,001,0,poly,4,0.475,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,001,Refreshed_Simulation,001,0,poly,4,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Refreshed_Simulation,001,Hardware,001,0,poly,4,0.25,nan,nan,nan,nan,nan
+16,1111,Refreshed_Simulation,001,Simulation,001,0,poly,4,0.30434782608695654,nan,nan,nan,nan,nan
+16,1111,Sim and Refreshed,001,Sim and Refreshed,001,0,poly,4,1.0,1.0,1.0,1.0,1.0,1.0
+16,1111,Sim and Refreshed,001,Hardware,001,0,poly,4,0.25,nan,nan,nan,nan,nan
