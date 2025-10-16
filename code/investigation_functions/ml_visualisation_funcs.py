@@ -101,8 +101,9 @@ def make_easy2plot(df,drop_nr_q = True, add_cv_avg = True):
     return df_
 
 def plot_bar_per_qubit_nr(
-        df4q,df8q,df16q, labels_,
-        title_, df_titles_ =['4q','8q','16q'],
+        df4q,df8q,df16q, 
+        title_, labels_ = ["Hardware",'Simulation','Refreshed_Sims',"Sim and Refreshed"],
+        df_titles_ =['4q','8q','16q'],
         nr_cat =3,x_='machines',y_='accuracy',lowerY=0,
         hue_ = 'tr&v exp_type', legend_off = True,
         fig_size_ = (9,6)):
