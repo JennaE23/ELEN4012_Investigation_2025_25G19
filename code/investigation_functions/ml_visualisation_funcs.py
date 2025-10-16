@@ -101,15 +101,23 @@ def make_easy2plot(df,drop_nr_q = True, add_cv_avg = True):
     return df_
 
 def plot_bar_per_qubit_nr(
-        df4q,df8q,df16q, labels_,nr_cat =3,x_='machines',y_='accuracy',lowerY=0,
-        hue_ = 'tr&v exp_type'):
-    
+        df4q,df8q,df16q, labels_,
+        title_, df_titles_ =['4q','8q','16q'],
+        nr_cat =3,x_='machines',y_='accuracy',lowerY=0,
+        hue_ = 'tr&v exp_type', legend_off = True,
+        fig_size_ = (9,6)):
+    fig = plt.figure(layout = 'constrained',figsize=fig_size_)
+    fig.suptitle(title_, fontsize=16, fontweight='bold')
+
     plt.subplot(311)
     ax_4qs =sns.barplot(
         df4q, x = x_, y = y_,
         hue = hue_)
     ax_4qs.set_ylim(tuple([lowerY,1]))
     ax_4qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
+    ax_4qs.set_title(df_titles_[0])
+    if legend_off:
+        ax_4qs.get_legend().remove()
 
     plt.subplot(312)
     ax_8qs=sns.barplot(
@@ -117,6 +125,9 @@ def plot_bar_per_qubit_nr(
         hue = hue_)
     ax_8qs.set_ylim(tuple([lowerY,1]))
     ax_8qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
+    ax_8qs.set_title(df_titles_[1])
+    if legend_off:
+        ax_8qs.get_legend().remove()
 
     plt.subplot(313)
     ax_16qs=sns.barplot(
@@ -124,5 +135,11 @@ def plot_bar_per_qubit_nr(
         hue = hue_)
     ax_16qs.set_ylim(tuple([lowerY,1]))
     ax_16qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
+    ax_16qs.set_title(df_titles_[2])
+    if legend_off:
+        ax_16qs.get_legend().remove()
 
+    plt.legend(bbox_to_anchor=(1.05, 0.5), loc='center left', borderaxespad=0.)
+    
+    #plt.legend(["Hardware",'Simulation','Refreshed_Sims',"Sim and Refreshed"])
     plt.show()
