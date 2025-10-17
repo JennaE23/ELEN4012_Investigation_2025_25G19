@@ -106,7 +106,10 @@ def plot_bar_per_qubit_nr(
         df_titles_ =['4q','8q','16q'],
         nr_cat =3,x_='machines',y_='accuracy',lowerY=0,
         hue_ = 'tr&v exp_type', legend_off = True,
-        fig_size_ = (9,6)):
+        fig_size_ = (9,6),
+        share_cat_labels = True,
+        plot1_labels = None, plot2_labels = None, plot3_labels = None):
+    
     fig = plt.figure(layout = 'constrained',figsize=fig_size_)
     fig.suptitle(title_, fontsize=16, fontweight='bold')
 
@@ -115,7 +118,10 @@ def plot_bar_per_qubit_nr(
         df4q, x = x_, y = y_,
         hue = hue_)
     ax_4qs.set_ylim(tuple([lowerY,1]))
-    ax_4qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
+    if not share_cat_labels:
+        ax_4qs.set_xticks(ticks = np.arange(0,nr_cat),labels=plot1_labels)
+    else:
+        ax_4qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
     ax_4qs.set_title(df_titles_[0])
     if legend_off:
         ax_4qs.get_legend().remove()
@@ -125,7 +131,10 @@ def plot_bar_per_qubit_nr(
         df8q, x = x_, y = y_,
         hue = hue_)
     ax_8qs.set_ylim(tuple([lowerY,1]))
-    ax_8qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
+    if not share_cat_labels:
+        ax_8qs.set_xticks(ticks = np.arange(0,nr_cat),labels=plot2_labels)
+    else:
+        ax_8qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
     ax_8qs.set_title(df_titles_[1])
     if legend_off:
         ax_8qs.get_legend().remove()
@@ -135,7 +144,10 @@ def plot_bar_per_qubit_nr(
         df16q, x = x_, y = y_,
         hue = hue_)
     ax_16qs.set_ylim(tuple([lowerY,1]))
-    ax_16qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
+    if not share_cat_labels:
+        ax_16qs.set_xticks(ticks = np.arange(0,nr_cat),labels=plot3_labels)
+    else:
+        ax_16qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
     ax_16qs.set_title(df_titles_[2])
     if legend_off:
         ax_16qs.get_legend().remove()
