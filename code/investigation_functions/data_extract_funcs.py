@@ -39,10 +39,12 @@ def add_dir_to_filenames_list(dir_,file_names):
             backend_files[i]= dir_ + backend_files[i]
     return file_names_new
 
-def add_dir_to_filenames_arr(dir_,file_names):
+def add_dir_to_filenames_arr(dir__,file_names):
     file_names_new =[]
     for i in range(len(file_names)):
-        file_names_new.append( dir_ + file_names[i])
+        # print(type(dir__))
+        # print(type(file_names[i]))
+        file_names_new.append( dir__ + file_names[i])
     return file_names_new
 
 def create_csvs(file_names_array, fields):

@@ -39,9 +39,9 @@ def add_file_to_meta_df(meta_df,file_name,dir_):
     row = extract_cols_from_filename(file_name,dir_)
     meta_df.loc[len(meta_df)] = row
     
-def add_qfolder_to_df(df,folder_dir,backends_,nr_qubits):
-    for backend in backends_:
-        backend_name = backend.backend_name
+def add_qfolder_to_df(df,folder_dir,backend_names,nr_qubits):
+    for backend_name in backend_names:
+        #backend_name = backend.backend_name
         file_names = data_extract_funcs.make_file_names(backend_name,nr_qubits)
         for file_name in file_names:
             add_file_to_meta_df(df,file_name,folder_dir)
@@ -52,10 +52,10 @@ def add_qfolder_to_df_generic(df,folder_dir,backends_,nr_qubits):
     for file_name in file_names:
         add_file_to_meta_df(df,file_name,folder_dir)
 
-def add_qfolders(df,backends,folders):
+def add_qfolders(df,backend_names,folders):
     for folder in folders:
         nr_qubits = re.findall(r'\d+',folder)[0]
-        add_qfolder_to_df(df,folder,backends,nr_qubits)
+        add_qfolder_to_df(df,folder,backend_names,nr_qubits)
 
 def add_qfolders_generic(df,backends,folders):
     for folder in folders:
@@ -74,7 +74,8 @@ def blank_meta_df():
 def load_meta_df(meta_df,experiment_type, exp_dir_='',updated_results = False, updated_service = 'Default'):#Hardware,Simulation,Refreshed_Simulation
     dir_Hardware = backend_vars.make_dir_list(
         exp_dir_,
-        backend_vars.Hardware_folder
+        backend_vars.Hardware_folder,
+        incl_16=True
     )
     dir_Sims = backend_vars.make_dir_list(
         exp_dir_,
@@ -87,31 +88,31 @@ def load_meta_df(meta_df,experiment_type, exp_dir_='',updated_results = False, u
         incl_16=True
     )
 
-    backends_ =[]
+    backend_names_ =[]
     dir_ =[]
     match experiment_type:
         case 'Hardware':
             dir_ = dir_Hardware
-            hardware_backends = backend_vars.hardware_backends
+            hardware_backend_names = backend_vars.hardware_backend_names
             if updated_results:
-                hardware_backends = backend_vars.update_hardware_backends(hardware_backends, updated_service)
-            backends_ = hardware_backends
+                hardware_backend_names = backend_vars.update_hardware_backend_names(hardware_backend_names)
+            backend_names_ = hardware_backend_names
         case 'Simulation':
             dir_ = dir_Sims
-            backends_ = backend_vars.fake_backends
+            backend_names_ = backend_vars.fake_backend_names
         case 'Refreshed_Simulation':
             dir_ = dir_Refr_Sims
             if updated_results:
-                backends_ = backend_vars.fake_backends
+                backend_names_ = backend_vars.fake_backend_names
             else:
-                backends_ = backend_vars.original_fake_backends
+                backend_names_ = backend_vars.original_fake_backend_names
         case 'Generic_Simulation':
             dir_ = dir_Sims
-            backends_ = "fake_genericV2"
-            add_qfolders_generic(meta_df, backends_,dir_)
+            backend_names_ = "fake_genericV2"
+            add_qfolders_generic(meta_df, backend_names_,dir_)
             return
 
-    add_qfolders(meta_df,backends_,dir_)
+    add_qfolders(meta_df,backend_names_,dir_)
 
 def get_results_df_from_row(row_index,meta_df):
     csv_file = meta_df.loc[row_index,'file_path']
