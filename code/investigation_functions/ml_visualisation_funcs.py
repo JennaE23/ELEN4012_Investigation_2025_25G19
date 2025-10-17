@@ -108,12 +108,21 @@ def plot_bar_per_qubit_nr(
         hue_ = 'tr&v exp_type', legend_off = True,
         fig_size_ = (9,6),
         share_cat_labels = True,
-        plot1_labels = None, plot2_labels = None, plot3_labels = None):
+        plot1_labels = None, plot2_labels = None, plot3_labels = None,
+        horizontal_stack = False):
+    
+    if horizontal_stack:
+        n_rows = 1
+        n_cols = 3
+        fig_size_=(10,3)
+    else:
+        n_rows = 3
+        n_cols = 1
     
     fig = plt.figure(layout = 'constrained',figsize=fig_size_)
     fig.suptitle(title_, fontsize=16, fontweight='bold')
 
-    plt.subplot(311)
+    plt.subplot(n_rows,n_cols,1)
     ax_4qs =sns.barplot(
         df4q, x = x_, y = y_,
         hue = hue_)
@@ -126,7 +135,7 @@ def plot_bar_per_qubit_nr(
     if legend_off:
         ax_4qs.get_legend().remove()
 
-    plt.subplot(312)
+    plt.subplot(n_rows,n_cols,2)
     ax_8qs=sns.barplot(
         df8q, x = x_, y = y_,
         hue = hue_)
@@ -139,7 +148,7 @@ def plot_bar_per_qubit_nr(
     if legend_off:
         ax_8qs.get_legend().remove()
 
-    plt.subplot(313)
+    plt.subplot(n_rows,n_cols,3)
     ax_16qs=sns.barplot(
         df16q, x = x_, y = y_,
         hue = hue_)
