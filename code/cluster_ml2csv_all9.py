@@ -17,7 +17,7 @@ for knn_modes in knn_modes_all_k:
 
 dir_runs = ""
 dir_ml = "ML_results/KNN/"
-file_name = "knn_16q_bvb2.csv"
+file_name = "knn_16q_bvb_fect.csv"
 # file_name = "KNN_4q_test.csv"
 ml2csv.create_ml_results_csv('KNN',dir_ml,file_name)
 
@@ -36,6 +36,9 @@ initial_list = ttf.get_HSR_array_all_backends(qubit_nr,dir_runs, True)
 # ml2csv.run_and_record_HSR_c111(initial_list,dir_ml,file_name,param_modes)
 # ml2csv.run_and_record_HSR_for_each_c_type(initial_list, dir_ml, file_name, param_modes)
 # ml2csv.run_and_record_circuit_test_table(initial_list, dir_ml, file_name, param_modes)
-ml2csv.run_and_record_backends_v_backends(
+# ml2csv.run_and_record_backends_v_backends(
+#     initial_list, dir_ml, file_name,param_modes_best_H_S_R, backend_combos
+# )
+ml2csv.run_and_record_bvb_for_each_c_type(
     initial_list, dir_ml, file_name,param_modes_best_H_S_R, backend_combos
 )
