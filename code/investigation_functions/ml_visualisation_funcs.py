@@ -165,3 +165,30 @@ def plot_bar_per_qubit_nr(
     
     #plt.legend(["Hardware",'Simulation','Refreshed_Sims',"Sim and Refreshed"])
     plt.show()
+
+def apply_condition_to_dfs(df_arr,col, val, equals = True):
+    df_arr_out = []
+    for df in df_arr:
+        if equals:
+            df_arr_out.append(df[df[col]==val])
+        else:
+            df_arr_out.append(df[df[col]!=val])
+    return df_arr_out
+
+def apply_isin_to_dfs(df_arr,col, list):
+    df_arr_out = []
+    for df in df_arr:
+            df_arr_out.append(df[df[col].isin(list)])
+    return df_arr_out
+
+def add_avg_cv_to_dfs(df_arr):
+    dfs_out = []
+    for df in df_arr:
+        dfs_out.append(add_avg_cv_col(df))
+    return dfs_out
+
+def apply_get_same(dfs, col1,col2, drop_same_cols = True):
+    dfs_out = []
+    for df in dfs:
+        dfs_out.append(get_df_with_same(col1,col2,df, drop_same_cols))
+    return dfs_out
