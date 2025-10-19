@@ -1,0 +1,15 @@
+Qubit Size: 4
+Avg Correlation H vs S:	0.9247548997430205
+Avg Correlation H vs R:	0.9236086058551511
+Avg Correlation R vs S:	0.9909491967251741
+
+Qubit Size: 8
+Avg Correlation H vs S:	0.9815491269096731
+Avg Correlation H vs R:	0.9813625787905945
+Avg Correlation R vs S:	0.9988743183940392
+
+Qubit Size: 16
+Avg Correlation H vs S:	0.9948465049630487
+Avg Correlation H vs R:	0.9947103706309361
+Avg Correlation R vs S:	0.9945427314249587
+
