@@ -11,7 +11,7 @@ def create_processed_df(file_name, shots = 4096):
 
     df2 = df
 
-    df2.iloc[:,0] = abs(df2.iloc[:,0] - 4096)
+    df2.iloc[:,0] = abs(df2.iloc[:,0] - shots)
 
     totalErrors = df2.iloc[:,0]
     totalErrors.rename("totalError", inplace=True)
@@ -28,7 +28,7 @@ def create_unprocessed_df(file_name, shots = 4096):
 
     df2 = df
 
-    df2.iloc[:,0] = abs(df2.iloc[:,0] - 4096)
+    df2.iloc[:,0] = abs(df2.iloc[:,0] - shots)
 
     totalErrors = df2.iloc[:,0]
     totalErrors.rename("totalError", inplace=True)
@@ -39,6 +39,13 @@ def create_processed_dfs(file_names_array, shots = 4096):
     dfs = []
     for file_name in file_names_array:
         df = create_processed_df(file_name, shots)
+        dfs.append(df)
+    return dfs
+
+def create_unprocessed_dfs(file_names_array, shots = 4096):
+    dfs = []
+    for file_name in file_names_array:
+        df = create_unprocessed_df(file_name, shots)
         dfs.append(df)
     return dfs
 
@@ -104,7 +111,9 @@ def arr_dfs_of_qubit_sizes(type_data, nr_qubit_sizes = 2,nr_machines = 2, nr_cir
         df.append(df_size)
     return df
 
-def get_expanded_df(type_data, nr_qubits, dir_='',updated_results = False):
+def get_expanded_df(
+        type_data, nr_qubits, dir_='',updated_results = False,
+        processed = True):
     big_df =  mdf.blank_meta_df()
     mdf.load_meta_df(big_df,type_data,dir_, updated_results)
 
@@ -112,7 +121,10 @@ def get_expanded_df(type_data, nr_qubits, dir_='',updated_results = False):
     # df_qubits =meta_dataframe_functions.add_experiment_type_column(df_qubits)
     df_arr = []
     for i in df_qubits.index: #for each row
-        df_ = create_processed_df(df_qubits.loc[i,'file_path'])
+        if processed:
+            df_ = create_processed_df(df_qubits.loc[i,'file_path'])
+        else:
+            df_ = create_unprocessed_df(df_qubits.loc[i,'file_path'])
     
         default_vals = {
                 'circuit_type': df_qubits.loc[i,'circuit_type'],
