@@ -41,20 +41,20 @@ def get_HSR_test_table(initial_list):
     list_of_arrays = generate_combos(initial_list)
     
     df_SR = pd.concat(initial_list[1:3].copy())
-    df_HS = pd.concat(initial_list[0:2].copy())
-    df_HR = pd.concat([initial_list[0],initial_list[2]])
-    df_HSR = pd.concat([df_HS,initial_list[2]])
+    # df_HS = pd.concat(initial_list[0:2].copy())
+    # df_HR = pd.concat([initial_list[0],initial_list[2]])
+    # df_HSR = pd.concat([df_HS,initial_list[2]])
     # Quick and dirty fix for results_to_csv function:
     df_SR['experiment_type'] = 'Sim and Refreshed'
-    df_HS['experiment_type'] = 'Hardware and Sim'
-    df_HR['experiment_type'] = 'Hardware and Refreshed'
-    df_HSR['experiment_type'] = 'Hardware, Sim, and Refreshed'
+    # df_HS['experiment_type'] = 'Hardware and Sim'
+    # df_HR['experiment_type'] = 'Hardware and Refreshed'
+    # df_HSR['experiment_type'] = 'Hardware, Sim, and Refreshed'
     #Train on H, Test on SR combined:
     list_of_arrays[0].append(df_SR)
-    list_of_arrays.append([df_HS,initial_list[2]])
-    list_of_arrays.append([df_HR,initial_list[1]])
-    list_of_arrays.append([df_SR,initial_list[0]])
-    list_of_arrays.append([df_HSR,df_HSR])
+    # list_of_arrays.append([df_HS,initial_list[2]])
+    # list_of_arrays.append([df_HR,initial_list[1]])
+    # list_of_arrays.append([df_SR,initial_list[0]])
+    # list_of_arrays.append([df_HSR,df_HSR])
     #make the train on H row only torino and brisbane:
     #H_backends = initial_list[0]['backend'].unique()
     for i in range(len(initial_list)):
@@ -66,6 +66,23 @@ def get_HSR_test_table(initial_list):
     # list_of_arrays.append(train_SR_test_H)
 
     return list_of_arrays
+# def get_HSR_pair_train_table(initial_list):
+#     list_of_arrays=[]
+    # df_SR = pd.concat(initial_list[1:3].copy())
+    # df_HS = pd.concat(initial_list[0:2].copy())
+    # df_HR = pd.concat([initial_list[0],initial_list[2]])
+    # df_HSR = pd.concat([df_HS,initial_list[2]])
+    # # Quick and dirty fix for results_to_csv function:
+    # df_SR['experiment_type'] = 'Sim and Refreshed'
+    # df_HS['experiment_type'] = 'Hardware and Sim'
+    # df_HR['experiment_type'] = 'Hardware and Refreshed'
+    # df_HSR['experiment_type'] = 'Hardware, Sim, and Refreshed'
+    # list_of_arrays.append([df_HS,initial_list[2]])
+    # list_of_arrays.append([df_HR,initial_list[1]])
+    # list_of_arrays.append([df_SR,initial_list[0]])
+    # list_of_arrays.append([df_HSR,df_HSR])
+
+    # return list_of_arrays
 
 def get_circuits_test_table(df_nq):
     circuits = get_circuit_type_array(df_nq)

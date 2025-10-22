@@ -2,6 +2,7 @@
 from investigation_functions import ml_funcs as mlf
 from investigation_functions import test_table_funcs as ttf
 
+import pandas as pd
 import numpy as np
 #from sklearn.model_selection import cross_val_score
 from csv import DictWriter
@@ -219,6 +220,36 @@ def run_and_record_HSR_for_each_c_type(initial_list_H_S_R, dir_ml, file_name, pa
         for mode in param_modes:
             run_and_record_test_table_for_mode(
                 test_table_HSR_c,mode,dir_ml,file_name
+            )
+def run_and_record_HSR_train_pairs(initial_list_H_S_R, dir_ml, file_name, param_modes):
+    # df_SR = pd.concat(initial_list[1:3].copy())
+    # df_HS = pd.concat(initial_list[0:2].copy())
+    # df_HR = pd.concat([initial_list[0],initial_list[2]])
+    # df_HSR = pd.concat([df_HS,initial_list[2]])
+    # # Quick and dirty fix for results_to_csv function:
+    # df_SR['experiment_type'] = 'Sim and Refreshed'
+    # df_HS['experiment_type'] = 'Hardware and Sim'
+    # df_HR['experiment_type'] = 'Hardware and Refreshed'
+    # df_HSR['experiment_type'] = 'Hardware, Sim, and Refreshed'
+    # list_of_arrays.append([df_HS,initial_list[2]])
+    # list_of_arrays.append([df_HR,initial_list[1]])
+    # list_of_arrays.append([df_SR,initial_list[0]])
+    # list_of_arrays.append([df_HSR,df_HSR])
+    for mode in param_modes:
+        for test_exp_type in range(3):
+            df_combined_train = pd.concat(
+                [initial_list_H_S_R[(1-test_exp_type)%3],
+                initial_list_H_S_R[(2-test_exp_type)%3]]
+            )
+            # print(df_combined_train['experiment_type'].unique())
+            exps = df_combined_train.loc[:,'experiment_type'].unique()
+            # print(exps)
+            df_combined_train.loc[:,'experiment_type'] = " ".join(exps)
+            df_test =initial_list_H_S_R[test_exp_type]
+
+            run_and_record_test_table_for_mode(
+                [[df_combined_train,df_test]],
+                mode,dir_ml,file_name
             )
 
 def run_and_record_circuit_test_table(initial_list_H_S_R, dir_ml, file_name, param_modes):

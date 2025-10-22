@@ -1,0 +1,31 @@
+nr_qubits,machines,tr&v exp_type,tr&v circuits,test exp_type,test circuits,preprocess settings,kernal,param settings,accuracy,cv_1,cv_2,cv_3,cv_4,cv_5
+4,1111,Simulation Refreshed_Simulation,111,Simulation Refreshed_Simulation,111,0,linear,0,0.5083333333333333,0.4921875,0.5520833333333334,0.4739583333333333,0.484375,0.5078125
+4,1111,Simulation Refreshed_Simulation,111,Hardware,111,0,linear,0,0.2538940809968847,nan,nan,nan,nan,nan
+4,1111,Hardware Simulation,111,Hardware Simulation,111,0,linear,0,0.6016260162601627,0.5796610169491525,0.6067796610169491,0.6406779661016949,0.6258503401360545,0.6326530612244898
+4,1111,Hardware Simulation,111,Simulation,111,0,linear,0,0.5858333333333333,nan,nan,nan,nan,nan
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation Hardware,111,0,linear,0,0.5962059620596206,0.5966101694915255,0.5627118644067797,0.5423728813559322,0.5,0.5952380952380952
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation,111,0,linear,0,0.4325,nan,nan,nan,nan,nan
+4,1111,Simulation Refreshed_Simulation,111,Simulation Refreshed_Simulation,111,0,poly,1,0.5291666666666667,0.5260416666666666,0.5963541666666666,0.4921875,0.5234375,0.5234375
+4,1111,Simulation Refreshed_Simulation,111,Hardware,111,0,poly,1,0.07476635514018691,nan,nan,nan,nan,nan
+4,1111,Hardware Simulation,111,Hardware Simulation,111,0,poly,1,0.5853658536585366,0.5661016949152542,0.5457627118644067,0.6237288135593221,0.6054421768707483,0.608843537414966
+4,1111,Hardware Simulation,111,Simulation,111,0,poly,1,0.58,nan,nan,nan,nan,nan
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation Hardware,111,0,poly,1,0.5853658536585366,0.5661016949152542,0.5491525423728814,0.5220338983050847,0.5102040816326531,0.5680272108843537
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation,111,0,poly,1,0.47333333333333333,nan,nan,nan,nan,nan
+4,1111,Simulation Refreshed_Simulation,111,Simulation Refreshed_Simulation,111,0,rbf,2,0.8916666666666667,0.875,0.8541666666666666,0.859375,0.8515625,0.8723958333333334
+4,1111,Simulation Refreshed_Simulation,111,Hardware,111,0,rbf,2,0.26635514018691586,nan,nan,nan,nan,nan
+4,1111,Hardware Simulation,111,Hardware Simulation,111,0,rbf,2,0.94579945799458,0.9457627118644067,0.9389830508474576,0.9355932203389831,0.9285714285714286,0.9183673469387755
+4,1111,Hardware Simulation,111,Simulation,111,0,rbf,2,0.9275,nan,nan,nan,nan,nan
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation Hardware,111,0,rbf,2,0.997289972899729,0.9830508474576272,0.9830508474576272,0.9898305084745763,0.9931972789115646,0.9931972789115646
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation,111,0,rbf,2,0.99,nan,nan,nan,nan,nan
+4,1111,Simulation Refreshed_Simulation,111,Simulation Refreshed_Simulation,111,0,poly,3,0.9375,0.9140625,0.9270833333333334,0.9088541666666666,0.9140625,0.921875
+4,1111,Simulation Refreshed_Simulation,111,Hardware,111,0,poly,3,0.26635514018691586,nan,nan,nan,nan,nan
+4,1111,Hardware Simulation,111,Hardware Simulation,111,0,poly,3,0.9376693766937669,0.9593220338983051,0.9728813559322034,0.9559322033898305,0.95578231292517,0.9489795918367347
+4,1111,Hardware Simulation,111,Simulation,111,0,poly,3,0.95,nan,nan,nan,nan,nan
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation Hardware,111,0,poly,3,1.0,0.9830508474576272,0.9830508474576272,0.9932203389830508,0.9863945578231292,0.9965986394557823
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation,111,0,poly,3,0.9941666666666666,nan,nan,nan,nan,nan
+4,1111,Simulation Refreshed_Simulation,111,Simulation Refreshed_Simulation,111,0,poly,4,0.9479166666666666,0.9322916666666666,0.9375,0.9270833333333334,0.9348958333333334,0.9427083333333334
+4,1111,Simulation Refreshed_Simulation,111,Hardware,111,0,poly,4,0.26635514018691586,nan,nan,nan,nan,nan
+4,1111,Hardware Simulation,111,Hardware Simulation,111,0,poly,4,0.9566395663956639,0.9728813559322034,0.9864406779661017,0.9694915254237289,0.9693877551020408,0.9523809523809523
+4,1111,Hardware Simulation,111,Simulation,111,0,poly,4,0.965,nan,nan,nan,nan,nan
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation Hardware,111,0,poly,4,1.0,0.9864406779661017,0.9932203389830508,1.0,0.9931972789115646,1.0
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation,111,0,poly,4,0.995,nan,nan,nan,nan,nan
