@@ -1,0 +1,31 @@
+nr_qubits,machines,tr&v exp_type,tr&v circuits,test exp_type,test circuits,preprocess settings,n_neighbors,param settings,accuracy,cv_1,cv_2,cv_3,cv_4,cv_5
+4,1111,Simulation Refreshed_Simulation,111,Simulation Refreshed_Simulation,111,0,5,0,0.9208333333333333,0.9010416666666666,0.9114583333333334,0.8984375,0.9244791666666666,0.9140625
+4,1111,Simulation Refreshed_Simulation,111,Hardware,111,0,5,0,0.32866043613707163,nan,nan,nan,nan,nan
+4,1111,Hardware Simulation,111,Hardware Simulation,111,0,5,0,0.962059620596206,0.9423728813559322,0.9661016949152542,0.9389830508474576,0.9455782312925171,0.9421768707482994
+4,1111,Hardware Simulation,111,Simulation,111,0,5,0,0.9533333333333334,nan,nan,nan,nan,nan
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation Hardware,111,0,5,0,1.0,0.9966101694915255,0.9966101694915255,1.0,1.0,1.0
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation,111,0,5,0,0.9983333333333333,nan,nan,nan,nan,nan
+4,1111,Simulation Refreshed_Simulation,111,Simulation Refreshed_Simulation,111,0,5,1,0.9416666666666667,0.9296875,0.9348958333333334,0.9348958333333334,0.9322916666666666,0.9270833333333334
+4,1111,Simulation Refreshed_Simulation,111,Hardware,111,0,5,1,0.2819314641744548,nan,nan,nan,nan,nan
+4,1111,Hardware Simulation,111,Hardware Simulation,111,0,5,1,0.9701897018970189,0.9661016949152542,0.976271186440678,0.9491525423728814,0.9523809523809523,0.9455782312925171
+4,1111,Hardware Simulation,111,Simulation,111,0,5,1,1.0,nan,nan,nan,nan,nan
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation Hardware,111,0,5,1,1.0,0.9966101694915255,0.9966101694915255,1.0,1.0,1.0
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation,111,0,5,1,1.0,nan,nan,nan,nan,nan
+4,1111,Simulation Refreshed_Simulation,111,Simulation Refreshed_Simulation,111,0,5,2,0.9416666666666667,0.9296875,0.9348958333333334,0.9348958333333334,0.9322916666666666,0.9270833333333334
+4,1111,Simulation Refreshed_Simulation,111,Hardware,111,0,5,2,0.2819314641744548,nan,nan,nan,nan,nan
+4,1111,Hardware Simulation,111,Hardware Simulation,111,0,5,2,0.9701897018970189,0.9661016949152542,0.976271186440678,0.9491525423728814,0.9523809523809523,0.9455782312925171
+4,1111,Hardware Simulation,111,Simulation,111,0,5,2,1.0,nan,nan,nan,nan,nan
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation Hardware,111,0,5,2,1.0,0.9966101694915255,0.9966101694915255,1.0,1.0,1.0
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation,111,0,5,2,1.0,nan,nan,nan,nan,nan
+4,1111,Simulation Refreshed_Simulation,111,Simulation Refreshed_Simulation,111,0,5,3,0.9416666666666667,0.9296875,0.9348958333333334,0.9348958333333334,0.9322916666666666,0.9270833333333334
+4,1111,Simulation Refreshed_Simulation,111,Hardware,111,0,5,3,0.2819314641744548,nan,nan,nan,nan,nan
+4,1111,Hardware Simulation,111,Hardware Simulation,111,0,5,3,0.9701897018970189,0.9661016949152542,0.976271186440678,0.9491525423728814,0.9523809523809523,0.9455782312925171
+4,1111,Hardware Simulation,111,Simulation,111,0,5,3,1.0,nan,nan,nan,nan,nan
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation Hardware,111,0,5,3,1.0,0.9966101694915255,0.9966101694915255,1.0,1.0,1.0
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation,111,0,5,3,1.0,nan,nan,nan,nan,nan
+4,1111,Simulation Refreshed_Simulation,111,Simulation Refreshed_Simulation,111,0,5,4,0.9416666666666667,0.9296875,0.9348958333333334,0.9348958333333334,0.9322916666666666,0.9270833333333334
+4,1111,Simulation Refreshed_Simulation,111,Hardware,111,0,5,4,0.2819314641744548,nan,nan,nan,nan,nan
+4,1111,Hardware Simulation,111,Hardware Simulation,111,0,5,4,0.9701897018970189,0.9661016949152542,0.976271186440678,0.9491525423728814,0.9523809523809523,0.9455782312925171
+4,1111,Hardware Simulation,111,Simulation,111,0,5,4,1.0,nan,nan,nan,nan,nan
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation Hardware,111,0,5,4,1.0,0.9966101694915255,0.9966101694915255,1.0,1.0,1.0
+4,1111,Refreshed_Simulation Hardware,111,Refreshed_Simulation,111,0,5,4,1.0,nan,nan,nan,nan,nan
