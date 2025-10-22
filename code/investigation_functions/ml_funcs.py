@@ -38,18 +38,18 @@ def apply_custom_scaling(df):
 
 def apply_preprosessing(
         df, drop_exp_type = True,label_encode = True,
-        drop_q = True,
+        drop_q = False,
     ):#assumes only 1 nr of qubits
     df_ = df
     if drop_exp_type:
         df_ = df_.drop('experiment_type',axis = 1)
     if label_encode:
         df_ = label_encode_backend(df_)
-    if drop_q:
-        df_ = df_.drop('nr_qubits', axis = 1)
         
     df_ = features_to_int(df_)
     df_ = drop_0th_col(df_[['nr_qubits']].iloc[0],df_)
+    if drop_q:
+        df_ = df_.drop('nr_qubits', axis = 1)
     df_ = total_Err_to_percent(df_)
     df_ = apply_custom_scaling(df_)
     return df_
