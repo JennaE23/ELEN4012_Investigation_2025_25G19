@@ -1,0 +1,25 @@
+nr_qubits,exp_type 1,exp_type 2,backend 1,backend 2,circuit 1,circuit 2,corr avg
+4,Hardware,Hardware,brisbane,brisbane,1,2,0.22472100081651034
+4,Hardware,Hardware,torino,torino,1,2,-0.010525639870880194
+4,Hardware,Hardware,brisbane,brisbane,1,3,0.1829746817584479
+4,Hardware,Hardware,torino,torino,1,3,0.08389667746530904
+4,Hardware,Hardware,brisbane,brisbane,2,3,0.1788172118936215
+4,Hardware,Hardware,torino,torino,2,3,0.03452160250143009
+4,Refreshed_Hardware,Refreshed_Hardware,brisbane,brisbane,1,2,0.24727717652146852
+4,Refreshed_Hardware,Refreshed_Hardware,torino,torino,1,2,0.05742501191006302
+4,Refreshed_Hardware,Refreshed_Hardware,brisbane,brisbane,1,3,0.14669701680283517
+4,Refreshed_Hardware,Refreshed_Hardware,torino,torino,1,3,0.07806388509710632
+4,Refreshed_Hardware,Refreshed_Hardware,brisbane,brisbane,2,3,0.07337697804506832
+4,Refreshed_Hardware,Refreshed_Hardware,torino,torino,2,3,0.039487310132864537
+4,Simulated,Simulated,brisbane,brisbane,1,2,0.05039368615716394
+4,Simulated,Simulated,torino,torino,1,2,0.022576425029767876
+4,Simulated,Simulated,brisbane,brisbane,1,3,0.05070935976468994
+4,Simulated,Simulated,torino,torino,1,3,-0.00099379757760706
+4,Simulated,Simulated,brisbane,brisbane,2,3,-0.011733097374459614
+4,Simulated,Simulated,torino,torino,2,3,-0.00796830291970328
+4,Refreshed_Simulated,Refreshed_Simulated,brisbane,brisbane,1,2,-0.060529184032412586
+4,Refreshed_Simulated,Refreshed_Simulated,torino,torino,1,2,0.006144892958361907
+4,Refreshed_Simulated,Refreshed_Simulated,brisbane,brisbane,1,3,-0.05037156993539024
+4,Refreshed_Simulated,Refreshed_Simulated,torino,torino,1,3,0.01344587772726353
+4,Refreshed_Simulated,Refreshed_Simulated,brisbane,brisbane,2,3,0.09256085635394014
+4,Refreshed_Simulated,Refreshed_Simulated,torino,torino,2,3,0.11903960776692865
