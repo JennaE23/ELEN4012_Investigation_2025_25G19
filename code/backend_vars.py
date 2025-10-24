@@ -13,11 +13,13 @@ fake_backends = [FakeTorino(), FakeFez(), FakeMarrakesh(),FakeBrisbane()]
 original_fake_backend_names = ['fake_brisbane','fake_torino']
 fake_backend_names = ['fake_brisbane','fake_fez','fake_marrakesh','fake_torino']
 hardware_backend_names = ['ibm_brisbane','ibm_torino']
+refr_hardware_backend_names = ['ibm_brisbane','ibm_torino']
 # Qubits list
 qubits_list = [4,8,16]
 
 # Directory Lists
 Hardware_folder = "Hardware_results/"
+Refr_Hardware_folder = "Refreshed_Hardware_results/"
 Sim_folder = "Simulated_results/"
 Refr_Sim_folder = "Refreshed_Simulated_results/"
 
