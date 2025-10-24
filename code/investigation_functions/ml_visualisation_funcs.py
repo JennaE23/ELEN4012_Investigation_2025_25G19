@@ -166,6 +166,80 @@ def plot_bar_per_qubit_nr(
     #plt.legend(["Hardware",'Simulation','Refreshed_Sims',"Sim and Refreshed"])
     plt.show()
 
+def plot_bar_per_df(
+        dfs, 
+        title_, labels_ = ["Hardware",'Simulation','Refreshed_Sims',"Sim and Refreshed"],
+        df_titles_ =['4q','8q','16q'],
+        nr_cat =3,x_='machines',y_='accuracy',lowerY=0,
+        hue_ = 'tr&v exp_type', legend_off = True,
+        fig_size_ = (9,6),
+        share_cat_labels = True,
+        plots_labels =None,
+        horizontal_stack = False):
+    
+    if horizontal_stack:
+        n_rows = 1
+        n_cols = len(dfs)
+        fig_size_=(10,3)
+    else:
+        n_rows = len(dfs)
+        n_cols = 1
+    
+    if plots_labels == None:
+        plots_labels = []
+        for i in range(len(dfs)):
+            plots_labels.append(labels_)
+    
+    axs = []
+
+    fig = plt.figure(layout = 'constrained',figsize=fig_size_)
+    fig.suptitle(title_, fontsize=16, fontweight='bold')
+
+    for i in range(len(dfs)):
+        axs.append(plt.subplot(n_rows,n_cols,i+1))
+        axs[i] =sns.barplot(
+            dfs[i], x = x_, y = y_,
+            hue = hue_)
+        axs[i] .set_ylim(tuple([lowerY,1]))
+        if not share_cat_labels:
+            axs[i] .set_xticks(ticks = np.arange(0,nr_cat),labels=plots_labels[i])
+        else:
+            axs[i].set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
+        axs[i].set_title(df_titles_[i])
+        if legend_off:
+            axs[i].get_legend().remove()
+
+    # plt.subplot(n_rows,n_cols,2)
+    # ax_8qs=sns.barplot(
+    #     df8q, x = x_, y = y_,
+    #     hue = hue_)
+    # ax_8qs.set_ylim(tuple([lowerY,1]))
+    # if not share_cat_labels:
+    #     ax_8qs.set_xticks(ticks = np.arange(0,nr_cat),labels=plot2_labels)
+    # else:
+    #     ax_8qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
+    # ax_8qs.set_title(df_titles_[1])
+    # if legend_off:
+    #     ax_8qs.get_legend().remove()
+
+    # plt.subplot(n_rows,n_cols,3)
+    # ax_16qs=sns.barplot(
+    #     df16q, x = x_, y = y_,
+    #     hue = hue_)
+    # ax_16qs.set_ylim(tuple([lowerY,1]))
+    # if not share_cat_labels:
+    #     ax_16qs.set_xticks(ticks = np.arange(0,nr_cat),labels=plot3_labels)
+    # else:
+    #     ax_16qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
+    # ax_16qs.set_title(df_titles_[2])
+    # if legend_off:
+    #     ax_16qs.get_legend().remove()
+
+    plt.legend(bbox_to_anchor=(1.05, 0.5), loc='center left', borderaxespad=0.)
+    
+    #plt.legend(["Hardware",'Simulation','Refreshed_Sims',"Sim and Refreshed"])
+    plt.show()
+
 def apply_condition_to_dfs(df_arr,col, val, equals = True):
     df_arr_out = []
     for df in df_arr:
