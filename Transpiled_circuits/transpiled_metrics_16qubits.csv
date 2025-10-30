@@ -1,16 +1,16 @@
-nr_qubits,backend,circuit,depth,size,width,n_ops
-16,fake_brisbane,1,449,1321,143,"OrderedDict({'rz': 773, 'sx': 385, 'ecr': 117, 'x': 30, 'measure': 16, 'barrier': 1})"
-16,fake_brisbane,2,451,1363,143,"OrderedDict({'rz': 781, 'sx': 389, 'ecr': 117, 'x': 60, 'measure': 16, 'barrier': 1})"
-16,fake_brisbane,3,700,1612,143,"OrderedDict({'rz': 896, 'sx': 532, 'ecr': 168, 'measure': 16, 'barrier': 1})"
-16,fake_torino,1,210,592,149,"OrderedDict({'sx': 272, 'rz': 184, 'cz': 120, 'measure': 16, 'barrier': 1})"
-16,fake_torino,2,205,550,149,"OrderedDict({'sx': 224, 'rz': 184, 'cz': 96, 'x': 30, 'measure': 16, 'barrier': 1})"
-16,fake_torino,3,244,598,149,"OrderedDict({'sx': 356, 'cz': 162, 'rz': 64, 'measure': 16, 'barrier': 1})"
-16,fake_fez,1,133,322,172,"OrderedDict({'rz': 184, 'sx': 92, 'cz': 30, 'measure': 16, 'barrier': 1})"
-16,fake_fez,2,133,352,172,"OrderedDict({'rz': 184, 'sx': 92, 'cz': 30, 'x': 30, 'measure': 16, 'barrier': 1})"
-16,fake_fez,3,187,382,172,"OrderedDict({'sx': 212, 'cz': 90, 'rz': 64, 'measure': 16, 'barrier': 1})"
-16,fake_marrakesh,1,133,322,172,"OrderedDict({'rz': 184, 'sx': 92, 'cz': 30, 'measure': 16, 'barrier': 1})"
-16,fake_marrakesh,2,133,352,172,"OrderedDict({'rz': 184, 'sx': 92, 'cz': 30, 'x': 30, 'measure': 16, 'barrier': 1})"
-16,fake_marrakesh,3,187,382,172,"OrderedDict({'sx': 212, 'cz': 90, 'rz': 64, 'measure': 16, 'barrier': 1})"
-16,pre-transpilation,1,33,78,32,,,,,,,
-16,pre-transpilation,2,35,108,32,,,,,,,
-16,pre-transpilation,3,33,78,32,,,,,,,
+nr_qubits,backend,circuit,depth,size,width
+16,fake_brisbane,1,468,1354,143
+16,fake_brisbane,2,525,1333,143
+16,fake_brisbane,3,700,1546,143
+16,fake_torino,1,217,520,149
+16,fake_torino,2,193,559,149
+16,fake_torino,3,280,652,149
+16,fake_fez,1,133,322,172
+16,fake_fez,2,133,352,172
+16,fake_fez,3,187,382,172
+16,fake_marrakesh,1,133,322,172
+16,fake_marrakesh,2,133,352,172
+16,fake_marrakesh,3,187,382,172
+16,pre-transpilation,1,33,78,32
+16,pre-transpilation,2,35,108,32
+16,pre-transpilation,3,33,78,32
