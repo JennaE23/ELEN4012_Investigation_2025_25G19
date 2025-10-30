@@ -17,6 +17,8 @@ import backend_vars
 #Call experiment_type as 'Hardware', 'Simulation', 'Refreshed_Simulation', 'Generic_Simulation'
 
 def extract_cols_from_filename(file_name_str, dir_):
+    file_path = dir_+file_name_str
+    file_name_str = file_name_str.replace('_summarised','')
     nr_qubits = re.findall(r'\d+',file_name_str[0:3])[0]
     backend_name_start = len(nr_qubits)+2 #might need to 7 change if 'ibm_..." is included in file name"
     circuit_type = file_name_str[-5]
@@ -31,18 +33,16 @@ def extract_cols_from_filename(file_name_str, dir_):
         
     backend_name = file_name_str[backend_name_start:-5]
     
-    file_path = dir_+file_name_str
-    
     return [nr_qubits,backend_name,is_sim,circuit_type,file_path]
 
 def add_file_to_meta_df(meta_df,file_name,dir_):
     row = extract_cols_from_filename(file_name,dir_)
     meta_df.loc[len(meta_df)] = row
     
-def add_qfolder_to_df(df,folder_dir,backend_names,nr_qubits):
+def add_qfolder_to_df(df,folder_dir,backend_names,nr_qubits, summarised =False):
     for backend_name in backend_names:
         #backend_name = backend.backend_name
-        file_names = data_extract_funcs.make_file_names(backend_name,nr_qubits)
+        file_names = data_extract_funcs.make_file_names(backend_name,nr_qubits, summarised)
         for file_name in file_names:
             add_file_to_meta_df(df,file_name,folder_dir)
 
@@ -52,10 +52,10 @@ def add_qfolder_to_df_generic(df,folder_dir,backends_,nr_qubits):
     for file_name in file_names:
         add_file_to_meta_df(df,file_name,folder_dir)
 
-def add_qfolders(df,backend_names,folders):
+def add_qfolders(df,backend_names,folders, summarised = False):
     for folder in folders:
         nr_qubits = re.findall(r'\d+',folder)[0]
-        add_qfolder_to_df(df,folder,backend_names,nr_qubits)
+        add_qfolder_to_df(df,folder,backend_names,nr_qubits, summarised)
 
 def add_qfolders_generic(df,backends,folders):
     for folder in folders:
@@ -73,7 +73,8 @@ def blank_meta_df():
 # *full refers to (torino, brisbane, fez and marrakesh), additional simulated results can be added be adjusting the backend_vars file.
 def load_meta_df(
         meta_df,experiment_type, exp_dir_='',
-        updated_results = False, updated_service = 'Default'
+        updated_results = False, updated_service = 'Default',
+        summarised = False
     ):#Hardware,Simulation,Refreshed_Simulation
     dir_Hardware = backend_vars.make_dir_list(
         exp_dir_,
@@ -122,7 +123,7 @@ def load_meta_df(
             add_qfolders_generic(meta_df, backend_names_,dir_)
             return
 
-    add_qfolders(meta_df,backend_names_,dir_)
+    add_qfolders(meta_df,backend_names_,dir_,summarised)
 
 def get_results_df_from_row(row_index,meta_df):
     csv_file = meta_df.loc[row_index,'file_path']

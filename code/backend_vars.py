@@ -42,6 +42,8 @@ dir_Refr_Sims_list = ["../Refreshed_Simulated_results/4q/","../Refreshed_Simulat
 def update_hardware_backend_names(hardware_backend_names):
     hardware_backends_new = hardware_backend_names
     new_backends = ['ibm_fez','ibm_marrakesh']
+    if new_backends in hardware_backends_new:
+        return hardware_backends_new
     hardware_backends_new.extend(new_backends)
     return hardware_backends_new
 
