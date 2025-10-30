@@ -106,7 +106,7 @@ def load_meta_df(
             dir_ = dir_Hardware
             hardware_backend_names = backend_vars.hardware_backend_names
             if updated_results:
-                hardware_backend_names = backend_vars.update_hardware_backend_names(hardware_backend_names)
+                hardware_backend_names = backend_vars.all_hardware_backend_names
             backend_names_ = hardware_backend_names
         case 'Simulation':
             dir_ = dir_Sims

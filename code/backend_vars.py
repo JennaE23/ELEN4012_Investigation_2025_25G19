@@ -14,6 +14,7 @@ original_fake_backend_names = ['fake_brisbane','fake_torino']
 fake_backend_names = ['fake_brisbane','fake_fez','fake_marrakesh','fake_torino']
 hardware_backend_names = ['ibm_brisbane','ibm_torino']
 refr_hardware_backend_names = ['ibm_brisbane','ibm_torino']
+all_hardware_backend_names = ['ibm_brisbane','ibm_torino','ibm_fez','ibm_marrakesh']
 # Qubits list
 qubits_list = [4,8,16]
 
