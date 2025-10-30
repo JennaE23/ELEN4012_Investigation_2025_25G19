@@ -11,3 +11,6 @@ nr_qubits,backend,circuit,depth,size,width,rz,ecr,barrier,x,measure,sx,cz
 4,fake_marrakesh,1,37,70,160,40,,1,,4,20,6
 4,fake_marrakesh,2,37,76,160,40,,1,6,4,20,6
 4,fake_marrakesh,3,43,82,160,16,,1,,4,44,18
+4,pre-transpilation,1,9,18,8,,,,,,,
+4,pre-transpilation,2,11,24,8,,,,,,,
+4,pre-transpilation,3,9,18,8,,,,,,,

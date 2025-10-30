@@ -11,3 +11,6 @@ nr_qubits,backend,circuit,depth,size,width,n_ops
 8,fake_marrakesh,1,69,154,164,"OrderedDict({'rz': 88, 'sx': 44, 'cz': 14, 'measure': 8, 'barrier': 1})"
 8,fake_marrakesh,2,69,168,164,"OrderedDict({'rz': 88, 'sx': 44, 'cz': 14, 'x': 14, 'measure': 8, 'barrier': 1})"
 8,fake_marrakesh,3,91,182,164,"OrderedDict({'sx': 100, 'cz': 42, 'rz': 32, 'measure': 8, 'barrier': 1})"
+8,pre-transpilation,1,17,38,16,,,,,,,
+8,pre-transpilation,2,19,52,16,,,,,,,
+8,pre-transpilation,3,17,38,16,,,,,,,
