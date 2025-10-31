@@ -266,3 +266,65 @@ def apply_get_same(dfs, col1,col2, drop_same_cols = True):
     for df in dfs:
         dfs_out.append(get_df_with_same(col1,col2,df, drop_same_cols))
     return dfs_out
+
+# for distance metrics
+def make_line_plots( 
+        df,
+        x= 'nr_qubits',
+        y = 'corr avg',
+        hue = 'circuits',
+        col='backends',
+        title_ = None,
+        fig_size_ = (12,2),
+        x_label = 'Number of Qubits',
+        y_label = None,
+        y_lim = None,
+        share_y = True,
+        share_y_ticks = True,
+        grid = True
+    ):
+    if y_label ==None:
+        y_label = y
+        
+    cols = df[col].unique()
+    num_cols = len(cols)
+    axs =[]
+
+    fig = plt.figure(layout = 'constrained',figsize=fig_size_)
+    fig.suptitle(title_, fontsize=16, fontweight='bold')
+    for i in range(num_cols):
+        if share_y and i>0:
+            y_ax = axs[0]
+        else:
+            y_ax = None
+        plt.subplot(1,num_cols,i+1, sharey = y_ax)
+        axs.append(
+            sns.lineplot(
+                data = df[df[col]==cols[i]],
+                x= x,
+                y = y,
+                hue = hue
+            )
+        )
+        axs[i].get_legend().remove()
+        axs[i].set_title(cols[i])
+        axs[i].set_ylabel(y_label)
+        axs[i].set_xlabel(x_label)
+        axs[i].set_xticks([4,8,16])
+        axs[i].set_ylim(y_lim)
+        if grid:
+            axs[i].grid(visible =grid, linestyle ='dotted')   
+    
+    if share_y:
+        for ax in axs[1:]:
+            ax.set_ylabel('')
+            # ax.set_yticks
+   
+    if share_y_ticks:
+            for ax in axs[1:]:
+                ax.label_outer()
+ 
+    plt.legend(
+        title = hue,
+        bbox_to_anchor=(1.05, 0.5), loc='center left', borderaxespad=0.)
+    return axs
