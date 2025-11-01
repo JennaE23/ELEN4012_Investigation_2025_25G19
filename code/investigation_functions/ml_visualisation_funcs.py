@@ -281,7 +281,8 @@ def make_line_plots(
         y_lim = None,
         share_y = True,
         share_y_ticks = True,
-        grid = True
+        grid = True,
+        axis_font_size = 15
     ):
     if y_label ==None:
         y_label = y
@@ -308,9 +309,10 @@ def make_line_plots(
         )
         axs[i].get_legend().remove()
         axs[i].set_title(cols[i])
-        axs[i].set_ylabel(y_label)
-        axs[i].set_xlabel(x_label)
-        axs[i].set_xticks([4,8,16])
+        axs[i].set_ylabel(y_label, fontsize = axis_font_size)
+        axs[i].set_xlabel(x_label, fontsize = axis_font_size)
+        axs[i].set_xticks([4,8,16],fontsize = axis_font_size)
+        axs[i].set_yticks(fontsize = axis_font_size)
         axs[i].set_ylim(y_lim)
         if grid:
             axs[i].grid(visible =grid, linestyle ='dotted')   
