@@ -57,4 +57,6 @@ This folder contains images of all of the transpiled circuits that the jobs resu
 
 The accuracy and cross-validation accuracy from every different training and testing combination for every different set of hyper-parameters for KNN and SVM are stored in this folder.
 
-6. 
+6. Fingerprint_results
+
+All of the statistical similarity and distance measures calculated between the different fingerprints are saved in this folder in csv format.
