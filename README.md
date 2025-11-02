@@ -6,7 +6,7 @@ This file acts as a guide to this repository.
 
 ### Code:
 All code is in the 'code/' folder. 
-In the code folder there are the follwoing sub-folders:
+In the code folder there are the following sub-folders:
 
 1. The structured_investigation_notebooks folder.
 
