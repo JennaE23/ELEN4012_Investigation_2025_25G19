@@ -2,14 +2,18 @@ import csv
 from csv import DictWriter
 #from qiskit_ibm_runtime import QiskitRuntimeService
 
-def make_file_names(backend,nr_qubits):
+def make_file_names(backend,nr_qubits, summarised = False):
     nr_qubits = str(nr_qubits)
     base_name = nr_qubits +"q_"
     base_name = base_name +backend
+    
+    summ = ''
+    if summarised:
+        summ = '_summarised'
 
     file_names = []
     for i in range(1,4):
-        temp_name = base_name + str(i) +".csv"
+        temp_name = base_name + str(i) +summ+".csv"
         file_names.append(temp_name)
     return file_names
 

@@ -147,8 +147,6 @@ def run_and_print_ml_results(train_df,test_dfs,param_mode, dir = '../ML_Results/
     model = param_mode.model
     param_settings = param_mode.label
     
-   
-        
     if get_self_score:
         fitted_model, score, cv_scores = mlf.std_split_fit_and_scores\
         (train_df_processed, model, cv = cross_validation)
@@ -236,7 +234,7 @@ def run_and_record_HSR_train_pairs(initial_list_H_S_R, dir_ml, file_name, param_
     # list_of_arrays.append([df_SR,initial_list[0]])
     # list_of_arrays.append([df_HSR,df_HSR])
     for mode in param_modes:
-        for test_exp_type in range(3):
+        for test_exp_type in range(len(initial_list_H_S_R)):
             df_combined_train = pd.concat(
                 [initial_list_H_S_R[(1-test_exp_type)%3],
                 initial_list_H_S_R[(2-test_exp_type)%3]]

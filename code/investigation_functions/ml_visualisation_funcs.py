@@ -5,17 +5,35 @@ from investigation_functions import ml_funcs as mlf
 import seaborn as sns
 import numpy as np
 
-def print_and_plot_svm_models(df_processed, models, model_names, df_name='', graph_type = 'bar',to_print = 'False'):
+def print_and_plot_svm_models(
+        df_processed, 
+        models, 
+        is_modes = True,
+        model_names=None, 
+        df_name='',
+        graph_type = 'bar',
+        to_print = False,
+        title = None
+    ):
     scores = []
-    
-    for model in models:
+    models_under = models
+    if not is_modes and (model_names == None):
+        raise ValueError("No model_names given when is_modes = False")
+    if is_modes:
+        models_under = []
+        model_names =[]
+        for mode in models:
+            models_under.append(mode.model)
+            model_names.append(mode.label)
+
+    for model in models_under:
         fitted_model,score,cv_score = mlf.std_split_fit_and_scores(df_processed,model)
         if to_print:
             print(f"Model={model}, Accuracy={score}, CV_Accuracy={cv_score.mean()}")
             print(f"CV_Scores={cv_score}")
         scores.append(cv_score.mean())
     
-    plt.figure(figsize=(10,6))
+    fig =plt.figure(figsize=(10,6))
     match graph_type:
         case 'line':
             plt.plot(model_names, scores, color='skyblue', marker='o', linestyle='-')
@@ -25,13 +43,17 @@ def print_and_plot_svm_models(df_processed, models, model_names, df_name='', gra
             raise ValueError("graph_type must be 'line' or 'bar'")
     plt.xlabel('SVM Models')
     plt.ylabel('Cross-Validation Accuracy')
-    plt.title(df_name +'SVM Model Comparison')
+    if title == None:
+        plt.title(df_name +'SVM Model Comparison')
+    else:
+        plt.title(title)
     plt.ylim(0, 1.2)
     plt.xticks(rotation=45)
     plt.grid(axis='y')
-    plt.show()
+    # plt.show()
     
     # return scores
+    return fig
 
 def print_and_plot_knn_model_range_neighbours(df_processed, k_values, graph_type = 'line'):
     scores = []
@@ -166,6 +188,80 @@ def plot_bar_per_qubit_nr(
     #plt.legend(["Hardware",'Simulation','Refreshed_Sims',"Sim and Refreshed"])
     plt.show()
 
+def plot_bar_per_df(
+        dfs, 
+        title_, labels_ = ["Hardware",'Simulation','Refreshed_Sims',"Sim and Refreshed"],
+        df_titles_ =['4q','8q','16q'],
+        nr_cat =3,x_='machines',y_='accuracy',lowerY=0,
+        hue_ = 'tr&v exp_type', legend_off = True,
+        fig_size_ = (9,6),
+        share_cat_labels = True,
+        plots_labels =None,
+        horizontal_stack = False):
+    
+    if horizontal_stack:
+        n_rows = 1
+        n_cols = len(dfs)
+        fig_size_=(10,3)
+    else:
+        n_rows = len(dfs)
+        n_cols = 1
+    
+    if plots_labels == None:
+        plots_labels = []
+        for i in range(len(dfs)):
+            plots_labels.append(labels_)
+    
+    axs = []
+
+    fig = plt.figure(layout = 'constrained',figsize=fig_size_)
+    fig.suptitle(title_, fontsize=16, fontweight='bold')
+
+    for i in range(len(dfs)):
+        axs.append(plt.subplot(n_rows,n_cols,i+1))
+        axs[i] =sns.barplot(
+            dfs[i], x = x_, y = y_,
+            hue = hue_)
+        axs[i] .set_ylim(tuple([lowerY,1]))
+        if not share_cat_labels:
+            axs[i] .set_xticks(ticks = np.arange(0,nr_cat),labels=plots_labels[i])
+        else:
+            axs[i].set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
+        axs[i].set_title(df_titles_[i])
+        if legend_off:
+            axs[i].get_legend().remove()
+
+    # plt.subplot(n_rows,n_cols,2)
+    # ax_8qs=sns.barplot(
+    #     df8q, x = x_, y = y_,
+    #     hue = hue_)
+    # ax_8qs.set_ylim(tuple([lowerY,1]))
+    # if not share_cat_labels:
+    #     ax_8qs.set_xticks(ticks = np.arange(0,nr_cat),labels=plot2_labels)
+    # else:
+    #     ax_8qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
+    # ax_8qs.set_title(df_titles_[1])
+    # if legend_off:
+    #     ax_8qs.get_legend().remove()
+
+    # plt.subplot(n_rows,n_cols,3)
+    # ax_16qs=sns.barplot(
+    #     df16q, x = x_, y = y_,
+    #     hue = hue_)
+    # ax_16qs.set_ylim(tuple([lowerY,1]))
+    # if not share_cat_labels:
+    #     ax_16qs.set_xticks(ticks = np.arange(0,nr_cat),labels=plot3_labels)
+    # else:
+    #     ax_16qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
+    # ax_16qs.set_title(df_titles_[2])
+    # if legend_off:
+    #     ax_16qs.get_legend().remove()
+
+    plt.legend(bbox_to_anchor=(1.05, 0.5), loc='center left', borderaxespad=0.)
+    
+    #plt.legend(["Hardware",'Simulation','Refreshed_Sims',"Sim and Refreshed"])
+    plt.show()
+
 def apply_condition_to_dfs(df_arr,col, val, equals = True):
     df_arr_out = []
     for df in df_arr:
@@ -192,3 +288,67 @@ def apply_get_same(dfs, col1,col2, drop_same_cols = True):
     for df in dfs:
         dfs_out.append(get_df_with_same(col1,col2,df, drop_same_cols))
     return dfs_out
+
+# for distance metrics
+def make_line_plots( 
+        df,
+        x= 'nr_qubits',
+        y = 'corr avg',
+        hue = 'circuits',
+        col='backends',
+        title_ = None,
+        fig_size_ = (12,2),
+        x_label = 'Number of Qubits',
+        y_label = None,
+        y_lim = None,
+        share_y = True,
+        share_y_ticks = True,
+        grid = True,
+        axis_font_size = 15
+    ):
+    if y_label ==None:
+        y_label = y
+        
+    cols = df[col].unique()
+    num_cols = len(cols)
+    axs =[]
+
+    fig = plt.figure(layout = 'constrained',figsize=fig_size_)
+    fig.suptitle(title_, fontsize=16, fontweight='bold')
+    for i in range(num_cols):
+        if share_y and i>0:
+            y_ax = axs[0]
+        else:
+            y_ax = None
+        plt.subplot(1,num_cols,i+1, sharey = y_ax)
+        axs.append(
+            sns.lineplot(
+                data = df[df[col]==cols[i]],
+                x= x,
+                y = y,
+                hue = hue
+            )
+        )
+        axs[i].get_legend().remove()
+        axs[i].set_title(cols[i])
+        axs[i].set_ylabel(y_label, fontsize = axis_font_size)
+        axs[i].set_xlabel(x_label, fontsize = axis_font_size)
+        axs[i].set_xticks([4,8,16],fontsize = axis_font_size)
+        axs[i].set_yticks(fontsize = axis_font_size)
+        axs[i].set_ylim(y_lim)
+        if grid:
+            axs[i].grid(visible =grid, linestyle ='dotted')   
+    
+    if share_y:
+        for ax in axs[1:]:
+            ax.set_ylabel('')
+            # ax.set_yticks
+   
+    if share_y_ticks:
+            for ax in axs[1:]:
+                ax.label_outer()
+ 
+    plt.legend(
+        title = hue,
+        bbox_to_anchor=(1.05, 0.5), loc='center left', borderaxespad=0.)
+    return axs

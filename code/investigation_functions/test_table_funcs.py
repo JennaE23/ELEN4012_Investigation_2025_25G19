@@ -23,13 +23,19 @@ def make_same_backends(dfs,backends):
     
     return dfs_mod
 
-def get_HSR_array_all_backends(nr_qubits,dir_='', updated_results = False):
+def get_HSR_array_all_backends(
+        nr_qubits,dir_='', updated_results = False,
+        exp_types = ['Hardware','Simulation','Refreshed_Simulation'],
+        incl_refr_H = False):
+    arr = []
+    for exp_type in exp_types:
+        arr.append (dpf.get_expanded_df(exp_type,nr_qubits, dir_,updated_results))
+    if incl_refr_H:
+        arr.append(dpf.get_expanded_df('Refreshed_Hardware',nr_qubits, dir_,updated_results))
+    # df_S = dpf.get_expanded_df('Simulation',nr_qubits,dir_, updated_results)
+    # df_R = dpf.get_expanded_df('Refreshed_Simulation',nr_qubits,dir_, updated_results)
 
-    df_H = dpf.get_expanded_df('Hardware',nr_qubits, dir_,updated_results)
-    df_S = dpf.get_expanded_df('Simulation',nr_qubits,dir_, updated_results)
-    df_R = dpf.get_expanded_df('Refreshed_Simulation',nr_qubits,dir_, updated_results)
-
-    return [df_H, df_S, df_R]
+    return arr
 
 def get_circuit_type_array(df_nq):
     df_nqi = mlf.features_to_int(df_nq)
@@ -135,15 +141,20 @@ def make_pairs(indiv_dfs):
 
 def print_test_table(test_table,Exp_type = True,backends = True, circ_types = True, nans = False):
 
-    for row in test_table:
-        print("\nrow")
-        for df in row:
-            print('\ndf')
+    for row_i in range(len(test_table)):
+        print("\nrow "+str(row_i))
+        row = test_table[row_i]
+        for df_i in range(len(row)):
+            df=row[df_i]
+            if df_i>0:
+                print('\ntest df ',str(df_i))
+            else:
+                print('training df')
             if Exp_type:
-                print(df['experiment_type'].unique())
+                print('experiment_type: ',df['experiment_type'].unique())
             if backends:
-                print(df['backend'].unique())
+                print('backend: ',df['backend'].unique())
             if circ_types:
-                print(df['circuit_type'].unique())
+                print('circuit_type: ',df['circuit_type'].unique())
             if nans:
                 print(df.isna().sum())
