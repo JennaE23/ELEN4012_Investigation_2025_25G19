@@ -109,8 +109,15 @@ def plot_bar_per_qubit_nr(
         fig_size_ = (9,6),
         share_cat_labels = True,
         plot1_labels = None, plot2_labels = None, plot3_labels = None,
-        horizontal_stack = False):
+        horizontal_stack = False,
+        upperY=1,
+        fontsize_ = 10,
+        errorbar_ = 'ci',
+        ylabel_ = 'accuracy',
+        xlabel_ = 'machines'):
     
+    plt.rcParams.update({'font.size': fontsize_}) 
+
     if horizontal_stack:
         n_rows = 1
         n_cols = 3
@@ -125,39 +132,48 @@ def plot_bar_per_qubit_nr(
     plt.subplot(n_rows,n_cols,1)
     ax_4qs =sns.barplot(
         df4q, x = x_, y = y_,
-        hue = hue_)
-    ax_4qs.set_ylim(tuple([lowerY,1]))
+        hue = hue_,
+        errorbar= errorbar_)
+    ax_4qs.set_ylim(tuple([lowerY,upperY]))
     if not share_cat_labels:
         ax_4qs.set_xticks(ticks = np.arange(0,nr_cat),labels=plot1_labels)
     else:
         ax_4qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
     ax_4qs.set_title(df_titles_[0])
+    ax_4qs.set_ylabel(ylabel_)
+    ax_4qs.set_xlabel(xlabel_)
     if legend_off:
         ax_4qs.get_legend().remove()
 
     plt.subplot(n_rows,n_cols,2)
     ax_8qs=sns.barplot(
         df8q, x = x_, y = y_,
-        hue = hue_)
-    ax_8qs.set_ylim(tuple([lowerY,1]))
+        hue = hue_,
+        errorbar= errorbar_)
+    ax_8qs.set_ylim(tuple([lowerY,upperY]))
     if not share_cat_labels:
         ax_8qs.set_xticks(ticks = np.arange(0,nr_cat),labels=plot2_labels)
     else:
         ax_8qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
     ax_8qs.set_title(df_titles_[1])
+    ax_8qs.set_ylabel(ylabel_)
+    ax_8qs.set_xlabel(xlabel_)
     if legend_off:
         ax_8qs.get_legend().remove()
 
     plt.subplot(n_rows,n_cols,3)
     ax_16qs=sns.barplot(
         df16q, x = x_, y = y_,
-        hue = hue_)
-    ax_16qs.set_ylim(tuple([lowerY,1]))
+        hue = hue_,
+        errorbar= errorbar_)
+    ax_16qs.set_ylim(tuple([lowerY,upperY]))
     if not share_cat_labels:
         ax_16qs.set_xticks(ticks = np.arange(0,nr_cat),labels=plot3_labels)
     else:
         ax_16qs.set_xticks(ticks = np.arange(0,nr_cat),labels=labels_)
     ax_16qs.set_title(df_titles_[2])
+    ax_16qs.set_ylabel(ylabel_)
+    ax_16qs.set_xlabel(xlabel_)
     if legend_off:
         ax_16qs.get_legend().remove()
 
