@@ -9,6 +9,8 @@ import seaborn as sns
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics.pairwise import cosine_distances
 
+from investigation_functions import data_process_funcs as dpf
+
 def get_test_list(
         qubits_list,change,
         backends_list = ['brisbane','torino','fez','marrakesh'],
@@ -387,4 +389,38 @@ def add_tot_err_col(df):
         file_path = df_.loc[i,'file_path']
         df_.loc[i,'tot_err']=get_tot_err(file_path)
     return df_
-    
+
+def summarise_and_save_df(
+        df, dir='../', exp_type_folder_name='Default', unique_dir = False, save_dir = ''):
+    circuit_types = df['circuit_type'].unique()
+    backends = df['backend'].unique()
+
+    for backend in backends:
+        for circuit in circuit_types:
+            df_subset = df[(df['backend'] == backend) & (df['circuit_type'] == circuit)]
+            df_ranged = dpf.find_range_dataframe(df_subset)
+
+            if exp_type_folder_name != 'Default':
+                exp_type = exp_type_folder_name
+                exp_type=exp_type.replace("ion", "ed")
+            else:
+                exp_type = df_subset['experiment_type'].iloc[0]
+                exp_type=exp_type.replace("ion", "ed")
+            
+            nr_qubits = df_subset['nr_qubits'].iloc[0]
+
+            if exp_type != 'Hardware':
+                backend_ = "fake_" + backend
+            else:
+                backend_ = "ibm_" + backend
+
+            if unique_dir:
+                file_name = f'{save_dir}{nr_qubits}q_{backend_}{circuit}_{exp_type}_summarised.csv'
+            else:
+                
+                file_name  = f'{dir}{exp_type}_results/{nr_qubits}q/{nr_qubits}q_{backend_}{circuit}_summarised.csv'
+            df_ranged.to_csv(file_name, index_label='column')
+
+def summarise_and_save(experiment_type, nr_qubits, dir='../', exp_type_folder_name='Default', unique_dir = False, save_dir = ''):
+    df = dpf.get_expanded_df(experiment_type, nr_qubits, dir_ = dir, processed = False, updated_results=True)
+    summarise_and_save_df(df, dir, exp_type_folder_name, unique_dir, save_dir)
