@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from itertools import combinations
 from csv import DictWriter
 
-# import seaborn as sns
+import seaborn as sns
 
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics.pairwise import cosine_distances
@@ -280,3 +280,111 @@ def add_corr_mag(df):
     df_ = df
     df_['corr avg mag']=df_['corr avg'].apply(abs)
     return df
+
+def make_line_plots( 
+        df,
+        x= 'nr_qubits',
+        y = 'corr avg',
+        hue = 'circuits',
+        col='backends',
+        title_ = None,
+        fig_size_ = (12,2),
+        x_label = 'Number of Qubits',
+        y_label = None,
+        y_lim = None,
+        share_y = True,
+        share_y_ticks = True,
+        grid = True,
+        axis_font_size = 15,
+        col_titles = None,
+        legend_title = None,
+        legend_labels = None,
+        legend_fontsize = 14,
+        vertical_stack = False,
+        x_ticks_auto = False
+    ):
+    if y_label ==None:
+        y_label = y
+        
+    cols = df[col].unique()
+    num_cols = len(cols)
+    num_rows =1
+    if vertical_stack:
+        num_cols = 1
+        num_rows =len(cols)
+    
+    axs =[]
+    if col_titles == None:
+        col_titles = cols
+    if legend_title == None:
+        legend_title = hue
+    
+    fig = plt.figure(layout = 'constrained',figsize=fig_size_)
+    # fig = plt.figure(figsize=fig_size_)
+    fig.suptitle(title_, fontsize=16, fontweight='bold')
+    for i in range(max(num_cols,num_rows)):
+        if share_y and i>0:
+            y_ax = axs[0]
+            
+        else:
+            y_ax = None
+        plt.subplot(num_rows,num_cols,i+1, sharey = y_ax,label = str(i))
+        axs.append(
+            sns.lineplot(
+                data = df[df[col]==cols[i]],
+                x= x,
+                y = y,
+                hue = hue
+            )
+        )
+        axs[i].get_legend().remove()
+        axs[i].set_title(col_titles[i], fontsize = axis_font_size+1)
+        axs[i].set_ylabel(y_label, fontsize = axis_font_size)
+        axs[i].set_xlabel(x_label, fontsize = axis_font_size)
+        if not x_ticks_auto:
+            axs[i].set_xticks([4,8,16])
+        axs[i].tick_params(
+            axis='both', which='both', labelsize=axis_font_size)
+        axs[i].set_ylim(y_lim)
+        if grid:
+            axs[i].grid(visible =grid, linestyle ='dotted')   
+    
+    if share_y:
+        for ax in axs[1:]:
+            ax.set_ylabel('')
+            # ax.set_yticks
+   
+    if share_y_ticks:
+            for ax in axs:
+                ax.label_outer()
+ 
+    axs[1].legend(
+        # handles =axs[0],
+        title = legend_title,
+        labels = legend_labels,
+        title_fontsize = legend_fontsize+1,
+        fontsize = legend_fontsize,
+        # loc='center left', 
+        # bbox_to_anchor=(1.05, 0.5), borderaxespad=0.
+        loc='lower center', bbox_to_anchor=(0.5, -0.1),
+        borderaxespad=10,
+        ncol =3
+        )
+    return axs
+
+def get_tot_err(file_path):
+    # print(row)
+    df = pd.read_csv(file_path)
+    # nr_qubits = n_q
+    # col_name_0th = str(np.strings.multiply('0',nr_qubits))
+    tot_err = df.loc[0,'mean']
+    return tot_err
+
+def add_tot_err_col(df):
+    df_ = df
+    for i in range(len(df_)):
+        # nq = int(df_.loc[i,'nr_qubits'])
+        file_path = df_.loc[i,'file_path']
+        df_.loc[i,'tot_err']=get_tot_err(file_path)
+    return df_
+    

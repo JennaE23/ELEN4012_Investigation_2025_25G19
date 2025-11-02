@@ -5,6 +5,7 @@ from qiskit_ibm_runtime import SamplerV2 as Sampler
 
 import datetime
 import config
+from csv import DictWriter
 
 def make_set_of_3(nr_qubits):
     circuit_types = ['Cnot','Cnot_X','Swap']
@@ -102,3 +103,63 @@ def send_and_record(nr_qubits,file_name,backend_names,service_):
     with open(file_name, "a", encoding="utf-8") as f:
         f.write(text)
     return lines
+
+def save_transpiled_metrics(nr_qubits,fake_backends,file_name,dirr):
+    qc_set = make_set_of_3(nr_qubits)
+    for backend in fake_backends:
+        # print(backend.name)
+        transpiled_circuits = transpile(qc_set, backend =backend, optimization_level =0)
+        for circ in range(3):
+            # print("circ:"+str(circ))
+            depth = transpiled_circuits[circ].depth()
+            size = transpiled_circuits[circ].size()
+            width = transpiled_circuits[circ].width()
+            # n_ops = transpiled_circuits[circ].count_ops()
+            row = {
+                'nr_qubits': nr_qubits,
+                'backend': backend.name,
+                'circuit': circ+1,
+                'depth': depth,
+                'size': size,
+                'width': width,
+                
+            } #| n_ops
+            fields = ['nr_qubits','backend','circuit','depth','size',
+                      'width']#,'rz','ecr', 'barrier', 'x', 'measure',
+                        # 'sx','cz']
+            
+            with open(dirr+file_name, 'a', newline='') as f:
+                writer = DictWriter(f, fieldnames=fields)
+                writer.writerow(row)
+
+def create_transpiled_metrics_csv(file_name,dirr):
+    fields = ['nr_qubits','backend','circuit','depth','size','width']
+            #   ,'rz','ecr', 'barrier', 'x', 'measure', 'sx','cz']
+    with open(dirr+file_name, 'w', newline='') as f:
+        writer = DictWriter(f, fieldnames=fields)
+        writer.writeheader()
+
+def save_pretranspiled_metrics(nr_qubits,file_name,dirr):
+    qc_set = make_set_of_3(nr_qubits)
+    for circ in range(3):
+        # print("circ:"+str(circ))
+        depth = qc_set[circ].depth()
+        size = qc_set[circ].size()
+        width = qc_set[circ].width()
+     
+        row = {
+            'nr_qubits': nr_qubits,
+            'backend': 'pre-transpilation',
+            'circuit': circ+1,
+            'depth': depth,
+            'size': size,
+            'width': width,
+            
+        } #| n_ops
+        fields = ['nr_qubits','backend','circuit','depth','size',
+                'width']#,'rz','ecr', 'barrier', 'x', 'measure',
+                # 'sx','cz']#,'cx','h','swap']
+
+        with open(dirr+file_name, 'a', newline='') as f:
+            writer = DictWriter(f, fieldnames=fields)
+            writer.writerow(row)
