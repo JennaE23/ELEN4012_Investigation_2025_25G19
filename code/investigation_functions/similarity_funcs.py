@@ -424,3 +424,116 @@ def summarise_and_save_df(
 def summarise_and_save(experiment_type, nr_qubits, dir='../', exp_type_folder_name='Default', unique_dir = False, save_dir = ''):
     df = dpf.get_expanded_df(experiment_type, nr_qubits, dir_ = dir, processed = False, updated_results=True)
     summarise_and_save_df(df, dir, exp_type_folder_name, unique_dir, save_dir)
+
+def plot_fingerprints(
+    dfs,
+    title_,
+    rows_ylim = [10,5],
+    backends = ['brisbane','torino','fez','marrakesh'],
+    x_labels = 'Erroneous Outcomes',
+    y_labels = 'Measured Probability \n (%)',
+    n_rows = 2,
+    n_cols = 2,
+    x_label_size = 14,
+    y_label_size = 14,
+    subtitle_size = 16,
+    subtitle_y = 1.05,
+    x_tick_rot = 90,
+    x_tick_size =14,
+    sharey_by_row = True,
+    show_plot = True,
+    colour_wrap = 4,
+    fig_size_ =(10,6)
+    # share_x_all = True
+    ):
+    colours = [
+        mcolors.CSS4_COLORS['darkturquoise'],
+        mcolors.CSS4_COLORS['dodgerblue'],
+        mcolors.CSS4_COLORS['blue'],
+        mcolors.CSS4_COLORS['royalblue']
+    ]
+    fig = plt.figure(figsize=fig_size_, layout = 'constrained')
+
+    plt.suptitle(
+        title_,fontsize = 17,
+        y = 1.08
+    )
+    axs =[]
+    # ax_x = None
+
+    for i in range(len(dfs)):
+        
+        axs_to_share = None
+        if sharey_by_row:
+            if (i+1)%n_cols==0:
+                axs_to_share = axs[i-1]
+        # if share_x_all and i>0:
+        #     ax_x = axs[0]
+
+        axs.append(plt.subplot(
+            n_rows,n_cols,i+1,ymargin =1,sharey=axs_to_share))
+        axs[i] =sns.barplot(
+            data =dfs[i], label = backends[i],
+            color=colours[i%colour_wrap]
+        )
+        axs[i].grid(linestyle='dotted')
+        
+        axs[i].set_ylabel(y_labels ,fontsize = y_label_size)
+        axs[i].set_xlabel(x_labels ,fontsize = x_label_size)
+        # ax1.get_xticks()
+        axs[i].set_title(
+            backends[i],fontsize = subtitle_size,y=subtitle_y)
+        if i>n_cols and sharey_by_row:#only works for 2 rows
+            axs[i].set_ylim((0,rows_ylim[1]))
+        elif sharey_by_row:
+            axs[i].set_ylim((0,rows_ylim[0]))
+        plt.xticks(rotation = x_tick_rot,fontsize = x_tick_size)
+        plt.yticks(fontsize = y_label_size)
+    if show_plot:
+        plt.show()
+    return fig,axs
+
+def __drop_0th(df,nr_qubits):
+    col_name = np.strings.multiply('0',nr_qubits)
+    df_no0 =df.drop(str(col_name),axis=1)
+    return df_no0
+
+def get_err_mean_percents(
+        df_to_sort,
+        nr_qubits=4,
+        backends=['brisbane','torino','fez','marrakesh'],
+        drop_0th = True
+    ):
+    # print(df_to_sort.info())
+    if drop_0th:
+        df_to_sort = __drop_0th(df_to_sort,nr_qubits)
+    # print(df_to_sort.info())
+    # dfs_split =[]
+    means_percent =[]
+    for backend in backends:
+        df_b =df_to_sort[df_to_sort['backend']==backend]
+        means_percent.append(dpf.find_mean_cols(df_b)*100/4096)
+        # dfs_split.append(df_b)
+
+    return means_percent
+
+def get_means_above(means,above_val):
+    means_above =[]
+    for mean in means:
+        high_mean =mean[mean>=0.5]
+        means_above.append(high_mean)
+        # print(high_mean)
+    return means_above
+
+def split_df_by_circuit_type(df):
+    c1_df = df[df['circuit_type']=='1']
+    c2_df = df[df['circuit_type']=='2']
+    c3_df = df[df['circuit_type']=='3']
+    return [c1_df,c2_df,c3_df]
+
+def split_df_by_baceknds(df,baceknds=['brisbane','torino','fez','marrakesh']):
+    dfs =[]
+    for backend in baceknds:
+        df_b = df[df['backend']==backend]
+        dfs.append(df_b)
+    return dfs
