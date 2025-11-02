@@ -5,17 +5,35 @@ from investigation_functions import ml_funcs as mlf
 import seaborn as sns
 import numpy as np
 
-def print_and_plot_svm_models(df_processed, models, model_names, df_name='', graph_type = 'bar',to_print = 'False'):
+def print_and_plot_svm_models(
+        df_processed, 
+        models, 
+        is_modes = True,
+        model_names=None, 
+        df_name='',
+        graph_type = 'bar',
+        to_print = False,
+        title = None
+    ):
     scores = []
-    
-    for model in models:
+    models_under = models
+    if not is_modes and (model_names == None):
+        raise ValueError("No model_names given when is_modes = False")
+    if is_modes:
+        models_under = []
+        model_names =[]
+        for mode in models:
+            models_under.append(mode.model)
+            model_names.append(mode.label)
+
+    for model in models_under:
         fitted_model,score,cv_score = mlf.std_split_fit_and_scores(df_processed,model)
         if to_print:
             print(f"Model={model}, Accuracy={score}, CV_Accuracy={cv_score.mean()}")
             print(f"CV_Scores={cv_score}")
         scores.append(cv_score.mean())
     
-    plt.figure(figsize=(10,6))
+    fig =plt.figure(figsize=(10,6))
     match graph_type:
         case 'line':
             plt.plot(model_names, scores, color='skyblue', marker='o', linestyle='-')
@@ -25,13 +43,17 @@ def print_and_plot_svm_models(df_processed, models, model_names, df_name='', gra
             raise ValueError("graph_type must be 'line' or 'bar'")
     plt.xlabel('SVM Models')
     plt.ylabel('Cross-Validation Accuracy')
-    plt.title(df_name +'SVM Model Comparison')
+    if title == None:
+        plt.title(df_name +'SVM Model Comparison')
+    else:
+        plt.title(title)
     plt.ylim(0, 1.2)
     plt.xticks(rotation=45)
     plt.grid(axis='y')
-    plt.show()
+    # plt.show()
     
     # return scores
+    return fig
 
 def print_and_plot_knn_model_range_neighbours(df_processed, k_values, graph_type = 'line'):
     scores = []

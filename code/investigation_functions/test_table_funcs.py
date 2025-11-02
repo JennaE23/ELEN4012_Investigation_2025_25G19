@@ -141,15 +141,20 @@ def make_pairs(indiv_dfs):
 
 def print_test_table(test_table,Exp_type = True,backends = True, circ_types = True, nans = False):
 
-    for row in test_table:
-        print("\nrow")
-        for df in row:
-            print('\ndf')
+    for row_i in range(len(test_table)):
+        print("\nrow "+str(row_i))
+        row = test_table[row_i]
+        for df_i in range(len(row)):
+            df=row[df_i]
+            if df_i>0:
+                print('\ntest df ',str(df_i))
+            else:
+                print('training df')
             if Exp_type:
-                print(df['experiment_type'].unique())
+                print('experiment_type: ',df['experiment_type'].unique())
             if backends:
-                print(df['backend'].unique())
+                print('backend: ',df['backend'].unique())
             if circ_types:
-                print(df['circuit_type'].unique())
+                print('circuit_type: ',df['circuit_type'].unique())
             if nans:
                 print(df.isna().sum())
