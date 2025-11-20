@@ -285,11 +285,12 @@ def run_and_record_bvb_for_each_c_type(
     circuit_options = ['1','2','3']
     
     for circuit_type in circuit_options:
-
+        
         init_list_circ =[]
         for exp_type in initial_list_H_S_R:
+            
             init_list_circ.append(exp_type[exp_type['circuit_type']==circuit_type])
-
+            
         run_and_record_backends_v_backends(
             init_list_circ, dir_ml, 
             file_name, param_modes_best_HSR, backend_combos_list,
