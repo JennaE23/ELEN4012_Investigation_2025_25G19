@@ -304,11 +304,15 @@ def make_line_plots(
         share_y = True,
         share_y_ticks = True,
         grid = True,
-        axis_font_size = 15
+        axis_font_size = 15,
+        style_on = False
     ):
     if y_label ==None:
         y_label = y
-        
+    if style_on:
+        style = hue
+    else:
+        style = None
     cols = df[col].unique()
     num_cols = len(cols)
     axs =[]
@@ -326,15 +330,16 @@ def make_line_plots(
                 data = df[df[col]==cols[i]],
                 x= x,
                 y = y,
-                hue = hue
+                hue = hue,
+                style = style
             )
         )
         axs[i].get_legend().remove()
         axs[i].set_title(cols[i])
         axs[i].set_ylabel(y_label, fontsize = axis_font_size)
         axs[i].set_xlabel(x_label, fontsize = axis_font_size)
-        axs[i].set_xticks([4,8,16],fontsize = axis_font_size)
-        axs[i].set_yticks(fontsize = axis_font_size)
+        axs[i].set_xticks([4,8,16])#,fontsize = axis_font_size)
+        #axs[i].set_yticks(fontsize = axis_font_size)
         axs[i].set_ylim(y_lim)
         if grid:
             axs[i].grid(visible =grid, linestyle ='dotted')   

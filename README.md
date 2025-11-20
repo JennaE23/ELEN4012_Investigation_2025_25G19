@@ -14,7 +14,7 @@ This folder contains notebooks that are written as a walkthrough of the process 
 
 2. The investigation_functions folder. 
 
-This folder contains is importable module that contains all of the functions written and used for the rest of the code.
+This folder contains is an importable module that contains all of the functions written and used for the rest of the code.
 
 3. The rough_code_sandbox folder.
 
